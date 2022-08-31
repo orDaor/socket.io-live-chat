@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Socket.IO Todo</title>
+    <link rel="stylesheet" href="/styles/base.css" />
+    <script src="/socket.io/socket.io.js" defer></script>
+    <script src="/scripts/socket.io-send-events.js" defer></script>
+    <script src="/scripts/socket.io-receive-ack-events.js" defer></script>
+    <script src="/scripts/soocket.io-receive-broadcast-events.js"></script>
+    <script src="/scripts/config-script.js"></script>
+    <script src="/scripts/main-script.js" defer></script>
+  </head>
+  <body>
+    <main>
+      <section id="form-section">
+        <form id="form" action="">
+          <input id="form-input" />
+          <button>Save</button>
+          <button id="load-todos-btn" type="button">Load Todos</button>
+        </form>
+      </section>
+      <section id="info-section"></section>
+      <section id="todos-section">
+        <ul id="todos"></ul>
+      </section>
+    </main>
+  </body>
+</html>
