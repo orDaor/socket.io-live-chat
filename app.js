@@ -8,7 +8,7 @@ const SocketIOServer = require("socket.io").Server;
 
 //imports custom
 const db = require("./data/database");
-const listenOnSocketEvents = require("./socket-io/listen-on-socket-events");
+const listenOnSocketEvents = require("./socket.io/listen-on-socket-events");
 
 //web server
 const app = express();

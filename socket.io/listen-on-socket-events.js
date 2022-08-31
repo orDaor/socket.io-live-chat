@@ -1,5 +1,5 @@
 //imports custom
-const socketEventsHandlers = require("../socket-io/socket-events-handlers");
+const socketEventsHandlers = require("../socket.io/socket-events-handlers");
 
 //start listening on events for a specific socket
 function listenOnSocketEvents(io, socket) {

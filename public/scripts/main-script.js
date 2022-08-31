@@ -1,5 +1,8 @@
-//opening wfeb socket connection (by default with the server which served the page)
-const socket = io();
+//opening feb socket connection (by default with the server which served the page)
+const socketConfig = {
+  autoConnect: false,
+};
+const socket = io(socketConfig);
 
 //access DOM elements
 const todosElement = document.getElementById("todos");
@@ -20,9 +23,9 @@ socket.on("connect", function () {
 //NOTE: at "conenct" event a new unique socket id is assigned to a socket (before connection there is no id)
 
 //on socket closed / disconnected
-socket.on("disconnect", function(reason) {
-    //when the socket disconnects / closes its socket id is reset
-    console.log(`Disconnected because: ${reason} (id = ${socket.id})`);
+socket.on("disconnect", function (reason) {
+  //when the socket disconnects / closes its socket id is reset
+  console.log(`Disconnected because: ${reason} (id = ${socket.id})`);
 });
 //NOTE: if we disconnect manually (from client or server), reconnection will not be automatic by the client
 
