@@ -41,7 +41,7 @@ ul {
 
 #friends-section ul {
   padding: 0 2rem;
-  height: 80%;
+  max-height: 80%;
   overflow: auto;
   direction: rtl;
   background-color: rgb(226, 243, 254);
@@ -58,7 +58,6 @@ ul {
 
 #chat-section {
   display: none;
-  gap: 1.5rem;
   flex-direction: column;
   position: fixed;
   left: 0;
@@ -68,8 +67,10 @@ ul {
 }
 
 .active-friends {
+  box-sizing: border-box;
   margin: 0;
   padding: 0 2rem;
+  height: 15%;
 }
 
 .active-friends p {
@@ -82,10 +83,9 @@ ul {
 }
 
 #chat-section ul {
-  padding-left: 2rem;
-  padding-right: 2rem;
+  padding: 1.5rem 2rem;
   box-sizing: border-box;
-  height: 90%;
+  height: 65%;
   overflow: auto;
 }
 
@@ -120,10 +120,11 @@ ul {
 }
 
 .chat-actions {
+  box-sizing: border-box;
   display: flex;
   gap: 1rem;
   padding: 2rem 2rem;
-  height: 10%;
+  height: 20%;
 }
 
 .chat-actions textarea {
