@@ -1,5 +1,5 @@
 //create a todo inside a new list element
-function displayOneTodo(todoText, todoId) {
+function displayOneTodo(todoId, todoText) {
   //create list item element
   const todoLiElement = document.createElement("li");
   todoLiElement.dataset.todoId = todoId;
@@ -89,7 +89,7 @@ function setTodoInput(todoId, todoText) {
 }
 
 //hide error message
-function hideErrorMessage() {
+function hideErrorInfo() {
   const errorMessage = document.getElementById("error-message");
   if (errorMessage) {
     errorMessage.parentElement.removeChild(errorMessage);
@@ -97,7 +97,7 @@ function hideErrorMessage() {
 }
 
 //display error message
-function displayErrorMessage(message) {
+function displayErrorInfo(message) {
   hideErrorMessage();
   const errorMessageElement = document.createElement("p");
   errorMessageElement.textContent = message;

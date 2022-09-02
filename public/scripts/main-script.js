@@ -17,7 +17,7 @@ loadTodosButtonElement.addEventListener("click", readTodo);
 //on socket opening / connection on
 socket.on("connect", function () {
   console.log(`Connected with id = ${socket.id}`); //socket undefined when not connected yet
-  readTodo();
+  readMessage();
 });
 //NOTE: "connect" means both connect and re-connect (connect after connection was closed)
 //NOTE: at "conenct" event a new unique socket id is assigned to a socket (before connection there is no id)
@@ -30,6 +30,6 @@ socket.on("disconnect", function (reason) {
 //NOTE: if we disconnect manually (from client or server), reconnection will not be automatic by the client
 
 //listen from broadcast events from server
-socket.on("todo-create-broadcast", onTodoCreateBroadcast);
-socket.on("todo-update-broadcast", onTodoUpdateBroadcast);
-socket.on("todo-delete-broadcast", onTodoDeleteBroadcast);
+socket.on("todo-create-broadcast", onMessageCreateBroadcast);
+socket.on("todo-update-broadcast", onMessageUpdateBroadcast);
+socket.on("todo-delete-broadcast", onMessageDeleteBroadcast);

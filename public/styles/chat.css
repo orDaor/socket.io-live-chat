@@ -70,7 +70,7 @@ ul {
   box-sizing: border-box;
   margin: 0;
   padding: 0 2rem;
-  height: 15%;
+  height: 13%;
 }
 
 .active-friends p {
@@ -85,7 +85,7 @@ ul {
 #chat-section ul {
   padding: 1.5rem 2rem;
   box-sizing: border-box;
-  height: 65%;
+  height: 67%;
   overflow: auto;
 }
 
@@ -122,22 +122,32 @@ ul {
 .chat-actions {
   box-sizing: border-box;
   display: flex;
+  align-items: center;
   gap: 1rem;
   padding: 2rem 2rem;
   height: 20%;
 }
 
 .chat-actions textarea {
+  padding: 1rem 2rem;
   box-sizing: border-box;
   width: 80%;
   resize: none;
   font: inherit;
+  outline: none;
+  border-radius: 70px;
+  border: 1px solid rgb(202, 201, 201);
 }
 
 .chat-actions button {
   box-sizing: border-box;
   width: 20%;
   font: inherit;
+  cursor: pointer;
+  height: 3.25rem;
+  border-radius: 70px;
+  border: 1px solid rgb(202, 201, 201);
+  background-color: rgb(226, 243, 254);
 }
 
 @media (min-width: 768px) {

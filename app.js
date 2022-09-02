@@ -29,7 +29,7 @@ app.use(express.json());
 
 //main apge
 app.get("/", function (req, res, next) {
-  res.render("todo");
+  res.render("chat");
 });
 
 //listen on connection event for incoming sockets.

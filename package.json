@@ -1,7 +1,7 @@
 {
-  "name": "crud-operations",
+  "name": "live-chat",
   "version": "1.0.0",
-  "description": "socket.io-todos-example",
+  "description": "socket.io-live-chat-example",
   "main": "index.js",
   "scripts": {
     "start": "nodemon app.js"

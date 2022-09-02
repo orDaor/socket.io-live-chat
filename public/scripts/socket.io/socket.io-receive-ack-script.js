@@ -1,48 +1,48 @@
-//process ack from server on todo create event
-function onTodoCreateAck(eventAck) {
-  //todo not saved as requested
+//process ack from server on message create event
+function onMessageCreateAck(eventAck) {
+  //message not saved as requested
   if (!eventAck.ok) {
-    displayErrorMessage(eventAck.message);
-    hideOneTodo("not-confirmed");
+    displayErrorInfo(eventAck.info);
+    hideOneMessage("not-confirmed");
     return;
   }
 
   //response ok
-  setTodoId(eventAck.id);
+  setMessageId(eventAck.messageId);
 }
 
-//process ack from server on todo read event
-function onTodoReadAck(eventAck) {
-  //clean from page all todos and error message
-  hideErrorMessage();
-  cleanAllTodos();
+//process ack from server on message read event
+function onMessageReadAck(eventAck) {
+  //clean from page all messages and error message
+  hideErrorInfo();
+  cleanAllMessages();
 
-  //could not fetch the todos
+  //could not fetch the messages
   if (!eventAck.ok) {
-    displayErrorMessage(eventAck.message);
+    displayErrorInfo(eventAck.info);
     return;
   }
 
   //response ok
-  displayAllTodos(eventAck.todos);
+  displayAllMessages(eventAck.messages);
 }
 
-//process ack from server on todo update event
-function onTodoUpdateAck(eventAck) {
-  //could not update the todo
+//process ack from server on message update event
+function onMessageUpdateAck(eventAck) {
+  //could not update the message
   if (!eventAck.ok) {
-    displayErrorMessage(eventAck.message);
+    displayErrorInfo(eventAck.info);
     return;
   }
 }
 
-//process ack from server on todo delete
-function onTodoDeleteAck(eventAck) {
-  //could not delete the todo
+//process ack from server on message delete
+function onMessageDeleteAck(eventAck) {
+  //could not delete the message
   if (!eventAck.ok) {
-    displayErrorMessage(eventAck.message);
+    displayErrorInfo(eventAck.info);
     return;
   }
 
-  hideOneTodo(eventAck.id);
+  hideOneMessage(eventAck.messageId);
 }
