@@ -6,22 +6,25 @@ function onDisconnect(reason) {
 }
 
 //create a new message in the DB and broadcast it to all other sockets
-async function onMessageCreate(socket, text, sendAck) {
+async function onMessageSend(socket, message, sendAck) {
   let eventAck = {};
-  let result = await messagesCrudOps.create(text);
+  const senderId = socket.id;
+  let result = await messagesCrudOps.save(message, senderId);
   // result = null;
   if (!result) {
     //an error occured when saving in the DB
     eventAck.ok = false;
-    eventAck.info = "We could not save your Message";
+    eventAck.info = "We could not save your message";
   } else {
     //message created successfully
     eventAck.ok = true;
-    eventAck.info = "Message created successfully";
+    eventAck.info = "Message saved successfully";
     eventAck.messageId = result.insertedId.toString();
     //broadcast the new message to all other users
-    socket.broadcast.emit("message-create-broadcast", {
-      text: text,
+    socket.broadcast.emit("message-receive-broadcast", {
+      //how to emit to recipient???
+      ...message, //text + recipientId
+      senderId: senderId,
       messageId: eventAck.messageId,
     });
   }
@@ -52,31 +55,6 @@ async function onMessageRead(socket, sendAck) {
   // console.log(eventAck);
 }
 
-//update a message in the DB
-async function onMessageUpdate(socket, newText, messageId, sendAck) {
-  let eventAck = {};
-  let result = await messagesCrudOps.update(newText, messageId);
-  // result = null;
-  if (!result) {
-    //an error occured when saving in the DB
-    eventAck.ok = false;
-    eventAck.info = "We could not update your message";
-  } else {
-    //message created successfully
-    eventAck.ok = true;
-    eventAck.info = "Message updated successfully";
-    //broadcast the updated message to all other users
-    socket.broadcast.emit("message-update-broadcast", {
-      text: newText,
-      messageId: messageId,
-    });
-  }
-
-  //acknowledge the message saving request to the client
-  sendAck(eventAck);
-  // console.log(eventAck);
-}
-
 //delete a message from the DB
 async function onMessageDelete(socket, messageId, sendAck) {
   let eventAck = {};
@@ -86,12 +64,14 @@ async function onMessageDelete(socket, messageId, sendAck) {
     //an error occured when saving in the DB
     eventAck.ok = false;
     eventAck.info = "We could not delete your message";
+    eventAck.messageId = messageId;
   } else {
     //message created successfully
     eventAck.ok = true;
     eventAck.info = "Message deleted successfully";
-    eventAck.id = id;
+    eventAck.messageId = messageId;
     //broadcast the new message to all other users
+    //how to emit to recipient???
     socket.broadcast.emit("message-delete-broadcast", messageId);
   }
 
@@ -103,8 +83,7 @@ async function onMessageDelete(socket, messageId, sendAck) {
 //exports
 module.exports = {
   onDisconnect: onDisconnect,
-  onMessageCreate: onMessageCreate,
+  onMessageSend: onMessageSend,
   onMessageRead: onMessageRead,
-  onMessageUpdate: onMessageUpdate,
   onMessageDelete: onMessageDelete,
 };

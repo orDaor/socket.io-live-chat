@@ -2,13 +2,17 @@
 const db = require("../data/database");
 const ObjectId = require("mongodb").ObjectId;
 
-//create 
-async function create(text) {
+//create
+async function save(message, senderId) {
   let result;
-  const message = { text: text };
+
+  const fullMessage = {
+    ...message,
+    senderId: senderId,
+  };
 
   try {
-    result = await db.getDb().collection("messages").insertOne(message);
+    result = await db.getDb().collection("messages").insertOne(fullMessage);
   } catch (error) {
     console.log(error);
   }
@@ -16,7 +20,7 @@ async function create(text) {
   return result;
 }
 
-//read 
+//read
 async function read() {
   let result;
   try {
@@ -30,27 +34,7 @@ async function read() {
   return result;
 }
 
-//update 
-async function update(newText, messageId) {
-  let result;
-  const query = { _id: new ObjectId(messageId) };
-  const update = {
-    $set: { text: newText },
-  };
-
-  try {
-    result = await db.getDb().collection("messages").updateOne(query, update);
-    if (!result.matchedCount) {
-      result = undefined;
-    }
-  } catch (error) {
-    console.log(error);
-  }
-
-  return result;
-}
-
-//delete 
+//delete
 async function remove(messageId) {
   let result;
   const query = { _id: new ObjectId(messageId) };
@@ -69,8 +53,7 @@ async function remove(messageId) {
 
 //exports
 module.exports = {
-  create: create,
+  save: save,
   read: read,
-  update: update,
   remove: remove,
 };

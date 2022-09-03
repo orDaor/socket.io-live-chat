@@ -49,7 +49,8 @@ ul {
 }
 
 .friend-chat-item {
-  margin: 2rem auto;
+  margin: 1.5rem auto;
+  cursor: pointer;
 }
 
 .friend-chat-item p {
@@ -103,12 +104,13 @@ ul {
 
 .message-item p {
   margin: 0;
-  padding: 0.5rem;
+  padding: 1rem;
   white-space: pre-wrap;
   display: inline-block;
   max-width: 80%;
   text-align: left;
   border-radius: 8px;
+  position: relative;
 }
 
 .message-item-left p {
@@ -117,6 +119,39 @@ ul {
 
 .message-item-right p {
   background-color: rgb(175, 219, 250);
+}
+
+.message-item .message-item-action {
+  position: absolute;
+  top: 3px;
+  left: -3px;
+  cursor: pointer;
+}
+
+.message-item p.message-item-error {
+  background-color: white;
+  color: rgb(122, 23, 23);
+  font-weight: bold;
+}
+
+.main-error-info {
+  margin: 0;
+}
+
+.main-error-info p {
+  box-sizing: border-box;
+  background-color: rgb(238, 164, 164);
+  padding: 1.5rem;
+  display: block;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 2rem;
+}
+
+.main-error-info span.closing-message-symbol {
+  color: white;
+  cursor: pointer;
 }
 
 .chat-actions {
@@ -174,4 +209,12 @@ ul {
     margin-right: 15%;
     left: calc(15rem + 15%);
   }
+}
+
+/* target all devices which can be hovered */
+@media (hover: hover) {
+}
+
+/* target all devices which can NOT be hovered */
+@media (hover: none) {
 }

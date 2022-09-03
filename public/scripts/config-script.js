@@ -1,106 +1,69 @@
-//create a todo inside a new list element
-function displayOneTodo(todoId, todoText) {
-  //create list item element
-  const todoLiElement = document.createElement("li");
-  todoLiElement.dataset.todoId = todoId;
-
-  //create one DIV for the input
-  const todoInputDivElement = document.createElement("div");
-  todoInputDivElement.classList.add("todo-input");
-
-  //create one DIV for the buttons
-  const todoButtonsDivElement = document.createElement("div");
-  todoButtonsDivElement.classList.add("todo-buttons");
-
-  //create an input with the todo text to be appended in the list item
-  const todoInputElement = document.createElement("input");
-  todoInputElement.value = todoText;
-  todoInputDivElement.appendChild(todoInputElement);
-  todoLiElement.appendChild(todoInputDivElement);
-
-  //create and append update button in the list item
-  const todoUpdateButton = document.createElement("button");
-  todoUpdateButton.textContent = "Update";
-  todoUpdateButton.classList.add("todo-update-btn");
-  todoUpdateButton.dataset.todoId = todoId;
-  todoUpdateButton.addEventListener("click", updateTodo);
-  todoButtonsDivElement.appendChild(todoUpdateButton);
-
-  //create and append delete button in the list item
-  const todoDeleteButton = document.createElement("button");
-  todoDeleteButton.textContent = "Delete";
-  todoDeleteButton.classList.add("todo-delete-btn");
-  todoDeleteButton.dataset.todoId = todoId;
-  todoDeleteButton.addEventListener("click", deleteTodo);
-  todoButtonsDivElement.appendChild(todoDeleteButton);
-
-  //append second div
-  todoLiElement.appendChild(todoButtonsDivElement);
-
-  //append the li item inside the todos list
-  todosElement.appendChild(todoLiElement);
+//scroll to the bottom of the chat list
+function scrollToBottomOfMessagesList() {
+  const messagesListElement = chatSectionElement.querySelector("ul");
+  messagesListElement.scrollTo({
+    top: messagesListElement.scrollHeight,
+    left: 0,
+    behavior: "smooth",
+  });
 }
 
-//display array of todos received on the socket
-function displayAllTodos(todos) {
-  for (const todo of todos) {
-    displayOneTodo(todo.todoText, todo._id);
-  }
+//display chat section
+function displayChatSection() {
+  chatSectionElement.style.display = "flex";
 }
 
-//clean all todos
-function cleanAllTodos() {
-  todosElement.textContent = "";
+//hide chat section
+function hideChatSection() {
+  chatSectionElement.style.display = "none";
 }
 
-//delete a todo
-function hideOneTodo(todoId) {
-  const allTodos = todosElement.querySelectorAll("li");
-  for (const liItem of allTodos) {
-    if (liItem.dataset.todoId === todoId) {
-      todosElement.removeChild(liItem);
-      return;
-    }
-  }
+//display message action opions (delete, resend...)
+function displayMessageActions(event) {
+  console.log("Message actions should be displayed (delete, resend...)");
 }
 
-//set todo id on the page
-function setTodoId(todoId) {
-  const allTodos = todosElement.querySelectorAll("li");
-  for (const liItem of allTodos) {
-    if (liItem.dataset.todoId === "not-confirmed") {
-      liItem.dataset.todoId = todoId;
-      liItem.querySelector(".todo-update-btn").dataset.todoId = todoId;
-      liItem.querySelector(".todo-delete-btn").dataset.todoId = todoId;
-      return;
-    }
-  }
-}
-
-//set todo input
-function setTodoInput(todoId, todoText) {
-  const allTodos = todosElement.querySelectorAll("li");
-  for (const liItem of allTodos) {
-    if (liItem.dataset.todoId === todoId) {
-      liItem.querySelector("input").value = todoText;
-      return;
-    }
-  }
-}
-
-//hide error message
-function hideErrorInfo() {
-  const errorMessage = document.getElementById("error-message");
-  if (errorMessage) {
-    errorMessage.parentElement.removeChild(errorMessage);
+//hide error info
+function hideMainErrorInfo() {
+  const mainErrorInfo = document.querySelector(".main-error-info");
+  if (mainErrorInfo) {
+    mainErrorInfo.parentElement.removeChild(mainErrorInfo);
   }
 }
 
 //display error message
-function displayErrorInfo(message) {
-  hideErrorMessage();
-  const errorMessageElement = document.createElement("p");
-  errorMessageElement.textContent = message;
-  errorMessageElement.id = "error-message";
-  document.getElementById("info-section").appendChild(errorMessageElement);
+function displayMainErrorInfo(info) {
+  hideMainErrorInfo();
+  const isErrorMessage = true;
+  displayOneMessage(isErrorMessage, null, info, null, true, false);
+}
+
+//display error info for one message
+function displayOneMessageErrorInfo(messageId, info) {
+  const messages = document.querySelectorAll(".message-item");
+  for (const message of messages) {
+    if (message.dataset.messageId === messageId) {
+      //find the message and add below it the error info
+      const errorTextElement = document.createElement("p");
+      errorTextElement.classList.add("message-item-error");
+      const spanErrorTextELement = document.createElement("span");
+      spanErrorTextELement.textContent = info;
+      errorTextElement.append(spanErrorTextELement);
+      message.append(errorTextElement);
+      return;
+    }
+  }
+}
+
+//display error info for one message
+function hideOneMessageErrorInfo(messageId) {
+  const messages = document.querySelectorAll(".message-item");
+  for (const message of messages) {
+    if (message.dataset.messageId === messageId) {
+      //find the message and remove its error info
+      const messageItemError = message.querySelector(".message-item-error");
+      messageItemError.parentElement.removeChild(messageItemError);
+      return;
+    }
+  }
 }

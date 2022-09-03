@@ -1,18 +1,16 @@
-//opening feb socket connection (by default with the server which served the page)
+//create socket, for which the client does not automatically send a request
+//to the server for opening it
 const socketConfig = {
   autoConnect: false,
 };
 const socket = io(socketConfig);
 
 //access DOM elements
-const todosElement = document.getElementById("todos");
-const formElement = document.getElementById("form");
-const formInputElement = document.getElementById("form-input");
-const loadTodosButtonElement = document.getElementById("load-todos-btn");
+const friendsSectionElement = document.getElementById("friends-section");
+const chatSectionElement = document.getElementById("chat-section");
 
 //send events to server
-formElement.addEventListener("submit", createTodo);
-loadTodosButtonElement.addEventListener("click", readTodo);
+chatSectionElement.querySelector("form").addEventListener("submit", sendMessage);
 
 //on socket opening / connection on
 socket.on("connect", function () {
@@ -30,6 +28,8 @@ socket.on("disconnect", function (reason) {
 //NOTE: if we disconnect manually (from client or server), reconnection will not be automatic by the client
 
 //listen from broadcast events from server
-socket.on("todo-create-broadcast", onMessageCreateBroadcast);
-socket.on("todo-update-broadcast", onMessageUpdateBroadcast);
-socket.on("todo-delete-broadcast", onMessageDeleteBroadcast);
+socket.on("message-receive-broadcast", onMessageReceiveBroadcast);
+socket.on("message-delete-broadcast", onMessageDeleteBroadcast);
+
+//global variables
+let thisUserId;

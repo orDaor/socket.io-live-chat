@@ -14,21 +14,14 @@ function listenOnSocketEvents(io, socket) {
   });
 
   //crud operations
-  socket.on("message-create", function (text, sendAck) {
-    socketEventsHandlers.onMessageCreate(socket, text, sendAck);
+
+  //message from client contains only text + recipiend id
+  socket.on("message-send", function (message, sendAck) {
+    socketEventsHandlers.onMessageSend(socket, message, sendAck);
   });
 
   socket.on("message-read", function (emptyObj, sendAck) {
     socketEventsHandlers.onMessageRead(socket, sendAck);
-  });
-
-  socket.on("message-update", function (message, sendAck) {
-    socketEventsHandlers.onMessageUpdate(
-      socket,
-      message.text,
-      message.messageId,
-      sendAck
-    );
   });
 
   socket.on("message-delete", function (messageId, sendAck) {

@@ -13,8 +13,11 @@
       src="/scripts/socket.io/socket.io-receive-ack-script.js"
       defer
     ></script>
-    <script src="/scripts/socket.io/soocket.io-receive-broadcast-script.js"></script>
-    <script src="/scripts/config-script.js"></script>
+    <script src="/scripts/socket.io/soocket.io-receive-broadcast-script.js" defer></script>
+    <script src="/scripts/utils-script.js" defer></script>
+    <script src="/scripts/config-script.js" defer></script>
+    <script src="/scripts/auth-script.js" defer></script>
+    <script src="/scripts/chat-script.js" defer></script>
     <script src="/scripts/main-script.js" defer></script>
   </head>
   <body>
@@ -61,43 +64,43 @@
         </div>
         <ul>
           <li class="message-item message-item-left">
-            <p> is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s,
-when an unknown printer took a galley of type and scrambled it to make a type specimen book.</p>
+            <p><span> is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s,
+              when an unknown printer took a galley of type and scrambled it to make a type specimen book.</span></p>
           </li>
           <li class="message-item message-item-right">
-            <p> is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.</p>
+            <p><span> is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s,
+              when an unknown printer took a galley of type and scrambled it to make a type specimen book.</span></p>
           </li>
           <li class="message-item message-item-left">
-            <p> is simply dummy text of the printing and typesetting industry.
-Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.</p>
+            <p><span> is simply dummy text of the printing and typesetting industry.
+              Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.</span></p>
           </li>
           <li class="message-item message-item-left">
-            <p> is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.</p>
+            <p><span> is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.</span></p>
           </li>
           <li class="message-item message-item-left">
-            <p> is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's
-standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it
-
-to make a type specimen book.</p>
+            <p><span> is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's
+              standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it
+              
+              to make a type specimen book.</span></p>
           </li>
           <li class="message-item message-item-right">
-            <p> is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.</p>
+            <p><span> is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.</span></p>
           </li>
           <li class="message-item message-item-left">
-            <p> is simply dummy text of the printing and typesetting industry.
+            <p><span> is simply dummy text of the printing and typesetting industry.
                                     
               
-Lorem Ipsum has been the industry's                         standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.</p>
+              Lorem Ipsum has been the industry's                         standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.</span></p>
           </li>
           <li class="message-item message-item-right">
-            <p> is simply dummy text of the printing and typesetting                    industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. </p>
+            <p><span> is simply dummy text of the printing and typesetting                    industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. </span></p>
           </li>
-
         </ul>
-        <div class="chat-actions">
-          <textarea rows="1"></textarea>
+        <form class="chat-actions">
+          <textarea name="message" rows="1"></textarea>
           <button>Send</button>
-        </div>
+        </form>
       </section>
     </main>
   </body>

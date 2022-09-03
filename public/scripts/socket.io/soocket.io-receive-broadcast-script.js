@@ -1,11 +1,13 @@
-//process broadcast notification from server on message create event
-function onMessageCreateBroadcast(broadcastNoty) {
-  displayOneMessage(broadcastNoty.messageId, broadcastNoty.text);
-}
-
-//process broadcast notification from server on message update event
-function onMessageUpdateBroadcast(broadcastNoty) {
-  setMessageInput(broadcastNoty.messageId, broadcastNoty.text);
+//process broadcast notification from server on message send event
+function onMessageReceiveBroadcast(broadcastNoty) {
+  displayOneMessage(
+    false,
+    broadcastNoty.messageId,
+    broadcastNoty.text,
+    "left",
+    false,
+    false
+  );
 }
 
 //process broadcast notification from server on message delete event

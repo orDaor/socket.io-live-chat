@@ -1,9 +1,8 @@
-//process ack from server on message create event
-function onMessageCreateAck(eventAck) {
+//process ack from server on message send event
+function onMessageSendAck(eventAck) {
   //message not saved as requested
   if (!eventAck.ok) {
-    displayErrorInfo(eventAck.info);
-    hideOneMessage("not-confirmed");
+    displayOneMessageErrorInfo("id-not-confirmed", eventAck.info);
     return;
   }
 
@@ -14,12 +13,11 @@ function onMessageCreateAck(eventAck) {
 //process ack from server on message read event
 function onMessageReadAck(eventAck) {
   //clean from page all messages and error message
-  hideErrorInfo();
   cleanAllMessages();
 
   //could not fetch the messages
   if (!eventAck.ok) {
-    displayErrorInfo(eventAck.info);
+    displayMainErrorInfo(eventAck.info);
     return;
   }
 
@@ -27,20 +25,11 @@ function onMessageReadAck(eventAck) {
   displayAllMessages(eventAck.messages);
 }
 
-//process ack from server on message update event
-function onMessageUpdateAck(eventAck) {
-  //could not update the message
-  if (!eventAck.ok) {
-    displayErrorInfo(eventAck.info);
-    return;
-  }
-}
-
 //process ack from server on message delete
 function onMessageDeleteAck(eventAck) {
   //could not delete the message
   if (!eventAck.ok) {
-    displayErrorInfo(eventAck.info);
+    displayOneMessageErrorInfo(eventAck.messageId, eventAck.info);
     return;
   }
 
