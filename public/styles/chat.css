@@ -73,7 +73,7 @@
 
 .message-item p {
   margin: 0;
-  padding: 1rem;
+  padding: 0.5rem;
   white-space: pre-wrap;
   display: inline-block;
   max-width: 80%;
