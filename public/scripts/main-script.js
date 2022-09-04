@@ -8,9 +8,12 @@ const socket = io(socketConfig);
 //access DOM elements
 const friendsSectionElement = document.getElementById("friends-section");
 const chatSectionElement = document.getElementById("chat-section");
+const signUpInSectionElement = document.getElementById("sign-up-in-section");
 
 //send events to server
-chatSectionElement.querySelector("form").addEventListener("submit", sendMessage);
+chatSectionElement
+  .querySelector("form")
+  .addEventListener("submit", sendMessage);
 
 //on socket opening / connection on
 socket.on("connect", function () {

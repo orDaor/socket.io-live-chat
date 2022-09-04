@@ -1,3 +1,41 @@
+//display sign up/in form
+function displaySignUpInForm(action) {
+  //the form to be creating can only be used for logging in or signin up
+  if (action !== "Login" && action !== "Signup") {
+    return;
+  }
+
+  //create and display the form
+  signUpInSectionElement.style.display = "block";
+  signUpInSectionElement.innerHTML = getHtmlContentSignUpInForm(action);
+  let authenticationProcess;
+  if (action === "Login") {
+    authenticationProcess = login;
+  } else if (action === "Signup") {
+    authenticationProcess = signup;
+  }
+  signUpInSectionElement
+    .querySelector("form")
+    .addEventListener("submit", authenticationProcess);
+  //DELETE below !! !
+  hideFriendsSection();
+  hideChatSection();
+}
+
+//hide sign up/in form
+function hideSignUpInForm() {
+  signUpInSectionElement.textContent = "";
+  signUpInSectionElement.style.display = "none";
+}
+
+//display error info on authentication form
+function displayAuthErrorInfo(info) {
+  const errorInfoElement = document.createElement("p");
+  errorInfoElement.classList.add("auth-error-info");
+  errorInfoElement.textContent = info;
+  signUpInSectionElement.querySelector("form").prepend(errorInfoElement);
+}
+
 //scroll to the bottom of the chat list
 function scrollToBottomOfMessagesList() {
   const messagesListElement = chatSectionElement.querySelector("ul");
@@ -6,6 +44,16 @@ function scrollToBottomOfMessagesList() {
     left: 0,
     behavior: "smooth",
   });
+}
+
+//hide friends section
+function hideFriendsSection() {
+  friendsSectionElement.style.display = "none";
+}
+
+//display friends section
+function displayFriendsSection() {
+  riendsSectionElement.style.display = "block";
 }
 
 //display chat section

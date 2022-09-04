@@ -1,0 +1,48 @@
+#sign-up-in-section {
+  width: 90%;
+  margin: 4rem auto;
+  text-align: center;
+}
+
+#sign-up-in-section p {
+  margin: 1.5rem auto;
+}
+
+#sign-up-in-section label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-weight: bold;
+}
+
+#sign-up-in-section input {
+  outline: none;
+  font: inherit;
+  padding: 0.75rem;
+}
+
+#sign-up-in-section button {
+  font: inherit;
+  border-radius: 70px;
+  border: 1px solid rgb(202, 201, 201);
+  background-color: rgb(226, 243, 254);
+  padding: 1rem;
+  cursor: pointer;
+}
+
+.auth-error-info {
+    background-color: rgb(238, 164, 164);
+    padding: 1rem;
+    border-radius: 6px;
+}
+
+@media (min-width: 480px) {
+    .auth-error-info {
+        max-width: 60%;
+    }
+}
+
+@media (min-width: 768px) {
+    .auth-error-info {
+        max-width: 40%;
+    }
+}
