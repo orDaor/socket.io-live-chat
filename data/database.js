@@ -21,7 +21,7 @@ async function connect() {
   const client = await MongoClient.connect(mongodbUrl);
   //get access to specific database hosted in the DB server, even if it does not exist yet (it
   //will be created with first queries)
-  database = client.db("socketio-live-chat");
+  database = client.db("socket.io-live-chat");
 }
 
 function getDb() {
