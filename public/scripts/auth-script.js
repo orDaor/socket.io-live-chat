@@ -10,10 +10,12 @@ async function login(event) {
   };
 
   //config ajax request for log in
-  const requestUrl = `/login`;
+  const requestUrl = `/user/login`;
   const requestConfig = {
     headers: {
+      Accept: "application/json",
       "Content-Type": "application/json",
+      "CSRF-Token": csrfToken,
     },
     method: "POST",
     boddy: JSON.stringify(userLoginData),
@@ -57,10 +59,12 @@ async function signup(event) {
   };
 
   //config ajax request for log in
-  const requestUrl = `/signup`;
+  const requestUrl = `/user/signup`;
   const requestConfig = {
     headers: {
+      Accept: "application/json",
       "Content-Type": "application/json",
+      "CSRF-Token": csrfToken,
     },
     method: "POST",
     boddy: JSON.stringify(userSignupData),

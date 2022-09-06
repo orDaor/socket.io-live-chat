@@ -1,11 +1,8 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Socket.IO Chat</title>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="/styles/base.css" />
+    <%- include("includes/head", {pageTitle: "Socket.IO Chat"}) %>
+    <meta name="csrf-token" content="<%= locals.csrfToken %>">
     <link rel="stylesheet" href="/styles/chat.css" />
     <link rel="stylesheet" href="/styles/auth.css" />
     <script src="/socket.io/socket.io.js" defer></script>
@@ -25,83 +22,9 @@
       <p>Built with Node.js, Socket.IO and MongoDB</p>
     </header>
     <main>
-      <section id="sign-up-in-section"></section>
-      <section id="friends-section">
-        <ul>
-          <li class="friend-chat-item"><p>Friend 1</p></li>
-          <li class="friend-chat-item"><p>Friend 2</p></li>
-          <li class="friend-chat-item"><p>Friend 3</p></li>
-          <li class="friend-chat-item"><p>Friend 3</p></li>
-          <li class="friend-chat-item"><p>Friend 3</p></li>
-          <li class="friend-chat-item"><p>Friend 3</p></li>
-          <li class="friend-chat-item"><p>Friend 3</p></li>
-          <li class="friend-chat-item"><p>Friend 3</p></li>
-          <li class="friend-chat-item"><p>Friend 3</p></li>
-          <li class="friend-chat-item"><p>Friend 3</p></li>
-          <li class="friend-chat-item"><p>Friend 3</p></li>
-          <li class="friend-chat-item"><p>Friend 3</p></li>
-          <li class="friend-chat-item"><p>Friend 3</p></li>
-          <li class="friend-chat-item"><p>Friend 3</p></li>
-          <li class="friend-chat-item"><p>Friend 3</p></li>
-          <li class="friend-chat-item"><p>Friend 3</p></li>
-          <li class="friend-chat-item"><p>Friend 3</p></li>
-          <li class="friend-chat-item"><p>Friend 3</p></li>
-          <li class="friend-chat-item"><p>Friend 3</p></li>
-          <li class="friend-chat-item"><p>Friend 3</p></li>
-          <li class="friend-chat-item"><p>Friend 3</p></li>
-          <li class="friend-chat-item"><p>Friend 3</p></li>
-          <li class="friend-chat-item"><p>Friend 3</p></li>
-          <li class="friend-chat-item"><p>Friend 3</p></li>
-          <li class="friend-chat-item"><p>Friend 3</p></li>
-          <li class="friend-chat-item"><p>Friend 3</p></li>
-          <li class="friend-chat-item"><p>Friend 3</p></li>
-          <li class="friend-chat-item"><p>Friend 3</p></li>
-        </ul>
-      </section>
-      <section id="chat-section">
-        <div class="active-friends">
-          <p>Active Friend Name</p>
-        </div>
-        <ul>
-          <li class="message-item message-item-left">
-            <p><span> is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s,
-              when an unknown printer took a galley of type and scrambled it to make a type specimen book.</span></p>
-          </li>
-          <li class="message-item message-item-right">
-            <p><span> is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s,
-              when an unknown printer took a galley of type and scrambled it to make a type specimen book.</span></p>
-          </li>
-          <li class="message-item message-item-left">
-            <p><span> is simply dummy text of the printing and typesetting industry.
-              Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.</span></p>
-          </li>
-          <li class="message-item message-item-left">
-            <p><span> is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.</span></p>
-          </li>
-          <li class="message-item message-item-left">
-            <p><span> is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's
-              standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it
-              
-              to make a type specimen book.</span></p>
-          </li>
-          <li class="message-item message-item-right">
-            <p><span> is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.</span></p>
-          </li>
-          <li class="message-item message-item-left">
-            <p><span> is simply dummy text of the printing and typesetting industry.
-                                    
-              
-              Lorem Ipsum has been the industry's                         standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.</span></p>
-          </li>
-          <li class="message-item message-item-right">
-            <p><span> is simply dummy text of the printing and typesetting                    industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. </span></p>
-          </li>
-        </ul>
-        <form class="chat-actions">
-          <textarea name="message" rows="1" required></textarea>
-          <button>Send</button>
-        </form>
-      </section>
+      <%- include("includes/friends-section") %>
+      <%- include("includes/friends-section") %>
+      <%- include("includes/chat-section") %>
     </main>
   </body>
 </html>

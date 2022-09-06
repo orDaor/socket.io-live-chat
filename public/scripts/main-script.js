@@ -1,3 +1,6 @@
+//CSRF token
+const csrfToken = document.querySelector('meta[name="csrf-token"]').content;
+
 //create socket, for which the client does not automatically send a request
 //to the server for opening it
 const socketConfig = {

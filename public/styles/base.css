@@ -22,6 +22,12 @@ body {
     margin-bottom: 0;
     font-weight: bold;
   }
+
+  #main-header a {
+    color: black;
+    font-weight: bold;
+  }
+
   
   ul {
     list-style: none;

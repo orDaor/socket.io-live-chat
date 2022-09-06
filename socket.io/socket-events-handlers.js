@@ -1,5 +1,3 @@
-const messagesCrudOps = require("../messages/messages-crud-ops");
-
 //when a websocket connection is dropped, execute this function
 function onDisconnect(reason) {
   console.log(`User disconnected because: ${reason}`);
