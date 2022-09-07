@@ -1,36 +1,148 @@
+html {
+  --font-size-0: 0.8rem;
+  --font-size-1: 1rem;
+  --font-size-2: 1.2rem;
+  --font-size-3: 1.4rem;
+  --font-size-4: 1.6rem;
+  --font-size-5: 1.8rem;
+  --font-size-6: 2rem;
+  --font-size-7: 2.3rem;
+  --font-size-8: 2.5rem;
+
+  --color-primary-100: rgb(249, 253, 255);
+  --color-primary-200: rgb(198, 233, 255);
+  --color-primary-300: rgb(176, 222, 255);
+  --color-primary-400: rgb(154, 215, 255);
+  --color-primary-500: rgb(131, 205, 255);
+  --color-primary-600: rgb(105, 195, 255);
+  --color-primary-700: rgb(84, 187, 255);
+
+  --color-grey-100: rgb(205, 205, 205);
+  --color-grey-200: rgb(139, 139, 139);
+  --color-grey-300: rgb(84, 84, 84);
+  --color-grey-500: rgb(64, 64, 64);
+  --color-grey-600: rgb(44, 44, 44);
+
+  --color-error-message: rgb(244, 158, 158);
+
+  --friends-section-width-1: 80%;
+  --friends-section-width-2: 15rem;
+
+  --friends-chat-section-from-top-1: 13rem;
+  --friends-chat-section-from-top-2: 11.5rem;
+
+  --friends-chat-section-from-left-right: 15%;
+}
+
 body {
-    margin: 0;
-    font-family: Arial, sans-serif;
-    box-sizing: border-box;
-  }
-  
-  #main-header {
-    padding: 2rem;
-    margin: 0;
-    text-align: center;
-    box-sizing: border-box;
-    background-color: rgb(175, 219, 250);
-  }
-  
+  background-color: var(--color-primary-100);
+  margin: 0;
+  font-family: "Open-Sans", sans-serif;
+  box-sizing: border-box;
+  color: var(--color-grey-600);
+  font-size: var(--font-size-1);
+}
+
+#main-header {
+  padding: 2rem;
+  margin: 0;
+  text-align: center;
+  box-sizing: border-box;
+  background-color: var(--color-primary-300);
+}
+
+#main-header h1 {
+  margin-top: 0;
+  margin-bottom: 1.3rem;
+  font-size: var(--font-size-3);
+  font-weight: bold;
+}
+
+#main-header p {
+  margin-top: 1rem;
+  margin-bottom: 0;
+  font-size: var(--font-size-1);
+}
+
+#main-header a {
+  color: black;
+  font-weight: bold;
+}
+
+ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.btn {
+  font: inherit;
+  padding: 1rem;
+  background-color: var(--color-primary-200);
+  border: 1px solid var(--color-primary-200);
+  color: var(--color-grey-600);
+  border-radius: 70px;
+  cursor: pointer;
+  font-size: var(--font-size-2);
+  width: 10rem;
+}
+
+.btn-alt {
+  background-color: white;
+  border-color: white;
+}
+
+@media (min-width: 480px) {
   #main-header h1 {
-    margin-top: 0;
-    margin-bottom: 1rem;
+    font-size: var(--font-size-4);
   }
-  
+}
+
+@media (min-width: 768px) {
+  #main-header h1 {
+    font-size: var(--font-size-5);
+  }
+
   #main-header p {
-    margin-top: 1rem;
-    margin-bottom: 0;
-    font-weight: bold;
+    font-size: var(--font-size-2);
+  }
+}
+
+@media (min-width: 1024px) {
+  #main-header h1 {
+    font-size: var(--font-size-6);
   }
 
-  #main-header a {
-    color: black;
-    font-weight: bold;
+  #main-header p {
+    font-size: var(--font-size-3);
+  }
+}
+
+/* target all devices which can be hovered */
+@media (hover: hover) {
+  .btn:hover {
+    background-color: var(--color-primary-400);
+    border-color: var(--color-primary-400);
   }
 
-  
-  ul {
-    list-style: none;
-    margin: 0;
-    padding: 0;
+  .btn-alt:hover {
+    background-color: var(--color-primary-100);
+    border-color: var(--color-primary-100);
   }
+
+  .btn:disabled {
+    background-color: var(--color-primary-200);
+    border-color: var(--color-primary-200);
+    cursor: default;
+  }
+
+  .btn-alt:disabled {
+    background-color: white;
+    border-color: white;
+    cursor: default;
+  }
+}
+
+/* target all devices which can NOT be hovered */
+@media (hover: none) {
+}

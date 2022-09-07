@@ -1,9 +1,9 @@
 #friends-section {
   text-align: center;
   position: fixed;
-  width: 80%;
-  left: calc(50% - 40%);
-  top: 13rem;
+  width: var(--friends-section-width-1);
+  left: calc(50% - var(--friends-section-width-1) / 2);
+  top: var(--friends-chat-section-from-top-1);
   bottom: 0;
   display: block;
 }
@@ -32,7 +32,7 @@
   position: fixed;
   left: 0;
   right: 0;
-  top: 13rem;
+  top: var(--friends-chat-section-from-top-1);
   bottom: 0;
 }
 
@@ -40,7 +40,7 @@
   box-sizing: border-box;
   margin: 0;
   padding: 0 2rem;
-  height: 13%;
+  height: 15%;
 }
 
 .active-friends p {
@@ -55,7 +55,7 @@
 #chat-section ul {
   padding: 1.5rem 2rem;
   box-sizing: border-box;
-  height: 67%;
+  height: 65%;
   overflow: auto;
 }
 
@@ -156,27 +156,30 @@
 
 @media (min-width: 768px) {
   #friends-section {
-    width: 15rem;
+    width: var(--friends-section-width-2);
     text-align: left;
     left: 0;
-    top: 11.5rem;
+    top: var(--friends-chat-section-from-top-2);
   }
 
   #chat-section {
     display: flex;
-    left: 15rem;
-    top: 11.5rem;
+    left: var(--friends-section-width-2);
+    top: var(--friends-chat-section-from-top-2);
   }
 }
 
 @media (min-width: 1024px) {
   #friends-section {
-    margin-left: 15%;
+    margin-left: var(--friends-chat-section-from-left-right);
   }
 
   #chat-section {
-    margin-right: 15%;
-    left: calc(15rem + 15%);
+    margin-right: var(--friends-chat-section-from-left-right);
+    left: calc(
+      var(--friends-section-width-2) +
+        var(--friends-chat-section-from-left-right)
+    );
   }
 }
 

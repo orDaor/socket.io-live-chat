@@ -8,13 +8,13 @@ const htmlContentEditMessageIcon = `<svg xmlns="http://www.w3.org/2000/svg" heig
 function getHtmlContentSignUpInForm(action) {
   return `<form>
   <p>
-    <label for="Nickname">Name</label>
+    <label for="Nickname">Your Name</label>
     <input type="text" id="username" name="username" required>
   </p>
   <p>
     <label for="password">Password</label>
     <input type="password" id="password" name="password" required>
   </p>
-  <button>${action}</button>
+  <button class="btn">${action}</button>
   </form>`;
 }
