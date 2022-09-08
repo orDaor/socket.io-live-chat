@@ -58,11 +58,6 @@ function displayOneMessage(
   }
 }
 
-function setActiveFriendId(friendId) {
-  chatSectionElement.querySelector(".active-friends").dataset.friendId =
-    friendId;
-}
-
 //display array of messages received on the socket
 function displayAllMessages(messages) {
   const activeFriendElement =

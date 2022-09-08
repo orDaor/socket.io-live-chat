@@ -10,6 +10,7 @@ html {
   --font-size-8: 2.5rem;
 
   --color-primary-100: rgb(249, 253, 255);
+  --color-primary-150: rgb(226, 243, 254);
   --color-primary-200: rgb(198, 233, 255);
   --color-primary-300: rgb(176, 222, 255);
   --color-primary-400: rgb(154, 215, 255);
@@ -23,7 +24,8 @@ html {
   --color-grey-500: rgb(64, 64, 64);
   --color-grey-600: rgb(44, 44, 44);
 
-  --color-error-message: rgb(244, 158, 158);
+  --color-error-box: rgb(244, 158, 158);
+  --color-error-text: rgb(122, 23, 23);
 
   --friends-section-width-1: 80%;
   --friends-section-width-2: 15rem;
@@ -32,6 +34,13 @@ html {
   --friends-chat-section-from-top-2: 11.5rem;
 
   --friends-chat-section-from-left-right: 15%;
+
+  --friends-selection-border-radius: 12px;
+
+  --friend-status-online:  rgb(29, 245, 29);
+  --friend-status-offline: var(--color-grey-200);
+
+  --friend-status-dimension: 10px;
 }
 
 body {
@@ -48,7 +57,7 @@ body {
   margin: 0;
   text-align: center;
   box-sizing: border-box;
-  background-color: var(--color-primary-300);
+  background-color: var(--color-primary-400);
 }
 
 #main-header h1 {

@@ -91,6 +91,10 @@ function displayOneMessageErrorInfo(messageId, info) {
   const messages = document.querySelectorAll(".message-item");
   for (const message of messages) {
     if (message.dataset.messageId === messageId) {
+      //add a line break before the error info
+      const lineBreakELement = document.createElement("p");
+      lineBreakELement.classList.add("line-break-control");
+      message.append(lineBreakELement);
       //find the message and add below it the error info
       const errorTextElement = document.createElement("p");
       errorTextElement.classList.add("message-item-error");

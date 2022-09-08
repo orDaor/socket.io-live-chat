@@ -32,7 +32,7 @@
 
 .auth-error-info {
   box-sizing: border-box;
-  background-color: var(--color-error-message);
+  background-color: var(--color-error-box);
   padding: 1rem;
   border-radius: 6px;
   width: 80%;

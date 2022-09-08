@@ -1,0 +1,118 @@
+#friends-section {
+  text-align: center;
+  position: fixed;
+  width: var(--friends-section-width-1);
+  left: calc(50% - var(--friends-section-width-1) / 2);
+  top: var(--friends-chat-section-from-top-1);
+  bottom: 0;
+  display: block;
+}
+
+#friends-section ul {
+  padding: 1rem 1rem;
+  max-height: 80%;
+  overflow: auto;
+  direction: ltr;
+  background-color: var(--color-primary-150);
+  border-radius: 12px;
+}
+
+.friend-chat-item {
+  padding: 0.75rem;
+  margin: 0.25rem 0;
+  cursor: pointer;
+  border: 5px solid transparent;
+  border-radius: var(--friends-selection-border-radius);
+  display: flex;
+  gap: 0.5rem;
+  justify-content: start;
+  align-items: center;
+}
+
+.friend-chat-item p {
+  margin: 0;
+}
+
+.friend-chat-item p.friend-chat-name {
+  font-size: var(--font-size-1);
+}
+
+.friend-chat-item p.friend-chat-status,
+.active-friends p.friend-chat-status {
+    margin: 0;
+    padding: 0;
+    width: var(--friend-status-dimension);
+    height: var(--friend-status-dimension);
+    border-radius: 100%;
+    border: none;
+  }
+
+.friend-chat-item p.friend-chat-status-online,
+.active-friends p.friend-chat-status-online {
+    background-color: var(--friend-status-online);
+}
+
+.friend-chat-item p.friend-chat-status-offline,
+.active-friends p.friend-chat-status-offline {
+    background-color: var(--friend-status-offline);
+}
+
+.friend-chat-item-selected {
+  border-color: var(--color-primary-500);
+  font-weight: bold;
+}
+
+.active-friends {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0 2rem;
+  height: 15%;
+}
+
+.active-friends .active-friends-content {
+  border: 5px solid var(--color-primary-500);
+  background-color: var(--color-primary-150);
+  margin: 0;
+  padding: 1rem 1rem;
+  display: inline-block;
+  border-radius: var(--friends-selection-border-radius);
+  font-weight: bold;
+  font-size: var(--font-size-1);
+}
+
+.active-friends .one-active-friend {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.active-friends p {
+    margin: 0;
+    padding: 0;
+}
+
+@media (min-width: 768px) {
+  #friends-section {
+    width: var(--friends-section-width-2);
+    text-align: left;
+    left: 0;
+    top: var(--friends-chat-section-from-top-2);
+  }
+}
+
+@media (min-width: 1024px) {
+  #friends-section {
+    margin-left: var(--friends-chat-section-from-left-right);
+  }
+}
+
+/* target all devices which can be hovered */
+@media (hover: hover) {
+  .friend-chat-item:hover {
+    border-color: var(--color-primary-500);
+  }
+}
+
+/* target all devices which can NOT be hovered */
+@media (hover: none) {
+}
