@@ -29,8 +29,9 @@ html {
 
   --friends-section-width-1: 80%;
   --friends-section-width-2: 15rem;
+  --friends-section-width-3: 60%;
 
-  --friends-chat-section-from-top-1: 13rem;
+  --friends-chat-section-from-top-1: 12rem;
   --friends-chat-section-from-top-2: 11.5rem;
 
   --friends-chat-section-from-left-right: 15%;

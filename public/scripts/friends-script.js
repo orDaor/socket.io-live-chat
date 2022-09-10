@@ -142,12 +142,72 @@ function setOneFriendOnlineStatus(friendId, isOnline) {
         friendChatStatusElement.classList.remove("friend-chat-status-online");
       }
       //if this element is also selected, then update accordlingly active friend status as well
-      if (
-        friend.classList.contains("friend-chat-item-selected")
-      ) {
+      if (friend.classList.contains("friend-chat-item-selected")) {
         setActiveFriendOnlineStatus(friendChatStatusElement);
       }
       return;
     }
   }
+}
+
+//request a link for inviting a friend
+function getInvitationLink() {
+  console.log("Ask the server to give me an invitation link...");
+}
+
+//display invitaion link
+function displayInvitationLink(linkText) {
+  const invitationLinkContainerElement = document.createElement("div");
+  invitationLinkContainerElement.classList.add("invitation-link");
+  const invitationLinkInputElement = document.createElement("input");
+  const invitationLinkActionsContainerElement = document.createElement("div");
+  invitationLinkActionsContainerElement.classList.add(
+    "invitation-link-actions"
+  );
+  const shareLinkButtonElement = document.createElement("button");
+  const hideInvitationLinkButtonElement = document.createElement("button");
+
+  //link input
+  invitationLinkInputElement.type = "text";
+  invitationLinkInputElement.readOnly = true;
+  if (linkText) {
+    invitationLinkInputElement.value = linkText;
+  } else {
+    invitationLinkInputElement.value = "https://linkforyourfriend";
+  }
+
+  //share link button
+  shareLinkButtonElement.textContent = "Share";
+
+  //button for closing the link
+  hideInvitationLinkButtonElement.textContent = "x";
+  hideInvitationLinkButtonElement.addEventListener("click", hideInvitationLink);
+
+  //append content
+  invitationLinkContainerElement.append(invitationLinkInputElement);
+  invitationLinkActionsContainerElement.append(shareLinkButtonElement);
+  invitationLinkActionsContainerElement.append(hideInvitationLinkButtonElement);
+  invitationLinkContainerElement.append(invitationLinkActionsContainerElement);
+
+  friendsSectionElement
+    .querySelector(".friends-control")
+    .append(invitationLinkContainerElement);
+}
+
+//hide invitation link
+function hideInvitationLink() {
+  const invitationLinkElement = friendsSectionElement.querySelector(
+    ".friends-control .invitation-link"
+  );
+  if (invitationLinkElement) {
+    invitationLinkElement.parentElement.removeChild(invitationLinkElement);
+  }
+}
+
+//set counter of new messages
+function setNewMessagesCount(count) {
+  const newMessagesCount = friendsSectionElement.querySelector(
+    ".friends-control .new-messages-count"
+  );
+  newMessagesCount.textContent = count;
 }

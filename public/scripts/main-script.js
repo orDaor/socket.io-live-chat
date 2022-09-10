@@ -10,8 +10,12 @@ const socket = io(socketConfig);
 
 //access DOM elements
 const friendsSectionElement = document.getElementById("friends-section");
+const addFriendButtonElement = document.querySelector("#friends-section .friends-control .friends-actions button");
 const chatSectionElement = document.getElementById("chat-section");
 const signUpInSectionElement = document.getElementById("sign-up-in-section");
+
+//standard event listeners
+addFriendButtonElement.addEventListener("click", getInvitationLink);
 
 //send events to server
 chatSectionElement

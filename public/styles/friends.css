@@ -8,11 +8,62 @@
   display: block;
 }
 
+.friends-control {
+  margin-bottom: 1rem;
+  padding: 1rem;
+  border-radius: 12px;
+  background-color: var(--color-primary-150);
+}
+
+.friends-control button {
+  font: inherit;
+  padding: 0;
+  margin: 0;
+  border: none;
+  background-color: transparent;
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.friends-control .friends-actions {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.friends-control .friends-actions p {
+  padding: 0;
+  margin: 0;
+}
+
+.friends-control .invitation-link {
+  margin-top: 0.75rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.friends-control .invitation-link input {
+  font: inherit;
+  border: none;
+  margin: 0;
+  padding: 0;
+  background-color: white;
+  text-align: left;
+  border: 1px solid var(--color-grey-100);
+  width: 50%;
+}
+
+.friends-control .invitation-link .invitation-link-actions {
+  display: flex;
+  gap: 1.5rem;
+}
+
 #friends-section ul {
-  padding: 1rem 1rem;
+  padding: 0 1rem;
   max-height: 80%;
   overflow: auto;
-  direction: ltr;
+  direction: rtl;
   background-color: var(--color-primary-150);
   border-radius: 12px;
 }
@@ -24,8 +75,9 @@
   border: 5px solid transparent;
   border-radius: var(--friends-selection-border-radius);
   display: flex;
+  flex-direction: row-reverse;
   gap: 0.5rem;
-  justify-content: start;
+  /* justify-content: center; */
   align-items: center;
 }
 
@@ -39,22 +91,22 @@
 
 .friend-chat-item p.friend-chat-status,
 .active-friends p.friend-chat-status {
-    margin: 0;
-    padding: 0;
-    width: var(--friend-status-dimension);
-    height: var(--friend-status-dimension);
-    border-radius: 100%;
-    border: none;
-  }
+  margin: 0;
+  padding: 0;
+  width: var(--friend-status-dimension);
+  height: var(--friend-status-dimension);
+  border-radius: 100%;
+  border: none;
+}
 
 .friend-chat-item p.friend-chat-status-online,
 .active-friends p.friend-chat-status-online {
-    background-color: var(--friend-status-online);
+  background-color: var(--friend-status-online);
 }
 
 .friend-chat-item p.friend-chat-status-offline,
 .active-friends p.friend-chat-status-offline {
-    background-color: var(--friend-status-offline);
+  background-color: var(--friend-status-offline);
 }
 
 .friend-chat-item-selected {
@@ -81,14 +133,26 @@
 }
 
 .active-friends .one-active-friend {
-    display: flex;
-    align-items: center;
-    gap: 1rem;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
 }
 
 .active-friends p {
-    margin: 0;
-    padding: 0;
+  margin: 0;
+  padding: 0;
+}
+
+@media (min-width: 480px) {
+  #friends-section {
+    width: var(--friends-section-width-3);
+    left: calc(50% - var(--friends-section-width-3) / 2);
+  }
+
+  #friends-section-control {
+    justify-content: center;
+    gap: 6rem;
+  }
 }
 
 @media (min-width: 768px) {
@@ -97,6 +161,11 @@
     text-align: left;
     left: 0;
     top: var(--friends-chat-section-from-top-2);
+  }
+
+  #friends-section-control {
+    justify-content: space-around;
+    gap: 0;
   }
 }
 

@@ -104,6 +104,7 @@
   outline: none;
   border-radius: 70px;
   border: 1px solid var(--color-grey-100);
+  overflow: auto;
 }
 
 .chat-actions button {
@@ -112,9 +113,6 @@
   font: inherit;
   cursor: pointer;
   height: 3.25rem;
-  border-radius: 70px;
-  border: 1px solid rgb(202, 201, 201);
-  background-color: rgb(226, 243, 254);
 }
 
 @media (min-width: 768px) {
