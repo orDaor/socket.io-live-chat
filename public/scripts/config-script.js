@@ -1,3 +1,15 @@
+//display friends section on desktop
+function displayFriendsAndChatSectionOnWidhtChaange(event) {
+  //window >= 768px
+  if (window.innerWidth >= 768) {
+    displayFriendsSection();
+    displayChatSection();
+  } else {
+    displayFriendsSection();
+    hideChatSection();
+  }
+}
+
 //display sign up/in form
 function displaySignUpInForm(action) {
   //the form to be creating can only be used for logging in or signin up
@@ -53,7 +65,7 @@ function hideFriendsSection() {
 
 //display friends section
 function displayFriendsSection() {
-  riendsSectionElement.style.display = "block";
+  friendsSectionElement.style.display = "block";
 }
 
 //display chat section
@@ -64,6 +76,12 @@ function displayChatSection() {
 //hide chat section
 function hideChatSection() {
   chatSectionElement.style.display = "none";
+}
+
+//display the friends list and hide chat
+function displayFriendsAndHideChat() {
+  displayFriendsSection();
+  hideChatSection();
 }
 
 //display message action opions (delete, resend...)
@@ -114,7 +132,10 @@ function hideOneMessageErrorInfo(messageId) {
     if (message.dataset.messageId === messageId) {
       //find the message and remove its error info
       const messageItemError = message.querySelector(".message-item-error");
-      messageItemError.parentElement.removeChild(messageItemError);
+      message.removeChild(messageItemError);
+      //remove also line break
+      const lineBreak = message.querySelector(".line-break-control");
+      message.removeChild(lineBreak);
       return;
     }
   }

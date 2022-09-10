@@ -1,6 +1,7 @@
 html {
   --font-size-0: 0.8rem;
   --font-size-1: 1rem;
+  --font-size-1-5: 1.1rem;
   --font-size-2: 1.2rem;
   --font-size-3: 1.4rem;
   --font-size-4: 1.6rem;
@@ -28,7 +29,7 @@ html {
   --color-error-text: rgb(122, 23, 23);
 
   --friends-section-width-1: 80%;
-  --friends-section-width-2: 15rem;
+  --friends-section-width-2: 20rem;
   --friends-section-width-3: 60%;
 
   --friends-chat-section-from-top-1: 12rem;
@@ -75,7 +76,6 @@ body {
 }
 
 #main-header a {
-  color: black;
   font-weight: bold;
 }
 
@@ -136,8 +136,8 @@ ul {
   }
 
   .btn-alt:hover {
-    background-color: var(--color-primary-100);
-    border-color: var(--color-primary-100);
+    background-color: var(--color-primary-200);
+    border-color: var(--color-primary-200);
   }
 
   .btn:disabled {

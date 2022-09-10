@@ -10,12 +10,17 @@ const socket = io(socketConfig);
 
 //access DOM elements
 const friendsSectionElement = document.getElementById("friends-section");
-const addFriendButtonElement = document.querySelector("#friends-section .friends-control .friends-actions button");
+const addFriendButtonElement = document.querySelector(".friends-control .add-friend-btn");
+const logOutButtonElement = document.querySelector(".friends-control .log-out-btn");
 const chatSectionElement = document.getElementById("chat-section");
 const signUpInSectionElement = document.getElementById("sign-up-in-section");
+const backToFriendsPageButton = document.querySelector(".active-friends .back-to-friends-page");
 
 //standard event listeners
+window.addEventListener("resize", displayFriendsAndChatSectionOnWidhtChaange);
 addFriendButtonElement.addEventListener("click", getInvitationLink);
+logOutButtonElement.addEventListener("click", logout);
+backToFriendsPageButton.addEventListener("click", displayFriendsAndHideChat);
 
 //send events to server
 chatSectionElement

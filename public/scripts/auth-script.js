@@ -1,3 +1,8 @@
+//log out
+async function logout(event) {
+  console.log("Should be logging out...");
+}
+
 //ajax request for requesting login
 async function login(event) {
   event.preventDefault();

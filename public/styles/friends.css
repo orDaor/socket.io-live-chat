@@ -6,6 +6,7 @@
   top: var(--friends-chat-section-from-top-1);
   bottom: 0;
   display: block;
+  color: var(--color-grey-500);
 }
 
 .friends-control {
@@ -23,6 +24,7 @@
   background-color: transparent;
   text-decoration: underline;
   cursor: pointer;
+  color: inherit;
 }
 
 .friends-control .friends-actions {
@@ -34,6 +36,12 @@
 .friends-control .friends-actions p {
   padding: 0;
   margin: 0;
+}
+
+.friends-control .friends-actions-buttons {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
 }
 
 .friends-control .invitation-link {
@@ -52,6 +60,7 @@
   text-align: left;
   border: 1px solid var(--color-grey-100);
   width: 50%;
+  color: inherit;
 }
 
 .friends-control .invitation-link .invitation-link-actions {
@@ -76,8 +85,14 @@
   border-radius: var(--friends-selection-border-radius);
   display: flex;
   flex-direction: row-reverse;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.friend-chat-item .friend-chat-main-info {
+  display: flex;
+  flex-direction: row-reverse;
   gap: 0.5rem;
-  /* justify-content: center; */
   align-items: center;
 }
 
@@ -86,7 +101,7 @@
 }
 
 .friend-chat-item p.friend-chat-name {
-  font-size: var(--font-size-1);
+  font-size: var(--font-size-2);
 }
 
 .friend-chat-item p.friend-chat-status,
@@ -114,11 +129,30 @@
   font-weight: bold;
 }
 
+.friend-chat-item-unread {
+  font-weight: bold;
+}
+
 .active-friends {
   box-sizing: border-box;
   margin: 0;
   padding: 0 2rem;
   height: 15%;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+}  
+
+.active-friends button {
+  margin: 0;
+  padding: 0;
+  border: none;
+  font: inherit;
+  background-color: transparent;
+  text-decoration: underline;
+  cursor: pointer;
+  border: 5px solid transparent;
+  color: var(--color-grey-600);
 }
 
 .active-friends .active-friends-content {
@@ -129,13 +163,19 @@
   display: inline-block;
   border-radius: var(--friends-selection-border-radius);
   font-weight: bold;
-  font-size: var(--font-size-1);
+  font-size: var(--font-size-2);
+  color: var(--color-grey-500);
 }
 
 .active-friends .one-active-friend {
   display: flex;
   align-items: center;
   gap: 1rem;
+}
+
+.active-friends .back-to-friends-page {
+  align-self: flex-start;
+  color: var(--color-grey-500);
 }
 
 .active-friends p {
@@ -166,6 +206,10 @@
   #friends-section-control {
     justify-content: space-around;
     gap: 0;
+  }
+
+  .active-friends .back-to-friends-page {
+    display: none;
   }
 }
 

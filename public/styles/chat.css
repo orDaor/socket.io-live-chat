@@ -17,6 +17,8 @@
 
 .message-item {
   margin: 2rem auto;
+  color: var(--color-grey-600);
+  font-size: var(--font-size-1-5);
 }
 
 .message-item-left {
@@ -57,6 +59,7 @@
   background-color: white;
   color: var(--color-error-text);
   font-weight: bold;
+  font-size: var(--font-size-1);
 }
 
 .message-item p.line-break-control {
