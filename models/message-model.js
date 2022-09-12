@@ -5,10 +5,17 @@ const ObjectId = require("mongodb").ObjectId;
 const db = require("../data/database");
 
 class Message {
-  constructor(text, recipientId, senderId, messageId) {
+  constructor(text, recipientId, senderId, creationDate, messageId) {
     this.text = text;
     this.recipientId = recipientId;
     this.senderId = senderId;
+
+    if (creationDate) {
+      this.creationDate = creationDate;
+    } else {
+      this.creationDate = new Date(); //now
+    }
+
     if (messageId) {
       this.messageId = messageId.toString();
     }
@@ -20,6 +27,7 @@ class Message {
       document.text,
       document.recipientId,
       document.senderId,
+      document.creationDate,
       document._id
     );
   }

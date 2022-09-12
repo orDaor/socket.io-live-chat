@@ -1,10 +1,5 @@
-//when a websocket connection is dropped, execute this function
-function onDisconnect(reason) {
-  console.log(`User disconnected because: ${reason}`);
-}
-
-//create a new message in the DB and broadcast it to all other sockets
-async function onMessageSend(socket, message, sendAck) {
+//send a message
+async function onSend(socket, message, sendAck) {
   let eventAck = {};
   const senderId = socket.id;
   let result = await messagesCrudOps.save(message, senderId);
@@ -32,8 +27,8 @@ async function onMessageSend(socket, message, sendAck) {
   // console.log(eventAck);
 }
 
-//read messages from DB
-async function onMessageRead(socket, sendAck) {
+//read messages
+async function onRead(socket, emptyObj, sendAck) {
   let eventAck = {};
   let result = await messagesCrudOps.read();
   // result = null;
@@ -53,8 +48,8 @@ async function onMessageRead(socket, sendAck) {
   // console.log(eventAck);
 }
 
-//delete a message from the DB
-async function onMessageDelete(socket, messageId, sendAck) {
+//delete a message
+async function onDelete(socket, messageId, sendAck) {
   let eventAck = {};
   let result = await messagesCrudOps.remove(messageId);
   // result = null;
@@ -80,8 +75,7 @@ async function onMessageDelete(socket, messageId, sendAck) {
 
 //exports
 module.exports = {
-  onDisconnect: onDisconnect,
-  onMessageSend: onMessageSend,
-  onMessageRead: onMessageRead,
-  onMessageDelete: onMessageDelete,
+  onSend: onSend,
+  onRead: onRead,
+  onDelete: onDelete,
 };

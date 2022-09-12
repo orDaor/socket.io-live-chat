@@ -5,9 +5,16 @@ const ObjectId = require("mongodb").ObjectId;
 const db = require("../data/database");
 
 class User {
-  constructor(name, password, userId) {
+  constructor(name, password, regitrationDate, userId) {
     this.name = name;
     this.password = password;
+
+    if (regitrationDate) {
+      this.regitrationDate = regitrationDate;
+    } else {
+      this.regitrationDate = new Date(); //now
+    }
+
     if (userId) {
       this.userId = userId.toString();
     }
@@ -15,7 +22,12 @@ class User {
 
   //generate User class obj from mongodb document
   static fromMongoDBDocumentToUser(document) {
-    return new User(document.name, document.password, document._id);
+    return new User(
+      document.name,
+      document.password,
+      document.regitrationDate,
+      document._id
+    );
   }
 
   //find a user by its id
