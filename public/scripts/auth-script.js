@@ -1,10 +1,13 @@
 //log out
-async function logout(event) {
+function logout(event) {
   console.log("Should be logging out...");
+  console.log(event.target);
 }
 
 //ajax request for requesting login
 async function login(event) {
+  console.log("login request...");
+
   event.preventDefault();
 
   //get form data
@@ -54,6 +57,8 @@ async function login(event) {
 
 //ajax request for requesting sign up
 async function signup(event) {
+  console.log("signup request...");
+
   event.preventDefault();
 
   //get form data

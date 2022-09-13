@@ -5,19 +5,27 @@ const csrfToken = document.querySelector('meta[name="csrf-token"]').content;
 //to the server for opening it
 const socketConfig = {
   autoConnect: false,
+  reconnection: false,
 };
 const socket = io(socketConfig);
 
 //access DOM elements
-const friendsSectionElement = document.getElementById("friends-section");
-const addFriendButtonElement = document.querySelector(".friends-control .add-friend-btn");
-const logOutButtonElement = document.querySelector(".friends-control .log-out-btn");
-const chatSectionElement = document.getElementById("chat-section");
+const initInfoSectionElement = document.getElementById("init-info-section");
 const signUpInSectionElement = document.getElementById("sign-up-in-section");
-const backToFriendsPageButton = document.querySelector(".active-friends .back-to-friends-page");
+const friendsSectionElement = document.getElementById("friends-section");
+const addFriendButtonElement = document.querySelector(
+  ".friends-control .add-friend-btn"
+);
+const logOutButtonElement = document.querySelector(
+  ".friends-control .log-out-btn"
+);
+const chatSectionElement = document.getElementById("chat-section");
+const backToFriendsPageButton = document.querySelector(
+  ".active-friends .back-to-friends-page"
+);
 
 //standard event listeners
-window.addEventListener("resize", displayFriendsAndChatSectionOnWidhtChaange);
+window.addEventListener("resize", displayFriendsAndChatSectionOnWidhtChange);
 addFriendButtonElement.addEventListener("click", getInvitationLink);
 logOutButtonElement.addEventListener("click", logout);
 backToFriendsPageButton.addEventListener("click", displayFriendsAndHideChat);

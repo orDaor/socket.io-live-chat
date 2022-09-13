@@ -2,6 +2,12 @@
   text-align: center;
 }
 
+#sign-up-in-section h1 {
+  color: inherit;
+  font-weight: 400;
+  font-size: var(--font-size-4);
+}
+
 #sign-up-in-section form {
   width: 90%;
   margin: 4rem auto;
@@ -28,6 +34,16 @@
   text-align: center;
   color: var(--color-grey-300);
   font-size: var(--font-size-2);
+}
+
+#sign-up-in-section button {
+  display: block;
+  margin: 0 auto 0 auto;
+}
+
+#sign-up-in-section .btn-alt {
+  border-color: var(--color-primary-100);
+  background-color: var(--color-primary-100);
 }
 
 .auth-error-info {
@@ -58,6 +74,10 @@
 
 /* target all devices which can be hovered */
 @media (hover: hover) {
+  #sign-up-in-section .btn-alt:hover {
+    background-color: var(--color-primary-100);
+    border-color: var(--color-primary-100);
+  }
 }
 
 /* target all devices which can NOT be hovered */

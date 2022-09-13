@@ -136,8 +136,8 @@ ul {
   }
 
   .btn-alt:hover {
-    background-color: var(--color-primary-200);
-    border-color: var(--color-primary-200);
+    background-color: var(--color-primary-150);
+    border-color: var(--color-primary-150);
   }
 
   .btn:disabled {

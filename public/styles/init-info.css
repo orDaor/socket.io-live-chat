@@ -1,0 +1,62 @@
+.init-info {
+  box-sizing: border-box;
+  text-align: center;
+  background-color: var(--color-primary-150);
+  border-radius: 12px;
+  padding: 2rem;
+}
+
+.init-info h1 {
+  color: inherit;
+  font-weight: 400;
+  font-size: var(--font-size-4);
+}
+
+.init-info a {
+  text-decoration: none;
+}
+
+.init-info {
+  width: 90%;
+  margin: 4rem auto;
+}
+
+.init-info p {
+  margin: 1.5rem auto;
+  white-space: pre-wrap;
+  font-size: var(--font-size-1);
+  color: var(--color-grey-500);
+}
+
+.init-info button {
+  display: block;
+  margin: 0 auto;
+  margin: 1.5rem auto;
+}
+
+.init-info .btn-alt {
+  border-color: var(--color-primary-100);
+  background-color: var(--color-primary-100);
+}
+
+@media (min-width: 480px) {
+  .init-info {
+    width: 80%;
+    max-width: 36rem;
+  }
+}
+
+@media (min-width: 768px) {
+}
+
+/* target all devices which can be hovered */
+@media (hover: hover) {
+  .init-info .btn-alt:hover {
+    background-color: var(--color-primary-100);
+    border-color: var(--color-primary-100);
+  }
+}
+
+/* target all devices which can NOT be hovered */
+@media (hover: none) {
+}

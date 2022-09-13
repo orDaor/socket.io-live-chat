@@ -5,8 +5,18 @@ const htmlContentEditMessageIcon = `<svg xmlns="http://www.w3.org/2000/svg" heig
 />
 </svg>`;
 
-function getHtmlContentSignUpInForm(action) {
+function getHtmlContentSignUpInForm(action, alternativeAction) {
+  let h1ElementTextContent;
+  if (action === "Login") {
+    h1ElementTextContent = "Log in with your account";
+  } else if (action === "Signup") {
+    h1ElementTextContent = "Create a new account";
+  }
+
   return `<form>
+  <h1>
+    ${h1ElementTextContent}
+  </h1>
   <p>
     <label for="Nickname">Your Name</label>
     <input type="text" id="username" name="username" required>
@@ -16,5 +26,22 @@ function getHtmlContentSignUpInForm(action) {
     <input type="password" id="password" name="password" required>
   </p>
   <button class="btn">${action}</button>
+  <button
+    type="button" class="btn btn-alt"
+    onclick="displaySignUpInForm('${alternativeAction}', '${action}')">
+  ${alternativeAction}
+  </button>
   </form>`;
+}
+
+const messagesLoadingErrorInfo = `We were not able to load your messages.
+Please try again by clicking this button or reloading the page!`;
+
+function getHtmlContentInitInfo(info) {
+  return `<div class="init-info">
+  <h1>Something went wrong</h1>
+  <p>${info}</p>
+  <a href="/"><button class="btn">Try Again</button></a>
+  <button class="btn btn-alt" onclick="logout(event)">Logout</button>
+  </div>`;
 }

@@ -1,25 +1,45 @@
-//display friends section on desktop
-function displayFriendsAndChatSectionOnWidhtChaange(event) {
-  //window >= 768px
-  if (window.innerWidth >= 768) {
-    displayFriendsSection();
-    displayChatSection();
-  } else {
-    displayFriendsSection();
-    hideChatSection();
+//display init info
+function disaplayInitInfo(info) {
+  if (!info) {
+    return;
   }
+
+  initInfoSectionElement.style.display = "block";
+  initInfoSectionElement.innerHTML = getHtmlContentInitInfo(info);
+
+  //DELETE below !! !
+  hideFriendsSection();
+  hideChatSection();
+}
+
+// hide init info
+function hideInitInfo() {
+  initInfoSectionElement.textContent = "";
+  initInfoSectionElement.style.display = "none";
 }
 
 //display sign up/in form
 function displaySignUpInForm(action) {
+  hideSignUpInForm();
+
   //the form to be creating can only be used for logging in or signin up
   if (action !== "Login" && action !== "Signup") {
     return;
   }
 
+  let alternativeAction;
+  if (action === "Login") {
+    alternativeAction = "Signup";
+  } else if (action === "Signup") {
+    alternativeAction = "Login";
+  }
+
   //create and display the form
   signUpInSectionElement.style.display = "block";
-  signUpInSectionElement.innerHTML = getHtmlContentSignUpInForm(action);
+  signUpInSectionElement.innerHTML = getHtmlContentSignUpInForm(
+    action,
+    alternativeAction
+  );
   let authenticationProcess;
   if (action === "Login") {
     authenticationProcess = login;
@@ -29,6 +49,7 @@ function displaySignUpInForm(action) {
   signUpInSectionElement
     .querySelector("form")
     .addEventListener("submit", authenticationProcess);
+
   //DELETE below !! !
   hideFriendsSection();
   hideChatSection();
@@ -42,10 +63,40 @@ function hideSignUpInForm() {
 
 //display error info on authentication form
 function displayAuthErrorInfo(info) {
+  hideAuthErrorInfo();
   const errorInfoElement = document.createElement("p");
   errorInfoElement.classList.add("auth-error-info");
   errorInfoElement.textContent = info;
   signUpInSectionElement.querySelector("form").prepend(errorInfoElement);
+}
+
+//hide auth error info on authentication form
+function hideAuthErrorInfo() {
+  const authErrorInfoElement =
+    signUpInSectionElement.querySelector(".auth-error-info");
+  if (authErrorInfoElement) {
+    authErrorInfoElement.parentElement.removeChild(authErrorInfoElement);
+  }
+}
+
+//display friends section on desktop
+function displayFriendsAndChatSectionOnWidhtChange(event) {
+  //only if auth form or init info are not visible
+  if (
+    (signUpInSectionElement.style.display === "none" ||
+      signUpInSectionElement.textContent === "") &&
+    (initInfoSectionElement.style.display === "none" ||
+      initInfoSectionElement.textContent === "")
+  ) {
+    //window >= 768px
+    if (window.innerWidth >= 768) {
+      displayFriendsSection();
+      displayChatSection();
+    } else {
+      displayFriendsSection();
+      hideChatSection();
+    }
+  }
 }
 
 //scroll to the bottom of the chat list
