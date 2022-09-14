@@ -5,7 +5,7 @@ const csrfToken = document.querySelector('meta[name="csrf-token"]').content;
 //to the server for opening it
 const socketConfig = {
   autoConnect: false,
-  reconnection: false,
+  // reconnection: false,
 };
 const socket = io(socketConfig);
 

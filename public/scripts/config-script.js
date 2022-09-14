@@ -86,7 +86,8 @@ function displayFriendsAndChatSectionOnWidhtChange(event) {
     (signUpInSectionElement.style.display === "none" ||
       signUpInSectionElement.textContent === "") &&
     (initInfoSectionElement.style.display === "none" ||
-      initInfoSectionElement.textContent === "")
+      initInfoSectionElement.textContent === "") &&
+    !document.getElementById("main-loader")
   ) {
     //window >= 768px
     if (window.innerWidth >= 768) {
@@ -189,5 +190,25 @@ function hideOneMessageErrorInfo(messageId) {
       message.removeChild(lineBreak);
       return;
     }
+  }
+}
+
+//create and display the main page loader
+function displayMainLoader() {
+  const loaderElement = document.createElement("div");
+  loaderElement.classList.add("loader");
+  loaderElement.id = "main-loader";
+  document.querySelector("main").append(loaderElement);
+
+  //DELETE below !! !
+  hideFriendsSection();
+  hideChatSection();
+}
+
+//remove the main page loader
+function removeMainLoader() {
+  const loaderElement = document.getElementById("main-loader");
+  if (loaderElement) {
+    loaderElement.parentElement.removeChild(loaderElement);
   }
 }
