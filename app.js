@@ -16,6 +16,7 @@ const notFoundMidlleware = require("./middlewares/not-found-middleware");
 const errorHandlingMiddleware = require("./middlewares/error-handling-middleware");
 const baseRoutes = require("./routes/base-routes");
 const userRoutes = require("./routes/user-routes");
+const messageRoutes = require("./routes/message-routes");
 const checkUserAuthStatus = require("./socket.io/middlewares/authentication-middleware");
 const initSocket = require("./socket.io/events-listeners/socket-init");
 const listenToBaseEvents = require("./socket.io/events-listeners/base-events-listeners");
@@ -53,6 +54,7 @@ app.use(addCsrfTokenMiddleware);
 //routes registration
 app.use(baseRoutes);
 app.use("/user", userRoutes);
+app.use("/message", messageRoutes);
 
 //not found middleware
 app.use(notFoundMidlleware);
