@@ -40,7 +40,26 @@ class User {
 
     //no user found
     if (!document) {
-      throw new Error("No user found");
+      throw new Error("No user found with this id");
+    }
+
+    //return user class obj
+    return User.fromMongoDBDocumentToUser(document);
+  }
+
+  //find a user by its id
+  static async findByName(name) {
+    //define query filter
+    const query = { name: name };
+
+    //run query
+    const document = await db.getDb().collection("users").findOne(query);
+
+    //no user found
+    if (!document) {
+      const error = new Error("No user found with this name");
+      error.code = 404;
+      throw error;
     }
 
     //return user class obj

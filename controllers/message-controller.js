@@ -2,7 +2,7 @@
 const jwt = require("jsonwebtoken");
 
 //read user chats
-function readAll() {
+function readAll(req, res, next) {
   //
 }
 

@@ -6,8 +6,6 @@ function logout(event) {
 
 //ajax request for requesting login
 async function login(event) {
-  console.log("login request...");
-
   event.preventDefault();
 
   //get form data
@@ -26,7 +24,7 @@ async function login(event) {
       "CSRF-Token": csrfToken,
     },
     method: "POST",
-    boddy: JSON.stringify(userLoginData),
+    body: JSON.stringify(userLoginData),
   };
 
   //send ajax request for login
@@ -49,16 +47,22 @@ async function login(event) {
     return;
   }
 
+  //invalid credentials
+  if (responseData.invalidCredentials) {
+    displayAuthErrorInfo(responseData.message);
+    return;
+  }
+
+  //TODO: get and memorize JWT
+  console.log(responseData.token);
+
   //login was ok
   hideSignUpInForm();
-  displayFriendsSection();
-  displayChatSection();
+  displayFriendsAndChatSectionOnWidhtChange();
 }
 
 //ajax request for requesting sign up
 async function signup(event) {
-  console.log("signup request...");
-
   event.preventDefault();
 
   //get form data
@@ -77,7 +81,7 @@ async function signup(event) {
       "CSRF-Token": csrfToken,
     },
     method: "POST",
-    boddy: JSON.stringify(userSignupData),
+    body: JSON.stringify(userSignupData),
   };
 
   //send ajax request for login
@@ -86,7 +90,7 @@ async function signup(event) {
     response = await fetch(requestUrl, requestConfig);
   } catch (error) {
     displayAuthErrorInfo(
-      "Can not reach the server. May check your connection?"
+      "Can not reach the server. Maybe check your connection?"
     );
     return;
   }
@@ -100,10 +104,18 @@ async function signup(event) {
     return;
   }
 
-  //login was ok
+  //check if uer input is valid
+  if (responseData.userInputNotValid) {
+    displayAuthErrorInfo(responseData.message);
+    return;
+  }
 
-  //save JWT...
+  //check if a user with this name already exists
+  if (responseData.userExistsAlready) {
+    displayAuthErrorInfo(responseData.message);
+    return;
+  }
 
-  hideSignUpInForm();
+  //ask the user to login
   displaySignUpInForm("Login");
 }
