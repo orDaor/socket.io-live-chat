@@ -13,7 +13,7 @@ function jwtSignCallback(error, token, res, responseData, next) {
 }
 
 //this is executed on JWT validation
-function jwtVerifyCallback(error, jwtPayload) {
+function jwtVerifyCallback(error, jwtPayload, res, responseData, next) {
   //
 }
 

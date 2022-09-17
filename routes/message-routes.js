@@ -11,7 +11,7 @@ const messageController = require("../controllers/message-controller");
 const router = express.Router();
 
 //fetch all user chats
-router.get("/all", messageController.readAll);
+router.post("/all", messageController.readAll);
 
 //export
 module.exports = router;

@@ -42,6 +42,5 @@ function getHtmlContentInitInfo(title, info) {
   <h1>${title}</h1>
   <p>${info}</p>
   <a href="/"><button class="btn">Try Again</button></a>
-  <button class="btn btn-alt" onclick="logout(event)">Logout</button>
   </div>`;
 }

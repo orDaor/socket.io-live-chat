@@ -10,8 +10,6 @@ function initAfterPageLoaded() {
   }
 
   //no token is stored, then need to login to get a valid token
-  hideFriendsSection();
-  hideChatSection();
   displaySignUpInForm("Login");
 }
 
@@ -25,10 +23,27 @@ async function initAfterLogin(token) {
   displayMainLoader();
 
   //fetch messages for this user
-  const chats = await fetchChats(token);
-
-  //loading stopped
-  hideMainLoader();
+  let chats;
+  let errorTitle;
+  let errorMessage;
+  try {
+    chats = await fetchChats(token);
+  } catch (error) {
+    if (error.code) {
+      //bad response
+      errorTitle = "Ooooops...";
+      errorMessage = error.customMessage;
+    } else {
+      //technical error
+      errorTitle = "Connection problems";
+      errorMessage =
+        "It was not possible to load your chats, because we could not reach the server. Maybe check your connection?";
+    }
+    //loading stopped
+    hideMainLoader();
+    disaplayInitInfo(errorTitle, errorMessage);
+    return;
+  }
 
   //no chats found
   if (chats.length === 0) {
@@ -43,16 +58,45 @@ async function initAfterLogin(token) {
   //load chats on screen
   //...??
 
+  //loading stopped
+  hideMainLoader();
+
   //initialization done
-  console.log("hey");
   initializationDoneGlobal = true;
 }
 
 //fetch "all" user messages
 async function fetchChats(token) {
-  let chats = [];
+  let response;
+  let error;
 
-  console.log("Chats loaded");
+  //config ajax request
+  const requestUrl = `/message/all`;
+  const requestConfig = {
+    headers: {
+      Accept: "application/json",
+      "Content-Type": "application/json",
+      "CSRF-Token": csrfToken,
+    },
+    method: "POST",
+    body: JSON.stringify({ token: token }),
+  };
 
-  return chats;
+  //send ajax request
+  response = await fetch(requestUrl, requestConfig);
+
+  //parse response
+  const responseData = await response.json();
+
+  //response not ok
+  if (!response.ok) {
+    error = new Error("Response not ok");
+    //401 (not authenticated), 403(not authorized), 404, 500, ...
+    error.code = response.status;
+    error.customMessage = responseData.message;
+    throw error;
+  }
+
+  //array of chats collected for this user
+  return responseData.chats;
 }

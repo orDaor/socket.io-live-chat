@@ -120,7 +120,10 @@ async function login(req, res, next) {
   jwt.sign(
     jwtPayload,
     "not-a-secret",
-    { expiresIn: oneDay_s * 2 },
+    {
+      expiresIn: oneDay_s * 2,
+      algorithm: "HS256",
+    },
     function (error, token) {
       //get token and send response
       authentication.jwtSignCallback(error, token, res, responseData, next);
