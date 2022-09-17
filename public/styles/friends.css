@@ -5,7 +5,7 @@
   left: calc(50% - var(--friends-section-width-1) / 2);
   top: var(--friends-chat-section-from-top-1);
   bottom: 0;
-  display: block;
+  display: none;
   color: var(--color-grey-500);
 }
 

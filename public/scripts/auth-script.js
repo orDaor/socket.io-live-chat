@@ -1,7 +1,16 @@
 //log out
 function logout(event) {
-  console.log("Should be logging out...");
-  console.log(event.target);
+  //remove JWT
+  localStorage.removeItem("token");
+
+  //clean all chat content
+  cleanAllFriends();
+  cleanAllMessages();
+
+  //use must login again to get a new token
+  hideFriendsSection();
+  hideChatSection();
+  displaySignUpInForm("Login");
 }
 
 //ajax request for requesting login
@@ -53,12 +62,11 @@ async function login(event) {
     return;
   }
 
-  //TODO: get and memorize JWT
-  console.log(responseData.token);
+  //login was ok, get and memorize JWT
+  localStorage.setItem("token", responseData.token);
 
-  //login was ok
-  hideSignUpInForm();
-  displayFriendsAndChatSectionOnWidhtChange();
+  //initialize after login
+  initAfterLogin(responseData.token);
 }
 
 //ajax request for requesting sign up

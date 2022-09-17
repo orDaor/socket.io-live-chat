@@ -29,30 +29,38 @@ window.addEventListener("resize", displayFriendsAndChatSectionOnWidhtChange);
 addFriendButtonElement.addEventListener("click", getInvitationLink);
 logOutButtonElement.addEventListener("click", logout);
 backToFriendsPageButton.addEventListener("click", displayFriendsAndHideChat);
-
-//send events to server
 chatSectionElement
   .querySelector("form")
   .addEventListener("submit", sendMessage);
 
-//on socket opening / connection on
+//on socket opened (connected)
 socket.on("connect", function () {
-  console.log(`Connected with id = ${socket.id}`); //socket undefined when not connected yet
+  //socket id undefined when socket is not connected yet
+  console.log(`Connected with id = ${socket.id}`);
   readMessage();
 });
 //NOTE: "connect" means both connect and re-connect (connect after connection was closed)
-//NOTE: at "conenct" event a new unique socket id is assigned to a socket (before connection there is no id)
+//NOTE: on "conenct" event, a new unique socket id is assigned to the socket (before connection there is no id)
 
-//on socket closed / disconnected
+//on socket closed (disconnected)
 socket.on("disconnect", function (reason) {
   //when the socket disconnects / closes its socket id is reset
   console.log(`Disconnected because: ${reason} (id = ${socket.id})`);
 });
-//NOTE: if we disconnect manually (from client or server), reconnection will not be automatic by the client
+//NOTE: if socket is disconnected manually with socket.disconnect(), euther from client or server,
+//      client will not try re-connecting automatically
 
-//listen from broadcast events from server
+//socket boradcast event listeners
 socket.on("message-receive-broadcast", onMessageReceiveBroadcast);
 socket.on("message-delete-broadcast", onMessageDeleteBroadcast);
 
+//socket ack event listeners
+//...??
+
+
 //global variables
-let thisUserId;
+let initializationDoneGlobal = false;
+
+//initialization
+initAfterPageLoaded();
+

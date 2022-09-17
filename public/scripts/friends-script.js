@@ -80,6 +80,11 @@ function displayAllFriends(friends) {
   }
 }
 
+//clean all friends
+function cleanAllFriends() {
+  friendsSectionElement.querySelector("ul").textContent = "";
+}
+
 //select one frand to chat with
 function selectOneFriend(event) {
   //find list item on which click occured

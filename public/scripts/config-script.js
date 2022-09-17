@@ -1,15 +1,11 @@
 //display init info
-function disaplayInitInfo(info) {
+function disaplayInitInfo(title, info) {
   if (!info) {
     return;
   }
 
   initInfoSectionElement.style.display = "block";
-  initInfoSectionElement.innerHTML = getHtmlContentInitInfo(info);
-
-  //DELETE below !! !
-  hideFriendsSection();
-  hideChatSection();
+  initInfoSectionElement.innerHTML = getHtmlContentInitInfo(title, info);
 }
 
 // hide init info
@@ -49,10 +45,6 @@ function displaySignUpInForm(action) {
   signUpInSectionElement
     .querySelector("form")
     .addEventListener("submit", authenticationProcess);
-
-  //DELETE below !! !
-  hideFriendsSection();
-  hideChatSection();
 }
 
 //hide sign up/in form
@@ -117,12 +109,33 @@ function hideFriendsSection() {
 
 //display friends section
 function displayFriendsSection() {
+  //show this section
   friendsSectionElement.style.display = "block";
+
+  //how many chats exist for this uer
+  const chatsList = friendsSectionElement.querySelectorAll(".friend-chat-item");
+
+  //if no chats exist static position should apply
+  if (!chatsList.length) {
+    if (window.innerWidth >= 768) {
+      friendsSectionElement.style.position = "static";
+      friendsSectionElement.style.margin = "4rem auto";
+      friendsSectionElement.style.width = "27rem";
+    } else {
+      friendsSectionElement.style.width = "";
+      friendsSectionElement.style.position = "";
+      friendsSectionElement.style.margin = "";
+    }
+  }
 }
 
 //display chat section
 function displayChatSection() {
-  chatSectionElement.style.display = "flex";
+  const friendsListItems =
+    friendsSectionElement.querySelectorAll(".friend-chat-item");
+  if (friendsListItems.length > 0) {
+    chatSectionElement.style.display = "flex";
+  }
 }
 
 //hide chat section
@@ -199,14 +212,10 @@ function displayMainLoader() {
   loaderElement.classList.add("loader");
   loaderElement.id = "main-loader";
   document.querySelector("main").append(loaderElement);
-
-  //DELETE below !! !
-  hideFriendsSection();
-  hideChatSection();
 }
 
 //remove the main page loader
-function removeMainLoader() {
+function hideMainLoader() {
   const loaderElement = document.getElementById("main-loader");
   if (loaderElement) {
     loaderElement.parentElement.removeChild(loaderElement);
