@@ -11,6 +11,9 @@ function logout(event) {
   hideFriendsSection();
   hideChatSection();
   displaySignUpInForm("Login");
+
+  //restart
+  initializationDoneGlobal = false;
 }
 
 //ajax request for requesting login
@@ -80,7 +83,7 @@ async function signup(event) {
     password: formData.get("password"),
   };
 
-  //config ajax request 
+  //config ajax request
   const requestUrl = `/user/signup`;
   const requestConfig = {
     headers: {
@@ -92,7 +95,7 @@ async function signup(event) {
     body: JSON.stringify(userSignupData),
   };
 
-  //send ajax request 
+  //send ajax request
   let response;
   try {
     response = await fetch(requestUrl, requestConfig);

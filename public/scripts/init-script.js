@@ -30,18 +30,28 @@ async function initAfterLogin(token) {
     chats = await fetchChats(token);
   } catch (error) {
     if (error.code) {
-      //bad response
-      errorTitle = "Ooooops...";
-      errorMessage = error.customMessage;
+      //not authenticated or not authorized (token validation at server side failed)
+      if (error.code === 401 || error.code === 403) {
+        //loading stopped
+        hideMainLoader();
+        displaySignUpInForm("Login"); //need to get a new valid token
+      } else {
+        //bad response
+        errorTitle = "Ooooops...";
+        errorMessage = error.customMessage;
+        //show error info
+        hideMainLoader();
+        disaplayInitInfo(errorTitle, errorMessage);
+      }
     } else {
       //technical error
       errorTitle = "Connection problems";
       errorMessage =
         "It was not possible to load your chats, because we could not reach the server. Maybe check your connection?";
+      //show error info
+      hideMainLoader();
+      disaplayInitInfo(errorTitle, errorMessage);
     }
-    //loading stopped
-    hideMainLoader();
-    disaplayInitInfo(errorTitle, errorMessage);
     return;
   }
 
