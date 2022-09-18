@@ -23,11 +23,11 @@ async function initAfterLogin(token) {
   displayMainLoader();
 
   //fetch messages for this user
-  let chats;
+  let chatList;
   let errorTitle;
   let errorMessage;
   try {
-    chats = await fetchChats(token);
+    chatList = await fetchChats(token);
   } catch (error) {
     if (error.code) {
       //not authenticated or not authorized (token validation at server side failed)
@@ -56,7 +56,9 @@ async function initAfterLogin(token) {
   }
 
   //no chats found
-  if (chats.length === 0) {
+  if (chatList.length === 0) {
+    console.log("init done with 0 chats");
+    hideMainLoader();
     displayFriendsSection();
     initializationDoneGlobal = true;
     return;
@@ -66,10 +68,8 @@ async function initAfterLogin(token) {
   displayFriendsAndChatSectionOnWidhtChange();
 
   //load chats on screen
-  //...??
-
-  //loading stopped
   hideMainLoader();
+  //...??
 
   //initialization done
   initializationDoneGlobal = true;
@@ -108,5 +108,5 @@ async function fetchChats(token) {
   }
 
   //array of chats collected for this user
-  return responseData.chats;
+  return responseData.chatList;
 }
