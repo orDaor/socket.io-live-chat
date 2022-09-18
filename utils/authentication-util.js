@@ -13,8 +13,17 @@ function jwtSignCallback(error, token, res, responseData, next) {
 }
 
 //this is executed on JWT validation
-function jwtVerifyCallback(error, jwtPayload, res, responseData, next) {
-  //
+function jwtVerifyCallback(error, jwtPayload, res, next) {
+  //token validation failed, move to next route
+  if (error) {
+    next();
+    return;
+  }
+
+  //token is valid, memorize authentication data and move to next route
+  res.locals.isAuthenticated = true;
+  res.locals.userId = jwtPayload.userId;
+  next();
 }
 
 //exports

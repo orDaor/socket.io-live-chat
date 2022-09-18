@@ -12,12 +12,14 @@ const SocketIOServer = require("socket.io").Server;
 const db = require("./data/database");
 const createSessionConfig = require("./config/session-config");
 const addCsrfTokenMiddleware = require("./middlewares/csrf-token-middleware");
+const httpAuthCheckMiddleware = require("./middlewares/http-authentication-middleware");
+const routesProtectionMiddleware = require("./middlewares/routes-protection-middleware");
 const notFoundMidlleware = require("./middlewares/not-found-middleware");
 const errorHandlingMiddleware = require("./middlewares/error-handling-middleware");
 const baseRoutes = require("./routes/base-routes");
 const userRoutes = require("./routes/user-routes");
 const messageRoutes = require("./routes/message-routes");
-const checkUserAuthStatus = require("./socket.io/middlewares/authentication-middleware");
+const socketAuthCheckMiddleware = require("./socket.io/middlewares/socket-authentication-middleware");
 const initSocket = require("./socket.io/events-listeners/socket-init");
 const listenToBaseEvents = require("./socket.io/events-listeners/base-events-listeners");
 const listenToUserEvents = require("./socket.io/events-listeners/user-events-listeners");
@@ -51,9 +53,19 @@ app.use(csrf());
 //generate CSRF token
 app.use(addCsrfTokenMiddleware);
 
-//routes registration
+//http authentication middleware
+app.use(httpAuthCheckMiddleware);
+
+//base routes
 app.use(baseRoutes);
+
+//user routes
 app.use("/user", userRoutes);
+
+//routes protection middleware
+app.use(routesProtectionMiddleware);
+
+//messages routes
 app.use("/message", messageRoutes);
 
 //not found middleware
@@ -62,8 +74,8 @@ app.use(notFoundMidlleware);
 //error handling middleware
 app.use(errorHandlingMiddleware);
 
-//a socket can be opened only if user requesting it is authenticated
-io.use(checkUserAuthStatus);
+//socket authentication middleware
+io.use(socketAuthCheckMiddleware);
 
 //listen on connection event for incoming sockets
 io.on("connection", function (socket) {

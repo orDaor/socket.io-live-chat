@@ -3,8 +3,8 @@ const bcryptjs = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 
 //imports custom
-const validation = require("../utils/validation");
-const authentication = require("../utils/authentication");
+const validation = require("../utils/validation-util");
+const authentication = require("../utils/authentication-util");
 const User = require("../models/user-model");
 
 //time constants

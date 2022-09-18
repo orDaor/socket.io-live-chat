@@ -7,10 +7,10 @@
 //imports custom
 //...
 
-function addCsrfToken(req, res, next) {
+function addCsrfTokenMIddleware(req, res, next) {
     res.locals.csrfToken = req.csrfToken();
     next();
 }
 
 //export
-module.exports = addCsrfToken;
+module.exports = addCsrfTokenMIddleware;
