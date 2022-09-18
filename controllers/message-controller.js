@@ -7,7 +7,7 @@ function readAll(req, res, next) {
   let responseData = {};
 
   //get rooms where user with res.locals.userId is active...
-
+  
   
 }
 

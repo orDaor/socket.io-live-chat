@@ -4,10 +4,11 @@ const ObjectId = require("mongodb").ObjectId;
 //imports built-in
 const db = require("../data/database");
 
+//this class defines a message, sent by a specific sender to a specific room
 class Message {
-  constructor(text, recipientId, senderId, creationDate, messageId) {
+  constructor(text, roomId, senderId, creationDate, messageId) {
     this.text = text;
-    this.recipientId = recipientId;
+    this.roomId = roomId;
     this.senderId = senderId;
 
     if (creationDate) {
@@ -25,7 +26,7 @@ class Message {
   static fromMongoDBDocumentToMessage(document) {
     return new Message(
       document.text,
-      document.recipientId,
+      document.roomId,
       document.senderId,
       document.creationDate,
       document._id
@@ -47,6 +48,25 @@ class Message {
 
     //return Message class obj
     return Message.fromMongoDBDocumentToMessage(document);
+  }
+
+  //find messages sent to a specific room
+  static async findManyByRoomId(roomId) {
+    //query filer
+    const query = { roomId: roomId };
+
+    //run query
+    const documents = await db
+      .getDb()
+      .collection("messages")
+      .find(query)
+      .toArray();
+
+    //map array of message documents into array of Message class objects
+    const mapOneDocument = function (document) {
+      return Message.fromMongoDBDocumentToMessage(document);
+    };
+    return documents.map(mapOneDocument);
   }
 
   //delete a message by its id

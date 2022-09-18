@@ -6,7 +6,7 @@ const db = require("../data/database");
 
 class Room {
   constructor(friends, lastActivityDate, roomId) {
-    this.friends = friends;
+    this.friends = friends; //array of user Ids as normal strings
     if (lastActivityDate) {
       this.lastActivityDate = lastActivityDate;
     } else {
@@ -45,6 +45,27 @@ class Room {
 
     //return room class obj
     return Room.fromMongoDBDocumentToRoom(document);
+  }
+
+  //find rooms where a specific user is active
+  static async findManyByUserId(userId) {
+    //query filter: look for all rooms where the user with
+    //userId is active (contained in the friends list)
+    const query = {
+      friends: { $in: [userId] },
+    };
+
+    const documents = await db
+      .getDb()
+      .collection("rooms")
+      .find(query)
+      .toArray();
+
+    //map array of room documents into array of Room class objects
+    const mapOneDocument = function (document) {
+      return Room.fromMongoDBDocumentToRoom(document);
+    };
+    return documents.map(mapOneDocument);
   }
 
   //delete a room by its id
