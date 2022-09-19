@@ -131,9 +131,8 @@ function displayFriendsSection() {
 
 //display chat section
 function displayChatSection() {
-  const friendsListItems =
-    friendsSectionElement.querySelectorAll(".friend-chat-item");
-  if (friendsListItems.length > 0) {
+  const chatList = friendsSectionElement.querySelectorAll(".friend-chat-item");
+  if (chatList.length > 0) {
     chatSectionElement.style.display = "flex";
   }
 }
@@ -166,7 +165,7 @@ function hideMainErrorInfo() {
 function displayMainErrorInfo(info) {
   hideMainErrorInfo();
   const isErrorMessage = true;
-  displayOneMessage(isErrorMessage, null, info, null, true, false);
+  displayOneMessage(isErrorMessage, null, info, null, null, true);
 }
 
 //display error info for one message

@@ -4,9 +4,9 @@ function displayOneMessage(
   isErrorMessage,
   messageId,
   text,
+  creationDate, //TODO
   side,
-  autoScrollToBottom,
-  actionsEnabled
+  autoScrollToBottom
 ) {
   //create a list item element
   const messageListItemElement = document.createElement("li");
@@ -44,7 +44,7 @@ function displayOneMessage(
   }
 
   //for normal message display also action button on the message for deleting it or re-sending it
-  if (!isErrorMessage && actionsEnabled) {
+  if (!isErrorMessage && side === "right") {
     const messageActionElement = document.createElement("div");
     messageActionElement.innerHTML = htmlContentEditMessageIcon;
     messageActionElement.classList.add("message-item-action");
@@ -60,26 +60,28 @@ function displayOneMessage(
 
 //display array of messages received on the socket
 function displayAllMessages(messages) {
-  const activeFriendElement =
-    chatSectionElement.querySelector(".active-friends");
-
   //loop through received messages
   for (const message of messages) {
-    //check who is sender of this message item
-    const isActiveFriendSender =
-      message.senderId === activeFriendElement.dataset.friendId &&
-      message.recipientId === thisUserId;
-
-    const isThisUserSender =
-      message.senderId === thisUserId &&
-      message.recipientId === activeFriendElement.dataset.friendId;
-
     //display on left if friend is sender, display on right if this user is the sender
     //NOTE: we scroll after all messages are loaded
-    if (isActiveFriendSender) {
-      displayOneMessage(false, message._id, message.text, "left", false, false);
-    } else if (isThisUserSender) {
-      displayOneMessage(false, message._id, message.text, "right", false, true);
+    if (message.senderIsViewer) {
+      displayOneMessage(
+        false,
+        message.messageId,
+        message.text,
+        message.creationDate,
+        "right",
+        false
+      );
+    } else {
+      displayOneMessage(
+        false,
+        message.messageId,
+        message.text,
+        message.creationDate,
+        "left",
+        false
+      );
     }
   }
 

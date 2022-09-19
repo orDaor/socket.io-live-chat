@@ -4,7 +4,7 @@ function logout(event) {
   localStorage.removeItem("token");
 
   //clean all chat content
-  cleanAllFriends();
+  cleanChatList();
   cleanAllMessages();
 
   //use must login again to get a new token

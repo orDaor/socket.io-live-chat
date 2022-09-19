@@ -1,4 +1,4 @@
-//process ack from server on message send event
+//process ack from server on message send eventack
 function onMessageSendAck(eventAck) {
   //message not saved as requested
   if (!eventAck.ok) {

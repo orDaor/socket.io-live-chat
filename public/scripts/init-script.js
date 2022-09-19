@@ -27,7 +27,7 @@ async function initAfterLogin(token) {
   let errorTitle;
   let errorMessage;
   try {
-    chatList = await fetchChats(token);
+    chatList = await fetchChatList(token);
   } catch (error) {
     if (error.code) {
       //not authenticated or not authorized (token validation at server side failed)
@@ -76,7 +76,7 @@ async function initAfterLogin(token) {
 }
 
 //fetch "all" user messages
-async function fetchChats(token) {
+async function fetchChatList(token) {
   let response;
   let error;
 

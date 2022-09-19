@@ -20,15 +20,15 @@ const logOutButtonElement = document.querySelector(
   ".friends-control .log-out-btn"
 );
 const chatSectionElement = document.getElementById("chat-section");
-const backToFriendsPageButton = document.querySelector(
-  ".active-friends .back-to-friends-page"
+const backToChatListButton = document.querySelector(
+  ".active-friends .back-to-chat-list"
 );
 
 //standard event listeners
 window.addEventListener("resize", displayFriendsAndChatSectionOnWidhtChange);
 addFriendButtonElement.addEventListener("click", getInvitationLink);
 logOutButtonElement.addEventListener("click", logout);
-backToFriendsPageButton.addEventListener("click", displayFriendsAndHideChat);
+backToChatListButton.addEventListener("click", displayFriendsAndHideChat);
 chatSectionElement
   .querySelector("form")
   .addEventListener("submit", sendMessage);
@@ -37,7 +37,6 @@ chatSectionElement
 socket.on("connect", function () {
   //socket id undefined when socket is not connected yet
   console.log(`Connected with id = ${socket.id}`);
-  readMessage();
 });
 //NOTE: "connect" means both connect and re-connect (connect after connection was closed)
 //NOTE: on "conenct" event, a new unique socket id is assigned to the socket (before connection there is no id)

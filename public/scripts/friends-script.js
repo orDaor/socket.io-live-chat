@@ -1,7 +1,7 @@
-//set active friend id
-function setActiveFriendId(friendId) {
-  chatSectionElement.querySelector(".active-friends").dataset.friendId =
-    friendId;
+//set active room id
+function setActiveChatRoomId(roomId) {
+  chatSectionElement.querySelector(".active-friends").dataset.roomId =
+    roomId;
 }
 
 //set active friend name
@@ -12,81 +12,81 @@ function setActiveFriendName(activeFriendName) {
   activeFriendNameElement.textContent = activeFriendName;
 }
 
-//set active friend online status
-function setActiveFriendOnlineStatus(selectedFriendStatusElement) {
-  const activeFriendStatus = chatSectionElement.querySelector(
+//set active chat online status
+function setActiveChatOnlineStatus(selectedChatStatusElement) {
+  const activeChatStatus = chatSectionElement.querySelector(
     ".active-friends .friend-chat-status"
   );
   if (
-    selectedFriendStatusElement.classList.contains("friend-chat-status-online")
+    selectedChatStatusElement.classList.contains("friend-chat-status-online")
   ) {
-    activeFriendStatus.classList.add("friend-chat-status-online");
-    activeFriendStatus.classList.remove("friend-chat-status-offline");
+    activeChatStatus.classList.add("friend-chat-status-online");
+    activeChatStatus.classList.remove("friend-chat-status-offline");
   } else if (
-    selectedFriendStatusElement.classList.contains("friend-chat-status-offline")
+    selectedChatStatusElement.classList.contains("friend-chat-status-offline")
   ) {
-    activeFriendStatus.classList.add("friend-chat-status-offline");
-    activeFriendStatus.classList.remove("friend-chat-status-online");
+    activeChatStatus.classList.add("friend-chat-status-offline");
+    activeChatStatus.classList.remove("friend-chat-status-online");
   }
 }
 
-//display one friend
-function displayOneFriend(friend, isOnline) {
+//display one chat
+function displayOneChat(roomId, friendsNames, isOnline) {
   const friendChatItemContainerElement = document.createElement("div");
   friendChatItemContainerElement.classList.add("friend-chat-main-info");
   const friendChatItemElement = document.createElement("li");
-  friendChatItemElement.classList.add("friend-chat-item"); // to be checked !!
-  friendChatItemElement.dataset.friendId = friend.friendId;
-  friendChatItemElement.addEventListener("click", selectOneFriend);
+  friendChatItemElement.classList.add("friend-chat-item"); 
+  friendChatItemElement.dataset.roomId = roomId;
+  friendChatItemElement.addEventListener("click", selectOneChat);
 
-  //online status of the friend
-  const friendOnlineStatus = document.createElement("p");
-  friendOnlineStatus.classList.add("friend-chat-status");
+  //online status of the chat
+  const chatOnlineStatus = document.createElement("p");
+  chatOnlineStatus.classList.add("friend-chat-status");
   if (isOnline) {
-    friendOnlineStatus.classList.add("friend-chat-status-online");
-    friendOnlineStatus.classList.remove("friend-chat-status-offline");
+    chatOnlineStatus.classList.add("friend-chat-status-online");
+    chatOnlineStatus.classList.remove("friend-chat-status-offline");
   } else {
-    friendOnlineStatus.classList.add("friend-chat-status-offline");
-    friendOnlineStatus.classList.remove("friend-chat-status-online");
+    chatOnlineStatus.classList.add("friend-chat-status-offline");
+    chatOnlineStatus.classList.remove("friend-chat-status-online");
   }
 
   //friend name
   const friendNameElement = document.createElement("p");
-  friendNameElement.textContent = friend.name; // to be checked !!
+  friendNameElement.textContent = friendsNames[0]; // to be checked !!
   friendNameElement.classList.add("friend-chat-name");
 
   //append content
-  friendChatItemContainerElement.appendChild(friendOnlineStatus);
+  friendChatItemContainerElement.appendChild(chatOnlineStatus);
   friendChatItemContainerElement.appendChild(friendNameElement);
   friendChatItemElement.appendChild(friendChatItemContainerElement);
   friendsSectionElement.querySelector("ul").appendChild(friendChatItemElement);
 }
 
-//hide one friend
-function hideOneFriend(friendId) {
-  const friends = document.querySelectorAll(".friend-chat-item");
-  for (const friend of friends) {
-    if (friend.dataset.friendId === friendId) {
-      friend.parentElement.removeChild(friend);
+//hide one chat
+function hideOneChat(roomId) {
+  const chatList = document.querySelectorAll(".friend-chat-item");
+  for (const chat of chatList) {
+    if (chat.dataset.roomId === roomId) {
+      chat.parentElement.removeChild(chat);
       return;
     }
   }
 }
 
-//display all friends
-function displayAllFriends(friends) {
-  for (const friend of friends) {
-    displayOneFriend(friend);
+//display all chats
+function displayChatList(chatList) {
+  for (const chat of chatList) {
+    displayOneChat(chat.roomId, chat.friendsNames); //TODO: pass isOnline parameter
   }
 }
 
-//clean all friends
-function cleanAllFriends() {
+//clean all chats
+function cleanChatList() {
   friendsSectionElement.querySelector("ul").textContent = "";
 }
 
-//select one frand to chat with
-function selectOneFriend(event) {
+//select one chat 
+function selectOneChat(event) {
   //find list item on which click occured
   let selectedFriendChatItemElement;
   if (event.target.classList.contains("friend-chat-item")) {
@@ -112,30 +112,30 @@ function selectOneFriend(event) {
   //select li item
   selectedFriendChatItemElement.classList.add("friend-chat-item-selected");
 
-  //gather selected friend item data
+  //gather selected chat item data
   const selectedFriendNameElement =
     selectedFriendChatItemElement.querySelector(".friend-chat-name");
-  const selectedFriendId = selectedFriendChatItemElement.dataset.friendId;
-  const selectedFriendStatusElement =
+  const selectedRoomId = selectedFriendChatItemElement.dataset.roomId;
+  const selectedChatStatusElement =
     selectedFriendChatItemElement.querySelector(".friend-chat-status");
 
-  //copy the selected friend name, online status and id in the active friend section
-  setActiveFriendId(selectedFriendId);
+  //copy the selected friend name, chat online status and id in the active friends section
+  setActiveChatRoomId(selectedRoomId);
 
   setActiveFriendName(selectedFriendNameElement.textContent);
 
-  setActiveFriendOnlineStatus(selectedFriendStatusElement);
+  setActiveChatOnlineStatus(selectedChatStatusElement);
 
-  //remove selected style from other friends in the list
-  const friends = document.querySelectorAll(".friend-chat-item");
-  for (const friend of friends) {
-    if (friend.dataset.friendId !== selectedFriendId) {
-      friend.classList.remove("friend-chat-item-selected");
+  //remove selected style from other chats in the list
+  const chatList = document.querySelectorAll(".friend-chat-item");
+  for (const chat of chatList) {
+    if (chat.dataset.roomId !== selectedroomId) {
+      chat.classList.remove("friend-chat-item-selected");
     }
   }
 
   //remove un-read chat item status if present
-  setChatItemAsRead(selectedFriendId);
+  setChatItemAsRead(selectedRoomId);
 
   //in mobile view, show only chat section
   if (window.innerWidth < 768) {
@@ -144,12 +144,12 @@ function selectOneFriend(event) {
   }
 }
 
-//set one friend online status
-function setOneFriendOnlineStatus(friendId, isOnline) {
-  const friends = document.querySelectorAll(".friend-chat-item");
-  for (const friend of friends) {
-    if (friend.dataset.friendId === friendId) {
-      const friendChatStatusElement = friend.querySelector(
+//set one chat online status
+function setOneChatOnlineStatus(roomId, isOnline) {
+  const chatList = document.querySelectorAll(".friend-chat-item");
+  for (const chat of chatList) {
+    if (chat.dataset.roomId === roomId) {
+      const friendChatStatusElement = chat.querySelector(
         ".friend-chat-status"
       );
       if (isOnline) {
@@ -159,9 +159,9 @@ function setOneFriendOnlineStatus(friendId, isOnline) {
         friendChatStatusElement.classList.add("friend-chat-status-offline");
         friendChatStatusElement.classList.remove("friend-chat-status-online");
       }
-      //if this element is also selected, then update accordlingly active friend status as well
-      if (friend.classList.contains("friend-chat-item-selected")) {
-        setActiveFriendOnlineStatus(friendChatStatusElement);
+      //if this element is also selected, then update accordlingly active chat online status as well
+      if (chat.classList.contains("friend-chat-item-selected")) {
+        setActiveChatOnlineStatus(friendChatStatusElement);
       }
       return;
     }
@@ -231,33 +231,33 @@ function setNewMessagesCount(count) {
 }
 
 //mark a friend chat item as UNread
-function setChatItemAsUnread(friendId) {
-  const friends = document.querySelectorAll(".friend-chat-item");
-  for (const friend of friends) {
-    if (friend.dataset.friendId === friendId) {
+function setChatItemAsUnread(roomId) {
+  const chatList = document.querySelectorAll(".friend-chat-item");
+  for (const chat of chatList) {
+    if (chat.dataset.roomId === roomId) {
       //set unread
-      friend.classList.add("friend-chat-item-unread");
+      chat.classList.add("friend-chat-item-unread");
       //add unread noty
       const unreadNoty = document.createElement("div");
       unreadNoty.classList.add("friend-chat-noty");
       unreadNoty.textContent = "(!)";
-      friend.appendChild(unreadNoty);
+      chat.appendChild(unreadNoty);
       return;
     }
   }
 }
 
 //mark a friend chat item as Read
-function setChatItemAsRead(friendId) {
-  const friends = document.querySelectorAll(".friend-chat-item");
-  for (const friend of friends) {
-    if (friend.dataset.friendId === friendId) {
+function setChatItemAsRead(roomId) {
+  const chatList = document.querySelectorAll(".friend-chat-item");
+  for (const chat of chatList) {
+    if (chat.dataset.roomId === roomId) {
       //remove unread
-      friend.classList.remove("friend-chat-item-unread");
+      chat.classList.remove("friend-chat-item-unread");
       //remove unread noty
-      const unreadNoty = friend.querySelector(".friend-chat-noty");
+      const unreadNoty = chat.querySelector(".friend-chat-noty");
       if (unreadNoty) {
-        friend.removeChild(unreadNoty);
+        chat.removeChild(unreadNoty);
       }
       return;
     }

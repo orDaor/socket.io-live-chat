@@ -21,11 +21,11 @@ async function readAll(req, res, next) {
   for (const room of rooms) {
     const chat = new Chat(room.roomId);
     try {
-      await chat.fillWithMessages();
+      await chat.fillWithMessages(res.locals.userId);
       chatList.push(chat);
     } catch (error) {
       //if it was not possible to fill the chat with room messages then
-      //a chat with empty messages array is pushed to the chat list array
+      //a chat with empty messages array is pushed to the chat list array anyway
       chatList.push(chat);
     }
   }

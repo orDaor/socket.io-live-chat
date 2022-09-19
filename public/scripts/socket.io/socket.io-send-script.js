@@ -9,13 +9,13 @@ function sendMessage(event) {
 
   //user connected...
   const formData = new FormData(event.target);
-  const activeFriendElement =
+  const activeChatElement =
     chatSectionElement.querySelector(".active-friends");
 
   //build message
   const message = {
     text: formData.get("message"),
-    recipientId: activeFriendElement.dataset.friendId,
+    recipientId: activeChatElement.dataset.roomId,
   };
 
   //send message
@@ -25,8 +25,8 @@ function sendMessage(event) {
       false,
       "id-not-confirmed",
       message.text,
+      new Date(), //now
       "right",
-      true,
       true
     );
     //send (emit) a event with a message to the server

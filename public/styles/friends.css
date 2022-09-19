@@ -173,7 +173,7 @@
   gap: 1rem;
 }
 
-.active-friends .back-to-friends-page {
+.active-friends .back-to-chat-list {
   align-self: flex-start;
   color: var(--color-grey-500);
 }
@@ -208,7 +208,7 @@
     gap: 0;
   }
 
-  .active-friends .back-to-friends-page {
+  .active-friends .back-to-chat-list {
     display: none;
   }
 }
