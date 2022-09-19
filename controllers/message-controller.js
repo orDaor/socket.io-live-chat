@@ -16,23 +16,25 @@ async function readAll(req, res, next) {
     return;
   }
 
-  //for each room found for this user, collect the messages in a chat
-  let chatList = [];
-  for (const room of rooms) {
-    const chat = new Chat(room.roomId);
+  //map each room connected to this user to a chat item which
+  //collects inside of it all messages for this room
+  const mapOneRoom = async function (room) {
+    const chat = new Chat(room, res.locals.userId);
     try {
-      await chat.fillWithMessages(res.locals.userId);
-      chatList.push(chat);
+      //collect friends names
+      //..??
+      //collect messages
+      await chat.fillWithMessages();
     } catch (error) {
-      //if it was not possible to fill the chat with room messages then
-      //a chat with empty messages array is pushed to the chat list array anyway
-      chatList.push(chat);
+      //if it was not possible to fill the chat with room messages
+      console.log(error);
     }
-  }
+    return chat;
+  };
 
   //All user chats are collected in the chatList array, send it back in the response
   responseData.message = "Chats collected successfully";
-  responseData.chatList = chatList;
+  responseData.chatList = rooms.map(mapOneRoom);
   res.json(responseData);
 }
 

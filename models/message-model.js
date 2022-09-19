@@ -1,7 +1,7 @@
 //imports 3r party
 const ObjectId = require("mongodb").ObjectId;
 
-//imports built-in
+//imports custom
 const db = require("../data/database");
 
 //this class defines a message, sent by a specific sender to a specific room

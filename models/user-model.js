@@ -1,7 +1,7 @@
 //imports 3r party
 const ObjectId = require("mongodb").ObjectId;
 
-//imports built-in
+//imports custom
 const db = require("../data/database");
 
 class User {
@@ -45,6 +45,33 @@ class User {
 
     //return user class obj
     return User.fromMongoDBDocumentToUser(document);
+  }
+
+  //find users which have an id included in a specific ids array/list
+  static async findManyByIds(ids) {
+    //convert array of string ids, into ObjectId class ids
+    const mapOneId = function (id) {
+      return new ObjectId(id);
+    };
+    const mongodbIds = ids.map(mapOneId);
+
+    //query filter
+    const query = {
+      _id: { $in: mongodbIds },
+    };
+
+    //run query
+    const documents = await db
+      .getDb()
+      .collection("users")
+      .find(query)
+      .toArray();
+
+    //map array of user documents into array of User class objects
+    const mapOneDocument = function (document) {
+      return User.fromMongoDBDocumentToUser(document);
+    };
+    return documents.map(mapOneDocument);
   }
 
   //find a user by its id
