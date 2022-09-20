@@ -3,7 +3,8 @@ const Message = require("../models/message-model");
 const MessageViewData = require("../models/message-view-data-model");
 const User = require("../models/user-model");
 
-//this class describes a chat between friends in a specific room
+//this class describes a chat between friends in a specific room, which was
+//requested by viewer, which is a user whith id = viewerId
 class Chat {
   constructor(room, viewerId) {
     if (!room || !viewerId) {
@@ -23,14 +24,25 @@ class Chat {
     const index = this.friends.indexOf(this.viewerId);
     if (index > -1) {
       this.friends.splice(index, 1);
+    } else {
+      throw new Error("Can not find the viewerId in the room");
     }
+
+    //friends names
+    this.friendsNames = []; //array of name
 
     //messages exchanged in this chat (viewer's ones are included)
     this.messages = []; //array of MessageViewData class objects
   }
 
   //collect friend names for this room
-  async fillWithfriendNames() {}
+  async fillWithfriendsNames() {
+    const users = await User.findManyByIds(this.friends);
+    const mapOneUser = function (user) {
+      return user.name;
+    };
+    this.friendsNames = users.map(mapOneUser);
+  }
 
   //collect messages for this room
   async fillWithMessages() {
