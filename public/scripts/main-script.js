@@ -59,6 +59,7 @@ socket.on("message-delete-broadcast", onMessageDeleteBroadcast);
 
 //global variables
 let initializationDoneGlobal = false;
+let chatListGlobal = [];
 
 //initialization
 initAfterPageLoaded();

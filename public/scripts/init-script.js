@@ -55,11 +55,15 @@ async function initAfterLogin(token) {
     return;
   }
 
+  //memorize chat list in global variable
+  chatListGlobal = chatList;
+
   //no chats found
-  if (chatList.length === 0) {
-    console.log("init done with 0 chats");
+  if (chatListGlobal.length === 0) {
     hideMainLoader();
     displayFriendsSection();
+    //upgrade connection to websocket protocol
+    socket.connect();
     initializationDoneGlobal = true;
     return;
   }
@@ -67,9 +71,20 @@ async function initAfterLogin(token) {
   //some chats were found...
   displayFriendsAndChatSectionOnWidhtChange();
 
-  //load chats on screen
+  //populate friends section with chat list
+  displayChatList(chatListGlobal);
+
+  //select first chat in the friends section list
+  //NOTE: with no passed parameters, 1st chat is selected by default
+  selectOneChat();
+
+  //populate chat section with messages contained in the selected chat
+  displayAllMessages(chatListGlobal[0].messages);
+
   hideMainLoader();
-  //...??
+
+  //upgrade connection to websocket protocol
+  socket.connect();
 
   //initialization done
   initializationDoneGlobal = true;

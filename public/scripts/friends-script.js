@@ -1,7 +1,6 @@
 //set active room id
 function setActiveChatRoomId(roomId) {
-  chatSectionElement.querySelector(".active-friends").dataset.roomId =
-    roomId;
+  chatSectionElement.querySelector(".active-friends").dataset.roomId = roomId;
 }
 
 //set active friend name
@@ -35,7 +34,7 @@ function displayOneChat(roomId, friendsNames, isOnline) {
   const friendChatItemContainerElement = document.createElement("div");
   friendChatItemContainerElement.classList.add("friend-chat-main-info");
   const friendChatItemElement = document.createElement("li");
-  friendChatItemElement.classList.add("friend-chat-item"); 
+  friendChatItemElement.classList.add("friend-chat-item");
   friendChatItemElement.dataset.roomId = roomId;
   friendChatItemElement.addEventListener("click", selectOneChat);
 
@@ -85,28 +84,35 @@ function cleanChatList() {
   friendsSectionElement.querySelector("ul").textContent = "";
 }
 
-//select one chat 
+//select one chat
 function selectOneChat(event) {
-  //find list item on which click occured
+  //init item which will be selected
   let selectedFriendChatItemElement;
-  if (event.target.classList.contains("friend-chat-item")) {
-    selectedFriendChatItemElement = event.target;
+
+  if (event) {
+    if (event.target.classList.contains("friend-chat-item")) {
+      selectedFriendChatItemElement = event.target;
+    } else {
+      //an child of list item was clicked, therefor find list item recursivly
+      selectedFriendChatItemElement = event.target.parentElement;
+      let iterationCount = 0;
+      while (
+        !selectedFriendChatItemElement.classList.contains("friend-chat-item") &&
+        iterationCount < 20 //max iterations allowed to avoid infinite loos
+      ) {
+        selectedFriendChatItemElement =
+          selectedFriendChatItemElement.parentElement;
+        iterationCount++;
+      }
+      //too many iterations: list item was not found
+      if (iterationCount >= 20) {
+        throw new Error("Could not find the selectedFriendChatItemElement");
+      }
+    }
   } else {
-    //an child of list item was clicked, therefor find list item recursivly
-    selectedFriendChatItemElement = event.target.parentElement;
-    let iterationCount = 0;
-    while (
-      !selectedFriendChatItemElement.classList.contains("friend-chat-item") &&
-      iterationCount < 20 //max iterations allowed to avoid infinite loos
-    ) {
-      selectedFriendChatItemElement =
-        selectedFriendChatItemElement.parentElement;
-      iterationCount++;
-    }
-    //too many iterations: list item was not found
-    if (iterationCount >= 20) {
-      throw new Error("Could not find the selectedFriendChatItemElement");
-    }
+    //if this function is called manually (not by a click event), just select the first chat item in the friends list
+    selectedFriendChatItemElement =
+      friendsSectionElement.querySelector("ul li");
   }
 
   //select li item
@@ -116,14 +122,13 @@ function selectOneChat(event) {
   const selectedFriendNameElement =
     selectedFriendChatItemElement.querySelector(".friend-chat-name");
   const selectedRoomId = selectedFriendChatItemElement.dataset.roomId;
-  const selectedChatStatusElement =
-    selectedFriendChatItemElement.querySelector(".friend-chat-status");
+  const selectedChatStatusElement = selectedFriendChatItemElement.querySelector(
+    ".friend-chat-status"
+  );
 
   //copy the selected friend name, chat online status and id in the active friends section
   setActiveChatRoomId(selectedRoomId);
-
   setActiveFriendName(selectedFriendNameElement.textContent);
-
   setActiveChatOnlineStatus(selectedChatStatusElement);
 
   //remove selected style from other chats in the list
@@ -149,9 +154,7 @@ function setOneChatOnlineStatus(roomId, isOnline) {
   const chatList = document.querySelectorAll(".friend-chat-item");
   for (const chat of chatList) {
     if (chat.dataset.roomId === roomId) {
-      const friendChatStatusElement = chat.querySelector(
-        ".friend-chat-status"
-      );
+      const friendChatStatusElement = chat.querySelector(".friend-chat-status");
       if (isOnline) {
         friendChatStatusElement.classList.add("friend-chat-status-online");
         friendChatStatusElement.classList.remove("friend-chat-status-offline");

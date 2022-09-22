@@ -15,8 +15,9 @@ function httpAuthCheckMiddleware(req, res, next) {
     return;
   }
 
-  //a token is found in the request
-  //check if user is authenticated (move this to the authentication middleware)
+  //a token is found in the request,
+  //check if user is authenticated (move this to the authentication middleware).
+  //NOTE: callback is passed to verify(), therefor it is called in ASYNC way
   jwt.verify(
     token,
     "not-a-secret",
