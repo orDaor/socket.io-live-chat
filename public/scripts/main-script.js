@@ -33,21 +33,17 @@ chatSectionElement
   .querySelector("form")
   .addEventListener("submit", sendMessage);
 
-//on socket opened (connected)
-socket.on("connect", function () {
-  //socket id undefined when socket is not connected yet
-  console.log(`Connected with soket.id = ${socket.id}`);
-});
-//NOTE: "connect" means both connect and re-connect (connect after connection was closed)
-//NOTE: on "conenct" event, a new unique socket id is assigned to the socket (before connection there is no id)
+//socket connection event listeners
+socket.on();
 
-//on socket closed (disconnected)
-socket.on("disconnect", function (reason) {
-  //when the socket disconnects / closes its socket id is reset
-  console.log(`Disconnected because: ${reason} (socket.id = ${socket.id})`);
-});
-//NOTE: if socket is disconnected manually with socket.disconnect(), euther from client or server,
-//      client will not try re-connecting automatically
+//ùsocket opened (connected)
+socket.on("connect", onSocketConnect);
+
+//ùocket closed (disconnected)
+socket.on("disconnect", onSocketDisconnect);
+
+//socket connection attempt failed
+socket.on("connect_error", onSocketConnecError);
 
 //socket boradcast event listeners
 socket.on("message-receive-broadcast", onMessageReceiveBroadcast);
@@ -56,11 +52,9 @@ socket.on("message-delete-broadcast", onMessageDeleteBroadcast);
 //socket ack event listeners
 //...??
 
-
 //global variables
 let initializationDoneGlobal = false;
 let chatListGlobal = [];
 
 //initialization
 initAfterPageLoaded();
-
