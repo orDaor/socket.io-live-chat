@@ -8,6 +8,7 @@ const socketConfig = {
   // reconnection: false,
 };
 const socket = io(socketConfig);
+//NOTE: by default this socket object (if no URL is pecified), will handle the connection with the server which served this page
 
 //access DOM elements
 const initInfoSectionElement = document.getElementById("init-info-section");

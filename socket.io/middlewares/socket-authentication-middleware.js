@@ -11,13 +11,19 @@ async function socketAuthCheckMiddleware(socket, next) {
   const token = socket.handshake.auth.token;
   //init error
   let error;
+  //NOTE: when creating an error to send back to the client, this can ONLY contain a "data" custom property
+  //a part from the "message"
 
   //no token in the request, move to next middleware/route
   if (!token) {
     //refuse socket connection
+    console.log("not auth 1");
     error = new Error("User not authenticated");
-    error.code = 401;
-    error.customMessage = "User not authenticated";
+    error.data = {
+      code: 401,
+      description: "User needs to login to get a new valid token",
+    };
+
     next(error);
     return;
   }
@@ -31,8 +37,12 @@ async function socketAuthCheckMiddleware(socket, next) {
     jwtPayload = jwt.verify(token, "not-a-secret", { algorithms: ["HS256"] });
   } catch (error) {
     //refuse socket connection
-    error.customMessage = "User not authenticated";
-    error.code = 401;
+    console.log("not auth 2");
+    error = new Error("User not authenticated");
+    error.data = {
+      code: 401,
+      description: "User needs to login to get a new valid token",
+    };
     next(error);
     return;
   }
@@ -46,9 +56,12 @@ async function socketAuthCheckMiddleware(socket, next) {
     rooms = await Room.findManyByUserId(socket.userId);
   } catch (error) {
     //refuse socket connection
-    error.customMessage =
-      "Could not fetch rooms info of the user from the database";
-    error.code = 500;
+    console.log("Server error");
+    error = new Error("Server error");
+    error.data = {
+      code: 500,
+      description: "Could not fetch rooms info of the user from the database",
+    };
     next(error);
     return;
   }
