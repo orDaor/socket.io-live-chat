@@ -69,7 +69,6 @@ async function initAfterLogin(token) {
   }
 
   //some chats were found...
-  displayFriendsAndChatSectionOnWidhtChange();
 
   //populate friends section with chat list
   displayChatList(chatListGlobal);
@@ -81,7 +80,9 @@ async function initAfterLogin(token) {
   //populate chat section with messages contained in the selected chat
   displayAllMessages(chatListGlobal[0].messages);
 
+  //show the friends and chat sections
   hideMainLoader();
+  displayFriendsAndChatSectionOnWidhtChange();
 
   //upgrade connection to websocket protocol
   socket.connect();
