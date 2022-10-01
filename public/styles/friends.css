@@ -55,12 +55,13 @@
   font: inherit;
   border: none;
   margin: 0;
-  padding: 0.5rem;
+  padding: 0.25rem;
   background-color: white;
   text-align: left;
   border: 1px solid var(--color-grey-100);
   width: 50%;
   color: inherit;
+  outline: none;
 }
 
 .friends-control .invitation-link .invitation-link-actions {
@@ -71,6 +72,7 @@
 .friends-control-error {
   color: var(--color-error-text);
   font-size: var(--font-size-0);
+  text-align: left;
 }
 
 .friends-control-error p {

@@ -7,6 +7,7 @@ function logout(event) {
   cleanChatList();
   cleanAllMessages();
   hideFriendsControlErrorInfo();
+  hideInvitationLink();
 
   //use must login again to get a new token
   hideFriendsSection();
