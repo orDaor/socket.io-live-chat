@@ -205,6 +205,33 @@ function hideOneMessageErrorInfo(messageId) {
   }
 }
 
+//display friends control error info
+function displayFriendsControlErrorInfo(info) {
+  const friendsControlElement =
+    friendsSectionElement.querySelector(".friends-control");
+
+  const friendsControlErrorContainerElement = document.createElement("div");
+  friendsControlErrorContainerElement.classList.add("friends-control-error");
+
+  const friendsControlErrorElement = document.createElement("p");
+  friendsControlErrorElement.textContent = info;
+
+  friendsControlErrorContainerElement.appendChild(friendsControlErrorElement);
+  friendsControlElement.appendChild(friendsControlErrorContainerElement);
+}
+
+//hide friends control error info
+function hideFriendsControlErrorInfo() {
+  const friendsControlErrorElement = friendsSectionElement.querySelector(
+    ".friends-control-error"
+  );
+  if (friendsControlErrorElement) {
+    friendsControlErrorElement.parentElement.removeChild(
+      friendsControlErrorElement
+    );
+  }
+}
+
 //create and display the main page loader
 function displayMainLoader() {
   const loaderElement = document.createElement("div");

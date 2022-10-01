@@ -55,7 +55,7 @@
   font: inherit;
   border: none;
   margin: 0;
-  padding: 0;
+  padding: 0.5rem;
   background-color: white;
   text-align: left;
   border: 1px solid var(--color-grey-100);
@@ -66,6 +66,16 @@
 .friends-control .invitation-link .invitation-link-actions {
   display: flex;
   gap: 1.5rem;
+}
+
+.friends-control-error {
+  color: var(--color-error-text);
+  font-size: var(--font-size-0);
+}
+
+.friends-control-error p {
+  margin: 0;
+  margin-top: 0.75rem;
 }
 
 #friends-section ul {

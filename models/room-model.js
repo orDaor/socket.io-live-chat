@@ -22,14 +22,6 @@ class Room {
     return new Room(document.friends, document.lastActivityDate, document._id);
   }
 
-  //generate mongodb document from Room class obj
-  static fromRoomToMongoDBDocument() {
-    return {
-      friends: this.friends,
-      lastActivityDate: this.lastActivityDate,
-    };
-  }
-
   //find a room by its id
   static async findById(roomId) {
     //define query filter
@@ -98,6 +90,14 @@ class Room {
         throw new Error("No room found for update");
       }
     }
+  }
+
+  //generate mongodb document from Room class obj
+  fromRoomToMongoDBDocument() {
+    return {
+      friends: this.friends,
+      lastActivityDate: this.lastActivityDate,
+    };
   }
 }
 

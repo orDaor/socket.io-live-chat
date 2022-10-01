@@ -1,3 +1,6 @@
+//imports custom
+const User = require("../models/user-model");
+
 //this is executed on JWT creation
 function jwtSignCallback(error, token, res, responseData, next) {
   //token creation error
@@ -13,9 +16,18 @@ function jwtSignCallback(error, token, res, responseData, next) {
 }
 
 //this is executed on JWT validation
-function jwtVerifyCallback(error, jwtPayload, res, next) {
+async function jwtVerifyCallback(error, jwtPayload, res, next) {
   //token validation failed, move to next route
   if (error) {
+    next();
+    return;
+  }
+
+  //check whether user pointed by this token still exists
+  let user;
+  try {
+    user = await User.findById(jwtPayload.userId);
+  } catch (error) {
     next();
     return;
   }

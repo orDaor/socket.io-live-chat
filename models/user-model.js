@@ -4,8 +4,14 @@ const ObjectId = require("mongodb").ObjectId;
 //imports custom
 const db = require("../data/database");
 
+//environment variable for the website domain
+let domain = "http://localhost:3000";
+if (process.env.DOMAIN) {
+  domain = process.env.DOMAIN;
+}
+
 class User {
-  constructor(name, password, regitrationDate, userId) {
+  constructor(name, password, regitrationDate, invitationId, userId) {
     this.name = name;
     this.password = password;
 
@@ -14,6 +20,8 @@ class User {
     } else {
       this.regitrationDate = new Date(); //now
     }
+
+    this.invitationId = invitationId;
 
     if (userId) {
       this.userId = userId.toString();
@@ -26,6 +34,7 @@ class User {
       document.name,
       document.password,
       document.regitrationDate,
+      document.invitationId,
       document._id
     );
   }
@@ -107,7 +116,36 @@ class User {
     if (!this.userId) {
       const result = await db.getDb().collection("users").insertOne(this);
       return result.insertedId;
+    } else {
+      //update existing
+      const query = { _id: new ObjectId(this.userId) };
+      const update = {
+        $set: this.fromUserToMongoDBDocument(),
+      };
+      const result = await db
+        .getDb()
+        .collection("users")
+        .updateOne(query, update);
+      //no user found for update
+      if (!result.matchedCount) {
+        throw new Error("No user found for update");
+      }
     }
+  }
+
+  //generate invitation link for connecting with this user
+  getInvitationLink() {
+    return domain + "/invite/" + this.invitationId;
+  }
+
+  //generate mongodb document from User class obj
+  fromUserToMongoDBDocument() {
+    return {
+      name: this.name,
+      password: this.password,
+      regitrationDate: this.regitrationDate,
+      invitationId: this.invitationId,
+    };
   }
 }
 

@@ -1,37 +1,49 @@
-//process ack from server on message send eventack
-function onMessageSendAck(eventAck) {
+//process ack from server on user get invitation link ack
+function onUserFetchInvitationLinkAck(ackData) {
+  //link was not generated
+  if (!ackData.ok) {
+    displayFriendsControlErrorInfo(ackData.info);
+    return;
+  }
+
+  //link generation ok
+  displayInvitationLink(ackData.invitationLink);
+}
+
+//process ack from server on message send ack
+function onMessageSendAck(ackData) {
   //message not saved as requested
-  if (!eventAck.ok) {
-    displayOneMessageErrorInfo("id-not-confirmed", eventAck.info);
+  if (!ackData.ok) {
+    displayOneMessageErrorInfo("id-not-confirmed", ackData.info);
     return;
   }
 
   //response ok
-  setMessageId(eventAck.messageId);
+  setMessageId(ackData.messageId);
 }
 
-//process ack from server on message read event
-function onMessageReadAck(eventAck) {
+//process ack from server on message read ack
+function onMessageReadAck(ackData) {
   //clean from page all messages and error message
   cleanAllMessages();
 
   //could not fetch the messages
-  if (!eventAck.ok) {
-    displayMainErrorInfo(eventAck.info);
+  if (!ackData.ok) {
+    displayMainErrorInfo(ackData.info);
     return;
   }
 
   //response ok
-  displayAllMessages(eventAck.messages);
+  displayAllMessages(ackData.messages);
 }
 
-//process ack from server on message delete
-function onMessageDeleteAck(eventAck) {
+//process ack from server on message delete ack
+function onMessageDeleteAck(ackData) {
   //could not delete the message
-  if (!eventAck.ok) {
-    displayOneMessageErrorInfo(eventAck.messageId, eventAck.info);
+  if (!ackData.ok) {
+    displayOneMessageErrorInfo(ackData.messageId, ackData.info);
     return;
   }
 
-  hideOneMessage(eventAck.messageId);
+  hideOneMessage(ackData.messageId);
 }

@@ -103,14 +103,14 @@ ul {
 }
 
 .loader {
-  border: 5px solid var(--color-primary-300);
+  border: 5px solid var(--color-primary-200);
   border-top: 5px solid var(--color-primary-500);
   border-radius: 50%;
   animation: spin 0.5s linear infinite;
 }
 
 #main-loader {
-  margin: 7rem auto;
+  margin: 10rem auto;
   width: 2rem;
   height: 2rem;
 }

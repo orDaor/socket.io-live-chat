@@ -171,11 +171,6 @@ function setOneChatOnlineStatus(roomId, isOnline) {
   }
 }
 
-//request a link for inviting a friend
-function getInvitationLink() {
-  console.log("Ask the server to give me an invitation link...");
-}
-
 //display invitaion link
 function displayInvitationLink(linkText) {
   const invitationLinkContainerElement = document.createElement("div");

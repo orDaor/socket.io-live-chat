@@ -27,7 +27,7 @@ const backToChatListButton = document.querySelector(
 
 //standard event listeners
 window.addEventListener("resize", displayFriendsAndChatSectionOnWidhtChange);
-addFriendButtonElement.addEventListener("click", getInvitationLink);
+addFriendButtonElement.addEventListener("click", fetchInvitationLink);
 logOutButtonElement.addEventListener("click", logout);
 backToChatListButton.addEventListener("click", displayFriendsAndHideChat);
 chatSectionElement

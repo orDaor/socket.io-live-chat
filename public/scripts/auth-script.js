@@ -6,11 +6,15 @@ function logout(event) {
   //clean all chat content
   cleanChatList();
   cleanAllMessages();
+  hideFriendsControlErrorInfo();
 
   //use must login again to get a new token
   hideFriendsSection();
   hideChatSection();
   displaySignUpInForm("Login");
+
+  //disconnect socket
+  socket.disconnect();
 
   //restart
   initializationDoneGlobal = false;

@@ -3,6 +3,7 @@ const jwt = require("jsonwebtoken");
 
 //imports custom
 const Room = require("../../models/room-model");
+const User = require("../../models/user-model");
 
 //this function checks whether a user is allowed or not to open a socket connection.
 //User is allowed if it is authenticated
@@ -42,6 +43,21 @@ async function socketAuthCheckMiddleware(socket, next) {
     error.data = {
       code: 401,
       description: "User needs to login to get a new valid token",
+    };
+    next(error);
+    return;
+  }
+
+  //check whether user pointed by this token still exists
+  let user;
+  try {
+    user = await User.findById(jwtPayload.userId);
+  } catch (error) {
+    console.log("Server error");
+    error = new Error("Server error");
+    error.data = {
+      code: 500,
+      description: "This user does not exist",
     };
     next(error);
     return;

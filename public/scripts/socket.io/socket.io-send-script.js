@@ -1,3 +1,30 @@
+//request a link for inviting a friend
+function fetchInvitationLink() {
+  //init
+  hideInvitationLink();
+  hideFriendsControlErrorInfo();
+  const errorInfo =
+    "It is not possible to reach the server now... Maybe check your connection?";
+  const delay = 5000;
+
+  //socket not connected
+  if (!socket.connected) {
+    displayFriendsControlErrorInfo(errorInfo);
+    return;
+  }
+
+  //start ack timeout: callback executed if ack is not received within delay
+  const timerId = setTimeout(function () {
+    displayFriendsControlErrorInfo(errorInfo);
+  }, delay);
+
+  //send event
+  socket.emit("user-fetch-invitation-link", {}, function (ackData) {
+    clearTimeout(timerId);
+    onUserFetchInvitationLinkAck(ackData);
+  });
+}
+
 //emit a message on the websocket connection
 function sendMessage(event) {
   event.preventDefault();
@@ -9,8 +36,7 @@ function sendMessage(event) {
 
   //user connected...
   const formData = new FormData(event.target);
-  const activeChatElement =
-    chatSectionElement.querySelector(".active-friends");
+  const activeChatElement = chatSectionElement.querySelector(".active-friends");
 
   //build message
   const message = {
