@@ -38,7 +38,7 @@ async function initAfterLogin(token) {
       } else {
         //bad response
         errorTitle = "Ooooops...";
-        errorMessage = error.customMessage;
+        errorMessage = error.message;
         //show error info
         hideMainLoader();
         disaplayInitInfo(errorTitle, errorMessage);
@@ -116,10 +116,10 @@ async function fetchChatList(token) {
 
   //response not ok
   if (!response.ok) {
-    error = new Error("Response not ok");
+    error = new Error();
     //401 (not authenticated), 403(not authorized), 404, 500, ...
     error.code = response.status;
-    error.customMessage = responseData.message;
+    error.message = responseData.message;
     throw error;
   }
 
