@@ -18,6 +18,15 @@ async function initAfterLogin(token) {
   //attach token to socket
   socket.auth = { token: token };
 
+  //handle invitation request, in case this page was served by accessing an invitation link
+  if (invitationInfo.invitationId) {
+    handleInvitationRequest(
+      invitationInfo.invitationId,
+      invitationInfo.inviterName
+    );
+    return;
+  }
+
   //loading...
   hideSignUpInForm();
   displayMainLoader();
@@ -128,15 +137,24 @@ async function fetchChatList(token) {
 }
 
 //handle invitation request after accessing an invitation link
-function handleInvitationRequest() {
+function handleInvitationRequest(invitationId, inviterName) {
   //check whether this page was served from an invitation link
-  if (invitationInfo.invitationId) {
+  if (invitationId) {
+    //config
+    let title;
+    let info;
+    let action;
     //who issued this link?
-    if (invitationInfo.inviterName) {
+    if (inviterName) {
       //the user who issued this link was found
+      //...???
     } else {
       //the user who issued this link was NOT found
+      title = "Ooooops...";
+      info =
+        "This invitation link is not valid. Please get a new link, or go back to Your Chats";
+      action = "Your Chats";
+      disaplayInitInfo(title, info, action);
     }
-    return;
   }
 }
