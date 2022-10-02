@@ -41,7 +41,7 @@ async function initAfterLogin(token) {
         errorMessage = error.message;
         //show error info
         hideMainLoader();
-        disaplayInitInfo(errorTitle, errorMessage);
+        disaplayInitInfo(errorTitle, errorMessage, "Try Again");
       }
     } else {
       //technical error
@@ -50,7 +50,7 @@ async function initAfterLogin(token) {
         "It was not possible to load your chats, because we could not reach the server. Maybe check your connection?";
       //show error info
       hideMainLoader();
-      disaplayInitInfo(errorTitle, errorMessage);
+      disaplayInitInfo(errorTitle, errorMessage, "Try Again");
     }
     return;
   }
@@ -125,4 +125,18 @@ async function fetchChatList(token) {
 
   //array of chats collected for this user
   return responseData.chatList;
+}
+
+//handle invitation request after accessing an invitation link
+function handleInvitationRequest() {
+  //check whether this page was served from an invitation link
+  if (invitationInfo.invitationId) {
+    //who issued this link?
+    if (invitationInfo.inviterName) {
+      //the user who issued this link was found
+    } else {
+      //the user who issued this link was NOT found
+    }
+    return;
+  }
 }

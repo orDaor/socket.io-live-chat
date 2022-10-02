@@ -102,6 +102,23 @@ class User {
     return User.fromMongoDBDocumentToUser(document);
   }
 
+  //find a user by invitation id
+  static async findByInvitationId(invitationId) {
+    //define query filter
+    const query = { invitationId: invitationId };
+
+    //run query
+    const document = await db.getDb().collection("users").findOne(query);
+
+    //no user found
+    if (!document) {
+      throw new Error("No user found with this invitation id");
+    }
+
+    //return user class obj
+    return User.fromMongoDBDocumentToUser(document);
+  }
+
   //delete a user by its id
   static async deleteById(userId) {
     const query = { _id: new ObjectId(userId) };
@@ -135,7 +152,7 @@ class User {
 
   //generate invitation link for connecting with this user
   getInvitationLink() {
-    return domain + "/invite/" + this.invitationId;
+    return domain + "/room/invitation/" + this.invitationId;
   }
 
   //generate mongodb document from User class obj

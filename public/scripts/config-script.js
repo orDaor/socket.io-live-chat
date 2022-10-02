@@ -1,11 +1,11 @@
 //display init info
-function disaplayInitInfo(title, info) {
+function disaplayInitInfo(title, info, action) {
   if (!info) {
     return;
   }
 
   initInfoSectionElement.style.display = "block";
-  initInfoSectionElement.innerHTML = getHtmlContentInitInfo(title, info);
+  initInfoSectionElement.innerHTML = getHtmlContentInitInfo(title, info, action);
 }
 
 // hide init info

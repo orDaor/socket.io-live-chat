@@ -18,6 +18,7 @@ const notFoundMidlleware = require("./middlewares/not-found-middleware");
 const errorHandlingMiddleware = require("./middlewares/error-handling-middleware");
 const baseRoutes = require("./routes/base-routes");
 const userRoutes = require("./routes/user-routes");
+const roomRoutes = require("./routes/room-routes");
 const messageRoutes = require("./routes/message-routes");
 const socketAuthCheckMiddleware = require("./socket.io/middlewares/socket-authentication-middleware");
 const initSocket = require("./socket.io/events-listeners/socket-init");
@@ -61,6 +62,9 @@ app.use(baseRoutes);
 
 //user routes
 app.use("/user", userRoutes);
+
+//rooms routes
+app.use("/room", roomRoutes);
 
 //routes protection middleware
 app.use(routesProtectionMiddleware);

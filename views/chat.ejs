@@ -3,6 +3,9 @@
   <head>
     <%- include("includes/head", {pageTitle: "Socket.IO Chat"}) %>
     <meta name="csrf-token" content="<%= locals.csrfToken %>">
+    <meta name="invitation-info"
+      data-invitation-id="<%= locals.invitationId %>"
+      data-inviter-name="<%= locals.inviterName %>">
     <link rel="stylesheet" href="/styles/init-info.css" />
     <link rel="stylesheet" href="/styles/auth.css" />
     <link rel="stylesheet" href="/styles/friends.css" />

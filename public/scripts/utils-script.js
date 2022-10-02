@@ -37,10 +37,11 @@ function getHtmlContentSignUpInForm(action, alternativeAction) {
 const messagesLoadingErrorInfo = `We were not able to load your messages.
 Please try again by clicking this button or reloading the page!`;
 
-function getHtmlContentInitInfo(title, info) {
-  return `<div class="init-info">
+function getHtmlContentInitInfo(title, info, action) {
+  const htmlContent = `<div class="init-info">
   <h1>${title}</h1>
   <p>${info}</p>
-  <a href="/"><button class="btn">Try Again</button></a>
+  <a href="/"><button class="btn">${action}</button></a>
   </div>`;
+  return htmlContent;
 }
