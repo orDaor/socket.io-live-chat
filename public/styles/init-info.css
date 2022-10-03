@@ -39,6 +39,13 @@
   background-color: var(--color-primary-100);
 }
 
+.init-info .init-info-error {
+  margin: 1.5rem auto;
+  color: var(--color-error-text);
+  font-size: var(--font-size-1);
+  text-align: center;
+}
+
 @media (min-width: 480px) {
   .init-info {
     width: 80%;

@@ -126,7 +126,14 @@ async function login(req, res, next) {
     },
     function (error, token) {
       //get token and send response
-      authentication.jwtSignCallback(error, token, res, responseData, next);
+      authentication.jwtSignCallback(
+        error,
+        token,
+        existingUser.name,
+        res,
+        responseData,
+        next
+      );
     }
   );
 }

@@ -2,7 +2,7 @@
 const User = require("../models/user-model");
 
 //this is executed on JWT creation
-function jwtSignCallback(error, token, res, responseData, next) {
+function jwtSignCallback(error, token, userName, res, responseData, next) {
   //token creation error
   if (error) {
     next(error);
@@ -11,6 +11,7 @@ function jwtSignCallback(error, token, res, responseData, next) {
 
   //response
   responseData.token = token;
+  responseData.userName = userName;
   responseData.message = "Login successfull";
   res.json(responseData);
 }

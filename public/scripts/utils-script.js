@@ -37,11 +37,27 @@ function getHtmlContentSignUpInForm(action, alternativeAction) {
 const messagesLoadingErrorInfo = `We were not able to load your messages.
 Please try again by clicking this button or reloading the page!`;
 
-function getHtmlContentInitInfo(title, info, action) {
-  const htmlContent = `<div class="init-info">
-  <h1>${title}</h1>
-  <p>${info}</p>
-  <a href="/"><button class="btn">${action}</button></a>
-  </div>`;
+function getHtmlContentInitInfo(title, info, action, optionalAction, data) {
+  //optional action
+  let optionalHtmlContent = "";
+  if (optionalAction) {
+    //accept invitation link case
+    if (optionalAction === "Join Chat") {
+      optionalHtmlContent = `<button class="btn" onclick="joinChat(event)">${optionalAction}</button>`;
+      //other cases
+    } else {
+      //TODO
+    }
+  }
+
+  //html content
+  const htmlContent =
+    `<div class="init-info">
+      <h1>${title}</h1>
+      <p>${info}</p>` +
+    optionalHtmlContent +
+    `<a href="/"><button class="btn btn-alt">${action}</button></a>` +
+    `</div>`;
+
   return htmlContent;
 }

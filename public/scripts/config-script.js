@@ -1,11 +1,16 @@
 //display init info
-function disaplayInitInfo(title, info, action) {
+function disaplayInitInfo(title, info, action, optionalAction) {
   if (!info) {
     return;
   }
 
   initInfoSectionElement.style.display = "block";
-  initInfoSectionElement.innerHTML = getHtmlContentInitInfo(title, info, action);
+  initInfoSectionElement.innerHTML = getHtmlContentInitInfo(
+    title,
+    info,
+    action,
+    optionalAction
+  );
 }
 
 // hide init info
@@ -229,6 +234,25 @@ function hideFriendsControlErrorInfo() {
     friendsControlErrorElement.parentElement.removeChild(
       friendsControlErrorElement
     );
+  }
+}
+
+//display init error info
+function displayInitErrorInfo(info) {
+  const initInfoElement = initInfoSectionElement.querySelector(".init-info");
+  const errorInfoElement = document.createElement("p");
+  errorInfoElement.textContent = info;
+  errorInfoElement.classList.add("init-info-error");
+  initInfoElement.appendChild(errorInfoElement);
+}
+
+//hide init error info
+function hideInitErrorInfo() {
+  const errorInfoElement = initInfoSectionElement.querySelector(
+    ".init-info .init-info-error"
+  );
+  if (errorInfoElement) {
+    errorInfoElement.parentElement.removeChild(errorInfoElement);
   }
 }
 

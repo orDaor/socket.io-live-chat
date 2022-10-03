@@ -1,7 +1,8 @@
 //log out
 function logout(event) {
-  //remove JWT
+  //remove JWT and user name
   localStorage.removeItem("token");
+  localStorage.removeItem("user-name");
 
   //clean all chat content
   cleanChatList();
@@ -70,8 +71,9 @@ async function login(event) {
     return;
   }
 
-  //login was ok, get and memorize JWT
+  //login was ok, get and memorize JWT and user name
   localStorage.setItem("token", responseData.token);
+  localStorage.setItem("user-name", responseData.userName);
 
   //initialize after login
   initAfterLogin(responseData.token);

@@ -71,7 +71,7 @@
 
 .friends-control-error {
   color: var(--color-error-text);
-  font-size: var(--font-size-0);
+  font-size: var(--font-size-1);
   text-align: left;
 }
 
