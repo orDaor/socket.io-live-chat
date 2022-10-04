@@ -2,7 +2,7 @@
 const csrfToken = document.querySelector('meta[name="csrf-token"]').content;
 
 //invitaion info (used to check whether this pages comes from an invitation link)
-const invitationInfo = document.querySelector('meta[name="invitation-info"]').dataset;
+const invitationInfoElement = document.querySelector('meta[name="invitation-info"]');
 
 //create socket, for which the client does not automatically send a request
 //to the server for opening it

@@ -10,19 +10,19 @@ async function handleInvitationLink(req, res, next) {
   let inviter;
   let locals = res.locals;
   locals.invitationInfo = {};
-  locals.invitationId = invitationId;
+  locals.invitationInfo.invitationId = invitationId;
   try {
     inviter = await User.findByInvitationId(invitationId);
   } catch (error) {
     //the user who issued this link was not found, so this link is not valid
-    locals.inviterName = "";
+    locals.invitationInfo.inviterName = "";
     //response
     res.render("chat");
     return;
   }
 
   //the user who issued this link was found
-  locals.inviterName = inviter.name;
+  locals.invitationInfo.inviterName = inviter.name;
 
   //response
   res.render("chat");
