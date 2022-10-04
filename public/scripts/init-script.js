@@ -170,36 +170,59 @@ function handleInvitationRequest(invitationInfo) {
 
 //accept chat invitation by another user
 async function joinChat(event) {
-  // let response;
-  // let error;
+  let response;
 
-  // //config ajax request
-  // const requestUrl = `/message/all`;
-  // const requestConfig = {
-  //   headers: {
-  //     Accept: "application/json",
-  //     "Content-Type": "application/json",
-  //     "CSRF-Token": csrfToken,
-  //   },
-  //   method: "POST",
-  //   body: JSON.stringify({ token: token }),
-  // };
+  //check if this user has a token, if not then login to get a new one
+  const token = localStorage.getItem("token");
+  if (!token) {
+    hideInitInfo();
+    displaySignUpInForm("Login");
+    return;
+  }
 
-  // //send ajax request
-  // response = await fetch(requestUrl, requestConfig);
+  //config ajax request
+  const requestUrl = `/room/join`;
+  const requestBody = {
+    token: token,
+    invitationId: invitationInfoElement.dataset.invitationId,
+  };
+  const requestConfig = {
+    headers: {
+      Accept: "application/json",
+      "Content-Type": "application/json",
+      "CSRF-Token": csrfToken,
+    },
+    method: "POST",
+    body: JSON.stringify(requestBody),
+  };
 
-  // //parse response
-  // const responseData = await response.json();
+  //send ajax request
+  try {
+    response = await fetch(requestUrl, requestConfig);
+  } catch (error) {
+    displayInitErrorInfo(
+      "Can not reach the server. May check your connection?"
+    );
+    return;
+  }
 
-  // //response not ok
-  // if (!response.ok) {
-  //   error = new Error();
-  //   //401 (not authenticated), 403(not authorized), 404, 500, ...
-  //   error.code = response.status;
-  //   error.message = responseData.message;
-  //   throw error;
-  // }
+  //parse response
+  const responseData = await response.json();
 
-  // //array of chats collected for this user
-  // return responseData.chatList;
+  //response not ok
+  if (!response.ok) {
+    if (response.status === 401 || response.status === 403) {
+      hideInitInfo();
+      displaySignUpInForm("Login"); //need to get a new valid token
+      return;
+    }
+    hideInitErrorInfo();
+    displayInitErrorInfo(responseData.message);
+    return;
+  }
+
+  //response was ok
+  invitationInfoElement = null;
+  hideInitInfo();
+  initAfterLogin(token);
 }

@@ -168,7 +168,6 @@ function hideMainErrorInfo() {
 
 //display error message
 function displayMainErrorInfo(info) {
-  hideMainErrorInfo();
   const isErrorMessage = true;
   displayOneMessage(isErrorMessage, null, info, null, null, true);
 }

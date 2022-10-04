@@ -2,7 +2,7 @@
 const csrfToken = document.querySelector('meta[name="csrf-token"]').content;
 
 //invitaion info (used to check whether this pages comes from an invitation link)
-const invitationInfoElement = document.querySelector('meta[name="invitation-info"]');
+let invitationInfoElement = document.querySelector('meta[name="invitation-info"]');
 
 //create socket, for which the client does not automatically send a request
 //to the server for opening it
@@ -37,10 +37,7 @@ chatSectionElement
   .querySelector("form")
   .addEventListener("submit", sendMessage);
 
-//socket connection event listeners
-socket.on();
-
-//ùsocket opened (connected)
+//socket opened (connected)
 socket.on("connect", onSocketConnect);
 
 //ùocket closed (disconnected)

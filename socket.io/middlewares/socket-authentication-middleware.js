@@ -18,7 +18,6 @@ async function socketAuthCheckMiddleware(socket, next) {
   //no token in the request, move to next middleware/route
   if (!token) {
     //refuse socket connection
-    console.log("not auth 1");
     error = new Error("User not authenticated");
     error.data = {
       code: 401,
@@ -38,7 +37,6 @@ async function socketAuthCheckMiddleware(socket, next) {
     jwtPayload = jwt.verify(token, "not-a-secret", { algorithms: ["HS256"] });
   } catch (error) {
     //refuse socket connection
-    console.log("not auth 2");
     error = new Error("User not authenticated");
     error.data = {
       code: 401,
@@ -53,7 +51,6 @@ async function socketAuthCheckMiddleware(socket, next) {
   try {
     user = await User.findById(jwtPayload.userId);
   } catch (error) {
-    console.log("Server error");
     error = new Error("Server error");
     error.data = {
       code: 500,
@@ -72,7 +69,6 @@ async function socketAuthCheckMiddleware(socket, next) {
     rooms = await Room.findManyByUserId(socket.userId);
   } catch (error) {
     //refuse socket connection
-    console.log("Server error");
     error = new Error("Server error");
     error.data = {
       code: 500,
@@ -87,7 +83,6 @@ async function socketAuthCheckMiddleware(socket, next) {
     return room.id;
   };
   socket.dbRooms = rooms.map(mapOneRoom);
-
   //response ok
   next();
 }

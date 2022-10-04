@@ -10,8 +10,8 @@ const roomController = require("../controllers/room-controller");
 //create router
 const router = express.Router();
 
-//invitation link handling
-// router.get("/invitation/:invitationId", roomController.handleInvitationLink);
+//user accept invitation request
+router.post("/join", roomController.accetpInvitationRequest);
 
 //export
 module.exports = router;

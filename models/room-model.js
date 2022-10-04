@@ -52,7 +52,7 @@ class Room {
       .collection("rooms")
       .find(query)
       .toArray();
-
+      
     //map array of room documents into array of Room class objects
     const mapOneDocument = function (document) {
       return Room.fromMongoDBDocumentToRoom(document);

@@ -76,7 +76,12 @@ async function login(event) {
   localStorage.setItem("user-name", responseData.userName);
 
   //initialize after login
-  initAfterLogin(responseData.token);
+  if (invitationInfoElement) {
+    hideSignUpInForm();
+    handleInvitationRequest(invitationInfoElement.dataset);
+  } else {
+    initAfterLogin(responseData.token);
+  }
 }
 
 //ajax request for requesting sign up
