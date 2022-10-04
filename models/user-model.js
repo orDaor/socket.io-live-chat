@@ -152,7 +152,7 @@ class User {
 
   //generate invitation link for connecting with this user
   getInvitationLink() {
-    return domain + "/room/invitation/" + this.invitationId;
+    return domain + "/user/invitation/" + this.invitationId;
   }
 
   //generate mongodb document from User class obj

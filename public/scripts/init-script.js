@@ -169,6 +169,37 @@ function handleInvitationRequest(invitationInfo) {
 }
 
 //accept chat invitation by another user
-function joinChat(event) {
-  console.log(event.target);
+async function joinChat(event) {
+  // let response;
+  // let error;
+
+  // //config ajax request
+  // const requestUrl = `/message/all`;
+  // const requestConfig = {
+  //   headers: {
+  //     Accept: "application/json",
+  //     "Content-Type": "application/json",
+  //     "CSRF-Token": csrfToken,
+  //   },
+  //   method: "POST",
+  //   body: JSON.stringify({ token: token }),
+  // };
+
+  // //send ajax request
+  // response = await fetch(requestUrl, requestConfig);
+
+  // //parse response
+  // const responseData = await response.json();
+
+  // //response not ok
+  // if (!response.ok) {
+  //   error = new Error();
+  //   //401 (not authenticated), 403(not authorized), 404, 500, ...
+  //   error.code = response.status;
+  //   error.message = responseData.message;
+  //   throw error;
+  // }
+
+  // //array of chats collected for this user
+  // return responseData.chatList;
 }

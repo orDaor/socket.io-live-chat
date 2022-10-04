@@ -11,7 +11,7 @@ const roomController = require("../controllers/room-controller");
 const router = express.Router();
 
 //invitation link handling
-router.get("/invitation/:invitationId", roomController.handleInvitationLink);
+// router.get("/invitation/:invitationId", roomController.handleInvitationLink);
 
 //export
 module.exports = router;

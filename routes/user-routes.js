@@ -16,5 +16,8 @@ router.post("/signup", userController.signup);
 //user login
 router.post("/login", userController.login);
 
+//invitation link handling
+router.get("/invitation/:invitationId", userController.handleInvitationLink);
+
 //export
 module.exports = router;
