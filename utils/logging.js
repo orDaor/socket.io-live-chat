@@ -5,7 +5,7 @@ function logSocketInitInfo(socket) {
     `Connected with:
         - socket.id = ${socket.id}
         - socket.userId = ${socket.userId}
-        - `
+    `
   );
 
   //rooms
@@ -14,5 +14,5 @@ function logSocketInitInfo(socket) {
 
 //exports
 module.exports = {
-    logSocketInitInfo: logSocketInitInfo,
+  logSocketInitInfo: logSocketInitInfo,
 };

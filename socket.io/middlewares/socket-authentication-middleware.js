@@ -80,7 +80,7 @@ async function socketAuthCheckMiddleware(socket, next) {
 
   //save in the socket an array of the room ids
   const mapOneRoom = function (room) {
-    return room.id;
+    return room.roomId;
   };
   socket.dbRooms = rooms.map(mapOneRoom);
   //response ok
