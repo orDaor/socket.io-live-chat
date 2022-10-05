@@ -12,38 +12,12 @@ function onUserFetchInvitationLinkAck(ackData) {
 
 //process ack from server on message send ack
 function onMessageSendAck(ackData) {
-  //message not saved as requested
+  //message not sent (not saved and not forwarded to the users in the room)
   if (!ackData.ok) {
-    displayOneMessageErrorInfo("id-not-confirmed", ackData.info);
+    displayOneMessageErrorInfo(ackData.tempMessageId, ackData.info);
     return;
   }
 
   //response ok
-  setMessageId(ackData.messageId);
-}
-
-//process ack from server on message read ack
-function onMessageReadAck(ackData) {
-  //clean from page all messages and error message
-  cleanAllMessages();
-
-  //could not fetch the messages
-  if (!ackData.ok) {
-    displayMainErrorInfo(ackData.info);
-    return;
-  }
-
-  //response ok
-  displayAllMessages(ackData.messages);
-}
-
-//process ack from server on message delete ack
-function onMessageDeleteAck(ackData) {
-  //could not delete the message
-  if (!ackData.ok) {
-    displayOneMessageErrorInfo(ackData.messageId, ackData.info);
-    return;
-  }
-
-  hideOneMessage(ackData.messageId);
+  setMessageId(ackData.messageId, ackData.tempMessageId);
 }

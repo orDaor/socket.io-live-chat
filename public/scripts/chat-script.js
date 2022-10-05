@@ -106,10 +106,10 @@ function hideOneMessage(messageId) {
 }
 
 //set message id on the page
-function setMessageId(messageId) {
+function setMessageId(messageId, tempMessageId) {
   const messages = document.querySelectorAll(".message-item");
   for (const message of messages) {
-    if (message.dataset.messageId === "id-not-confirmed") {
+    if (message.dataset.messageId === tempMessageId) {
       message.dataset.messageId = messageId;
       return;
     }

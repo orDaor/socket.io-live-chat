@@ -200,11 +200,13 @@ function hideOneMessageErrorInfo(messageId) {
     if (message.dataset.messageId === messageId) {
       //find the message and remove its error info
       const messageItemError = message.querySelector(".message-item-error");
-      message.removeChild(messageItemError);
-      //remove also line break
-      const lineBreak = message.querySelector(".line-break-control");
-      message.removeChild(lineBreak);
-      return;
+      if (messageItemError) {
+        message.removeChild(messageItemError);
+        //remove also line break
+        const lineBreak = message.querySelector(".line-break-control");
+        message.removeChild(lineBreak);
+        return;
+      }
     }
   }
 }

@@ -6,10 +6,13 @@ class MessageViewData {
     //general message data
     this.text = message.text;
     this.creationDate = message.creationDate;
-    this.messageId = message.messageId;
 
     //if this user who sent this message is the same who wants to vizualize it
     this.senderIsViewer = message.senderId === viewerId;
+
+    if (this.senderIsViewer) {
+      this.messageId = message.messageId;
+    }
   }
 }
 

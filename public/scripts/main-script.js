@@ -48,10 +48,6 @@ socket.on("connect_error", onSocketConnecError);
 
 //socket boradcast event listeners
 socket.on("message-receive-broadcast", onMessageReceiveBroadcast);
-socket.on("message-delete-broadcast", onMessageDeleteBroadcast);
-
-//socket ack event listeners
-//...??
 
 //global variables
 let initializationDoneGlobal = false;

@@ -139,6 +139,7 @@
 .friend-chat-item-selected {
   border-color: var(--color-primary-500);
   font-weight: bold;
+  cursor: auto;
 }
 
 .friend-chat-item-unread {

@@ -4,7 +4,7 @@ const minUserNameLength = 5;
 const maxUserNameLength = 20;
 
 //sign up input validation
-function userInput(userInput, loggingEnabled = false) {
+function userData(userInput, loggingEnabled = false) {
   //user name validation
   const validatedUserName = userInput.userName.trim();
   const userNameOk =
@@ -30,9 +30,46 @@ function userInput(userInput, loggingEnabled = false) {
   }
 }
 
+//validate a message which the user tries to send
+function message(message, loggingEnabled = true) {
+  //text
+  const validatedText = message.text.trim();
+  const textOk = validatedText;
+
+  //roomId
+  const validatedRoomId = message.roomId.trim();
+  const roomIdOk = validatedRoomId.length > 5;
+
+  //creation date
+  const validatedCreationDate = message.creationDate.trim();
+  const creationDateOk = validatedCreationDate;
+
+  //temp message id
+  const validatedTempMessageId = message.tempMessageId.trim();
+  const tempMessageIdOk = validatedTempMessageId > 5;
+
+  if (loggingEnabled) {
+    console.log(`textOk: ${!!textOk}`);
+    console.log(`roomIdOk: ${!!roomIdOk}`);
+    console.log(`creationDateOk: ${!!creationDateOk}`);
+  }
+
+  if (textOk && roomIdOk && creationDateOk && tempMessageIdOk) {
+    return {
+      validatedText: validatedText,
+      validatedRoomId: validatedRoomId,
+      validatedCreationDate: validatedCreationDate,
+      validatedTempMessageId: validatedTempMessageId,
+    };
+  } else {
+    return undefined;
+  }
+}
+
 //exports
 module.exports = {
-  userInput: userInput,
+  userData: userData,
+  message: message,
   minUserNameLength: minUserNameLength,
   maxUserNameLength: maxUserNameLength,
   minPasswordLength: minPasswordLength,

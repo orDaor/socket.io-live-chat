@@ -58,7 +58,7 @@
 .message-item p.message-item-error {
   background-color: white;
   color: var(--color-error-text);
-  font-weight: bold;
+  /* font-weight: bold; */
   font-size: var(--font-size-1);
 }
 

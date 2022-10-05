@@ -20,7 +20,7 @@ async function signup(req, res, next) {
   const unserInput = req.body;
 
   //user input validation
-  const validatedUserInput = validation.userInput(unserInput, false);
+  const validatedUserInput = validation.userData(unserInput, false);
   if (!validatedUserInput) {
     responseData.message = `User name length must be between ${validation.minUserNameLength} and ${validation.maxUserNameLength}.
        Password must be at least ${validation.minPasswordLength} characters long`;
