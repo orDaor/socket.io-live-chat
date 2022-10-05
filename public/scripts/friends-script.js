@@ -134,7 +134,7 @@ function selectOneChat(event) {
   //remove selected style from other chats in the list
   const chatList = document.querySelectorAll(".friend-chat-item");
   for (const chat of chatList) {
-    if (chat.dataset.roomId !== selectedroomId) {
+    if (chat.dataset.roomId !== selectedRoomId) {
       chat.classList.remove("friend-chat-item-selected");
     }
   }
