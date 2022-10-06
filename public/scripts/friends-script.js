@@ -142,6 +142,14 @@ function selectOneChat(event) {
   //remove un-read chat item status if present
   setChatItemAsRead(selectedRoomId);
 
+  //display all messages for this chat
+  for (const chat of chatListGlobal) {
+    if (chat.roomId === selectedRoomId) {
+      displayAllMessages(chat.messages);
+      break;
+    }
+  }
+
   //in mobile view, show only chat section
   if (window.innerWidth < 768) {
     hideFriendsSection();

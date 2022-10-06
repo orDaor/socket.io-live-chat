@@ -20,4 +20,6 @@ function onMessageSendAck(ackData) {
 
   //response ok
   setMessageId(ackData.messageId, ackData.tempMessageId);
+
+  //TODO: add message in chatListGlobal[]
 }

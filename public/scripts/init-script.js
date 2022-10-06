@@ -79,12 +79,10 @@ async function initAfterLogin(token) {
   //populate friends section with chat list
   displayChatList(chatListGlobal);
 
-  //select first chat in the friends section list
+  //select first chat in the friends section list, and populate the chat section with
+  //the messages of this first chat
   //NOTE: with no passed parameters, 1st chat is selected by default
   selectOneChat();
-
-  //populate chat section with messages contained in the selected chat
-  displayAllMessages(chatListGlobal[0].messages);
 
   //show the friends and chat sections
   hideMainLoader();
@@ -153,7 +151,7 @@ function handleInvitationRequest(invitationInfo) {
       action = "Your Chats";
     } else {
       //the link was issued by another user
-      title = `<b>${invitationInfo.inviterName}</b> invited you to for joining a chat`;
+      title = `<b>${invitationInfo.inviterName}</b> wants to chat with you!`;
       info = `If you acept the invitation, you will join a new chat room with ${invitationInfo.inviterName}`;
       action = "Refuse";
       optionalAction = "Join Chat";
@@ -222,7 +220,8 @@ async function joinChat(event) {
   }
 
   //response was ok
-  invitationInfoElement = null;
+  history.replaceState(null, "", "/"); //update the currend url path with "/" (home page)
+  invitationInfoElement = null; //finished to handle invitation request
   hideInitInfo();
-  initAfterLogin(token);
+  initAfterLogin(token); //request chats of this user
 }

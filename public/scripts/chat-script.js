@@ -76,7 +76,7 @@ function displayAllMessages(messages) {
     } else {
       displayOneMessage(
         false,
-        message.messageId,
+        "",
         message.text,
         message.creationDate,
         "left",

@@ -12,7 +12,7 @@ async function onSend(socket, message, sendAck) {
   const validatedMessage = validation.message(message);
   if (!validatedMessage) {
     ackData.ok = false;
-    ackData.message = "User tried to send an empty message";
+    ackData.message = "User tried to send a non valid message";
     sendAck(ackData);
     return;
   }
@@ -27,29 +27,39 @@ async function onSend(socket, message, sendAck) {
 
   console.log(fullMessage);
 
-  // const senderId = socket.id;
-  // let result = await messagesCrudOps.save(message, senderId);
-  // // result = null;
-  // if (!result) {
-  //   //an error occured when saving in the DB
-  //   ackData.ok = false;
-  //   ackData.info = "We could not save your message";
-  // } else {
-  //   //message created successfully
-  //   ackData.ok = true;
-  //   ackData.info = "Message saved successfully";
-  //   ackData.messageId = result.insertedId.toString();
-  //   //broadcast the new message to all other users
-  //   socket.broadcast.emit("message-receive-broadcast", {
-  //     //how to emit to recipient???
-  //     ...message, //text + recipientId
-  //     senderId: senderId,
-  //     messageId: ackData.messageId,
-  //   });
-  // }
+  //the message contains a destination room id --> check if this socket
+  //is assigned to such a room. If not send back an error
+  if (!socket.rooms.has(validatedMessage.validatedRoomId)) {
+    ackData.ok = false;
+    ackData.message = "Message can not be sento to this room";
+    sendAck(ackData);
+    return;
+  }
 
-  // //se nd acknowledge event
-  // sendAck(ackData);
+  //save message in the DB
+  let messageId;
+  try {
+    messageId = await fullMessage.save();
+  } catch (error) {
+    ackData.ok = false;
+    ackData.message = "Message not saved";
+    sendAck(ackData);
+    return;
+  }
+
+  //broadcast message to the destination room from this socket
+  const broadCastData = {
+    text: validatedMessage.validatedText,
+    creationDate: validatedMessage.validatedCreationDate,
+  };
+  socket
+    .to(validatedMessage.validatedRoomId)
+    .emit("message-receive-broadcast", broadCastData);
+
+  //send ack ok
+  ackData.ok = true;
+  ackData.messageId = messageId;
+  ackData.tempMessageId = validatedMessage.validatedTempMessageId;
 }
 
 //exports
