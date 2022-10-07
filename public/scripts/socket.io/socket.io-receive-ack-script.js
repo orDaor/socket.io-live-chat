@@ -18,8 +18,14 @@ function onMessageSendAck(ackData) {
     return;
   }
 
-  //response ok
-  setMessageId(ackData.messageId, ackData.tempMessageId);
+  //response ok, update message id on screen
+  setMessageId(ackData.message.messageId, ackData.tempMessageId);
 
-  //TODO: add message in chatListGlobal[]
+  //add message in chatListGlobal
+  for (const chat of chatListGlobal) {
+    if (chat.roomId === ackData.roomId) {
+      chat.messages.push(ackData.message);
+      return;
+    }
+  }
 }

@@ -9,7 +9,7 @@ async function readAll(req, res, next) {
 
   //get rooms where user is active
   let rooms;
-  
+
   try {
     rooms = await Room.findManyByUserId(res.locals.userId);
   } catch (error) {
@@ -26,7 +26,9 @@ async function readAll(req, res, next) {
   for (const room of rooms) {
     const chat = await ChatViewData.fromRoomToChatViewData(
       room,
-      res.locals.userId
+      res.locals.userId,
+      true, //tryFillWithFriendsNames
+      true  //tryFillWithMessages
     );
     chatList.push(chat);
   }
