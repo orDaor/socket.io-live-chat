@@ -26,9 +26,7 @@ async function readAll(req, res, next) {
   for (const room of rooms) {
     const chat = await ChatViewData.fromRoomToChatViewData(
       room,
-      res.locals.userId,
-      true, //tryFillWithFriendsNames
-      true  //tryFillWithMessages
+      res.locals.userId
     );
     chatList.push(chat);
   }

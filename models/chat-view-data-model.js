@@ -17,12 +17,7 @@ class ChatViewData {
   }
 
   //map a room into a ChatViewData class
-  static async fromRoomToChatViewData(
-    room,
-    viewerId,
-    tryFillWithFriendsNames,
-    tryFillWithMessages
-  ) {
+  static async fromRoomToChatViewData(room, viewerId) {
     //create a chat object from a room
     const chat = new Chat(room, viewerId);
 
@@ -30,25 +25,21 @@ class ChatViewData {
     let errorList = [];
 
     //collect friends names of this room inside this chat
-    if (tryFillWithFriendsNames) {
-      try {
-        await chat.fillWithfriendsNames();
-      } catch (error) {
-        //if it was not possible to fill the chat with room messages
-        errorList.push(1001);
-        console.log(error);
-      }
+    try {
+      await chat.fillWithfriendsNames();
+    } catch (error) {
+      //if it was not possible to fill the chat with room messages
+      errorList.push(1001);
+      console.log(error);
     }
 
     //collect messages of this room inside this chat
-    if (tryFillWithMessages) {
-      try {
-        await chat.fillWithMessages();
-      } catch (error) {
-        //if it was not possible to fill the chat with room messages
-        errorList.push(1002);
-        console.log(error);
-      }
+    try {
+      await chat.fillWithMessages();
+    } catch (error) {
+      //if it was not possible to fill the chat with room messages
+      errorList.push(1002);
+      console.log(error);
     }
 
     //get only chat data that user needs to know
