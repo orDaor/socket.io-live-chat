@@ -12,6 +12,7 @@ function onUserFetchInvitationLinkAck(ackData) {
 
 //process ack from server on message send ack
 function onMessageSendAck(ackData) {
+  console.log(ackData);
   //message not sent (not saved and not forwarded to the users in the room)
   if (!ackData.ok) {
     displayOneMessageErrorInfo(ackData.tempMessageId, ackData.info);

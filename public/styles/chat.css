@@ -40,6 +40,10 @@
   position: relative;
 }
 
+.message-item p span {
+  word-wrap: break-word;
+}
+
 .message-item-left p {
   background-color: var(--color-primary-150);
 }

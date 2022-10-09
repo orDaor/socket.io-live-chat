@@ -6,7 +6,8 @@ function displayOneMessage(
   text,
   creationDate, //TODO
   side,
-  autoScrollToBottom
+  autoScrollToBottom,
+  scrollBehavior
 ) {
   //create a list item element
   const messageListItemElement = document.createElement("li");
@@ -54,12 +55,14 @@ function displayOneMessage(
 
   //scroll the message list at the bottom
   if (autoScrollToBottom) {
-    scrollToBottomOfMessagesList();
+    scrollToBottomOfMessagesList(scrollBehavior);
   }
 }
 
 //display array of messages received on the socket
-function displayAllMessages(messages) {
+function displayAllMessages(messages, scrollBahavior) {
+  //clean current messages
+  cleanAllMessages();
   //loop through received messages
   for (const message of messages) {
     //display on left if friend is sender, display on right if this user is the sender
@@ -86,7 +89,7 @@ function displayAllMessages(messages) {
   }
 
   //scroll to the bottom
-  scrollToBottomOfMessagesList();
+  scrollToBottomOfMessagesList(scrollBahavior);
 }
 
 //clean all messages

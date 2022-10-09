@@ -49,8 +49,9 @@ class Chat {
     //find messages sent into this room context
     const messages = await Message.findManyByRoomId(this.roomId);
     //map each messages in MessageViewData class objects
+    const viewerId = this.viewerId;
     const mapOneMessage = function (message) {
-      return new MessageViewData(message, this.viewerId);
+      return new MessageViewData(message, viewerId);
     };
     this.messages = messages.map(mapOneMessage);
   }

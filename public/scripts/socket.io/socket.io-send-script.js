@@ -55,7 +55,8 @@ function sendMessage(event) {
     message.text,
     new Date(), //now
     "right",
-    true
+    true,
+    "smooth"
   );
 
   //user not connected...
@@ -77,5 +78,5 @@ function sendMessage(event) {
   }); //we can pass any data that can be encoded as JSON
 
   //clean form input
-  formData.set("message", "");
+  event.target.querySelector("textarea[name='message']").value = "";
 }

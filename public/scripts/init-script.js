@@ -87,6 +87,7 @@ async function initAfterLogin(token) {
   //show the friends and chat sections
   hideMainLoader();
   displayFriendsAndChatSectionOnWidhtChange();
+  scrollToBottomOfMessagesList("auto");
 
   //upgrade connection to websocket protocol
   socket.connect();

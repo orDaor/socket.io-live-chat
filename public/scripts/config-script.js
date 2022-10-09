@@ -98,12 +98,13 @@ function displayFriendsAndChatSectionOnWidhtChange(event) {
 }
 
 //scroll to the bottom of the chat list
-function scrollToBottomOfMessagesList() {
+function scrollToBottomOfMessagesList(scrollBehavior) {
   const messagesListElement = chatSectionElement.querySelector("ul");
+  console.log(messagesListElement);
   messagesListElement.scrollTo({
     top: messagesListElement.scrollHeight,
     left: 0,
-    behavior: "smooth",
+    behavior: scrollBehavior,
   });
 }
 

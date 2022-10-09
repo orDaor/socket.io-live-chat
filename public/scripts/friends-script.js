@@ -115,6 +115,21 @@ function selectOneChat(event) {
       friendsSectionElement.querySelector("ul li");
   }
 
+  //in mobile view, show only chat section
+  if (window.innerWidth < 768) {
+    hideFriendsSection();
+    displayChatSection();
+  }
+
+  //if already selected, stop!
+  if (
+    selectedFriendChatItemElement.classList.contains(
+      "friend-chat-item-selected"
+    )
+  ) {
+    return;
+  }
+
   //select li item
   selectedFriendChatItemElement.classList.add("friend-chat-item-selected");
 
@@ -145,15 +160,9 @@ function selectOneChat(event) {
   //display all messages for this chat
   for (const chat of chatListGlobal) {
     if (chat.roomId === selectedRoomId) {
-      displayAllMessages(chat.messages);
+      displayAllMessages(chat.messages, "auto");
       break;
     }
-  }
-
-  //in mobile view, show only chat section
-  if (window.innerWidth < 768) {
-    hideFriendsSection();
-    displayChatSection();
   }
 }
 

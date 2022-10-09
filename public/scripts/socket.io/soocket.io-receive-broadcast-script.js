@@ -3,10 +3,14 @@ function onMessageReceiveBroadcast(broadcastData) {
   //init
   let thisUserName = localStorage.getItem("user-name");
 
+  console.log(broadcastData);
+
   //check if the room id to which the received message points, is in the chatListGlobal array
-  const destinationChatIndexGlobal = chatListGlobal.indexOf(function (chat) {
+  const destinationChatIndexGlobal = chatListGlobal.findIndex(function (chat) {
     return chat.roomId === broadcastData.roomId;
   });
+
+  console.log(destinationChatIndexGlobal);
 
   //chat not present yet, then add it
   if (destinationChatIndexGlobal === -1) {
@@ -41,8 +45,9 @@ function onMessageReceiveBroadcast(broadcastData) {
   );
 
   //find chat on screen in the friends list
-  const chatListDOM = document.querySelectorAll(".friend-chat-item");
-  const destinationChatIndexDOM = chatListDOM.indexOf(function (chat) {
+  let chatListDOM = document.querySelectorAll(".friend-chat-item");
+  chatListDOM = Array.from(chatListDOM); //this is needed because chatListDOM is not an array
+  const destinationChatIndexDOM = chatListDOM.findIndex(function (chat) {
     return (
       chat.dataset.roomId === chatListGlobal[destinationChatIndexGlobal].roomId
     );
@@ -65,7 +70,8 @@ function onMessageReceiveBroadcast(broadcastData) {
       broadcastData.message.text,
       broadcastData.message.creationDate,
       "left",
-      true //to be checked
+      true, //to be checked
+      "smooth"
     );
   } else {
     //mark as UN-read

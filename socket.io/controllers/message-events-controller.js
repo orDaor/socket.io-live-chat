@@ -11,8 +11,7 @@ async function onSend(socket, message, sendAck) {
   let ackData = {};
 
   //message not valid, can not be sent
-  // console.log(message);
-  const validatedMessage = validation.message(message);
+  const validatedMessage = validation.message(message, false);
   if (!validatedMessage) {
     ackData.ok = false;
     ackData.info = "User tried to send a non valid message";
@@ -49,8 +48,6 @@ async function onSend(socket, message, sendAck) {
     validatedMessage.validatedCreationDate
   );
 
-  // console.log(fullMessage);
-
   //save message in the DB
   let messageId;
   try {
@@ -66,7 +63,6 @@ async function onSend(socket, message, sendAck) {
   fullMessage.messageId = messageId;
 
   //find user names in the destination room
-
   let friends;
   let friendsNames = [];
   let errorList = [];
@@ -91,12 +87,16 @@ async function onSend(socket, message, sendAck) {
     .to(fullMessage.roomId)
     .emit("message-receive-broadcast", broadcastData);
 
+  // console.log(broadcastData);
+  // console.log(fullMessage);
+
   //send ack ok
   ackData.ok = true;
   ackData.info = "Message sent successfully";
   ackData.roomId = fullMessage.roomId;
   ackData.tempMessageId = validatedMessage.validatedTempMessageId;
   ackData.message = new MessageViewData(fullMessage, socket.userId);
+  sendAck(ackData);
 }
 
 //exports
