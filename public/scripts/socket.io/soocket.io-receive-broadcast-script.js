@@ -64,6 +64,7 @@ function onMessageReceiveBroadcast(broadcastData) {
       "friend-chat-item-selected"
     )
   ) {
+    //enter the message in the message list
     displayOneMessage(
       false,
       "",
@@ -73,8 +74,20 @@ function onMessageReceiveBroadcast(broadcastData) {
       true, //to be checked
       "smooth"
     );
+    //in case of mobile view and only chat list is visible
+    const isFriendsSectionVisibleOnMobile =
+      window.innerHeight < 768 &&
+      chatSectionElement.style.display === "none" &&
+      friendsSectionElement.style.display === "block";
+
+    //still notify a new message is received (mark as UN-read)
+    if (isFriendsSectionVisibleOnMobile) {
+      setChatItemAsRead(chatListDOM[destinationChatIndexDOM].dataset.roomId);
+      setChatItemAsUnread(chatListDOM[destinationChatIndexDOM].dataset.roomId);
+    }
   } else {
     //mark as UN-read
+    setChatItemAsRead(chatListDOM[destinationChatIndexDOM].dataset.roomId);
     setChatItemAsUnread(chatListDOM[destinationChatIndexDOM].dataset.roomId);
   }
 }

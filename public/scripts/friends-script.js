@@ -115,10 +115,22 @@ function selectOneChat(event) {
       friendsSectionElement.querySelector("ul li");
   }
 
+  //gather selected chat item data
+  const selectedFriendNameElement =
+    selectedFriendChatItemElement.querySelector(".friend-chat-name");
+  const selectedRoomId = selectedFriendChatItemElement.dataset.roomId;
+  const selectedChatStatusElement = selectedFriendChatItemElement.querySelector(
+    ".friend-chat-status"
+  );
+
+  //remove un-read chat item status if present
+  setChatItemAsRead(selectedRoomId);
+
   //in mobile view, show only chat section
   if (window.innerWidth < 768) {
     hideFriendsSection();
     displayChatSection();
+    scrollToBottomOfMessagesList("auto");
   }
 
   //if already selected, stop!
@@ -133,14 +145,6 @@ function selectOneChat(event) {
   //select li item
   selectedFriendChatItemElement.classList.add("friend-chat-item-selected");
 
-  //gather selected chat item data
-  const selectedFriendNameElement =
-    selectedFriendChatItemElement.querySelector(".friend-chat-name");
-  const selectedRoomId = selectedFriendChatItemElement.dataset.roomId;
-  const selectedChatStatusElement = selectedFriendChatItemElement.querySelector(
-    ".friend-chat-status"
-  );
-
   //copy the selected friend name, chat online status and id in the active friends section
   setActiveChatRoomId(selectedRoomId);
   setActiveFriendName(selectedFriendNameElement.textContent);
@@ -153,9 +157,6 @@ function selectOneChat(event) {
       chat.classList.remove("friend-chat-item-selected");
     }
   }
-
-  //remove un-read chat item status if present
-  setChatItemAsRead(selectedRoomId);
 
   //display all messages for this chat
   for (const chat of chatListGlobal) {
