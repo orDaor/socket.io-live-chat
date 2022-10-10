@@ -3,14 +3,10 @@ function onMessageReceiveBroadcast(broadcastData) {
   //init
   let thisUserName = localStorage.getItem("user-name");
 
-  console.log(broadcastData);
-
   //check if the room id to which the received message points, is in the chatListGlobal array
   const destinationChatIndexGlobal = chatListGlobal.findIndex(function (chat) {
     return chat.roomId === broadcastData.roomId;
   });
-
-  console.log(destinationChatIndexGlobal);
 
   //chat not present yet, then add it
   if (destinationChatIndexGlobal === -1) {
@@ -76,12 +72,17 @@ function onMessageReceiveBroadcast(broadcastData) {
     );
     //in case of mobile view and only chat list is visible
     const isFriendsSectionVisibleOnMobile =
-      window.innerHeight < 768 &&
+      window.innerWidth < 768 &&
       chatSectionElement.style.display === "none" &&
       friendsSectionElement.style.display === "block";
 
+    console.log(chatSectionElement.style.display);
+    console.log(friendsSectionElement.style.display);
+    console.log(isFriendsSectionVisibleOnMobile);
+
     //still notify a new message is received (mark as UN-read)
     if (isFriendsSectionVisibleOnMobile) {
+      console.log("set as unread");
       setChatItemAsRead(chatListDOM[destinationChatIndexDOM].dataset.roomId);
       setChatItemAsUnread(chatListDOM[destinationChatIndexDOM].dataset.roomId);
     }

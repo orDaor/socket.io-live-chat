@@ -16,7 +16,6 @@ async function readAll(req, res, next) {
     next(error);
     return;
   }
-  // console.log(rooms);
 
   //map each room connected to this user to a chat item which
   //collects inside of it all messages for this room
@@ -31,12 +30,12 @@ async function readAll(req, res, next) {
     chatList.push(chat);
   }
 
-  // console.log(rooms);
-  // console.log(chatList);
+  //sort chats from most recent to oldest
+  ChatViewData.sortChatListFromMostRecentToOldest(chatList);
 
   //All user chats are collected in the chatList array, send it back in the response
   responseData.message = "Chats collected successfully";
-  responseData.chatList = chatList;
+  responseData.chatList = chatList; //sorted
   res.json(responseData);
 }
 
