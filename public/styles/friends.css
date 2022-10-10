@@ -93,7 +93,6 @@
   padding: 0.75rem;
   margin: 0.25rem 0;
   cursor: pointer;
-  border: 5px solid transparent;
   border-radius: var(--friends-selection-border-radius);
   display: flex;
   flex-direction: row-reverse;
@@ -136,12 +135,6 @@
   background-color: var(--friend-status-offline);
 }
 
-.friend-chat-item-selected {
-  border-color: var(--color-primary-500);
-  font-weight: bold;
-  cursor: auto;
-}
-
 .friend-chat-item-unread {
   font-weight: bold;
 }
@@ -154,7 +147,7 @@
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
-}  
+}
 
 .active-friends button {
   margin: 0;
@@ -169,8 +162,7 @@
 }
 
 .active-friends .active-friends-content {
-  border: 5px solid var(--color-primary-500);
-  background-color: var(--color-primary-150);
+  background-color: var(--color-primary-200);
   margin: 0;
   padding: 1rem 1rem;
   display: inline-block;
@@ -221,6 +213,12 @@
     gap: 0;
   }
 
+  .friend-chat-item-selected {
+    background-color: var(--color-primary-200);
+    font-weight: bold;
+    cursor: auto;
+  }
+
   .active-friends .back-to-chat-list {
     display: none;
   }
@@ -235,7 +233,7 @@
 /* target all devices which can be hovered */
 @media (hover: hover) {
   .friend-chat-item:hover {
-    border-color: var(--color-primary-500);
+    background-color: var(--color-primary-200);
   }
 }
 
