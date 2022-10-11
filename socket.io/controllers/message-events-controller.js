@@ -75,9 +75,20 @@ async function onSend(socket, message, sendAck) {
     errorList.push(1001);
   }
 
+  //find the message sender name
+  let senderName = "";
+  const friendIndex = friends.findIndex(function (user) {
+    return user.userId === socket.userId;
+  });
+  if (friendIndex > -1) {
+    senderName = friends[friendIndex].name;
+  }
+
+  //build the broadcast message
   const broadcastData = {
     message: new MessageViewData(fullMessage, null),
     roomId: fullMessage.roomId,
+    senderName: senderName,
     friendsNames: friendsNames,
     errorList: errorList,
   };

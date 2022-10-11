@@ -30,7 +30,7 @@ function setActiveChatOnlineStatus(selectedChatStatusElement) {
 }
 
 //display one chat
-function displayOneChat(roomId, friendsNames, isOnline) {
+function displayOneChat(roomId, friendsNames, isOnline, position) {
   const friendChatItemContainerElement = document.createElement("div");
   friendChatItemContainerElement.classList.add("friend-chat-main-info");
   const friendChatItemElement = document.createElement("li");
@@ -54,11 +54,18 @@ function displayOneChat(roomId, friendsNames, isOnline) {
   friendNameElement.textContent = friendsNames[0]; // to be checked !!
   friendNameElement.classList.add("friend-chat-name");
 
-  //append content
+  //append chat content
   friendChatItemContainerElement.appendChild(chatOnlineStatus);
   friendChatItemContainerElement.appendChild(friendNameElement);
   friendChatItemElement.appendChild(friendChatItemContainerElement);
-  friendsSectionElement.querySelector("ul").appendChild(friendChatItemElement);
+
+  //append or prepend the chat room inside the chat list
+  const friendSectionListElement = friendsSectionElement.querySelector("ul");
+  if (position === "append") {
+    friendSectionListElement.appendChild(friendChatItemElement);
+  } else if (position === "prepend") {
+    friendSectionListElement.prepend(friendChatItemElement);
+  }
 }
 
 //hide one chat
@@ -75,7 +82,7 @@ function hideOneChat(roomId) {
 //display all chats
 function displayChatList(chatList) {
   for (const chat of chatList) {
-    displayOneChat(chat.roomId, chat.friendsNames); //TODO: pass isOnline parameter
+    displayOneChat(chat.roomId, chat.friendsNames, false, "append"); //TODO: pass isOnline parameter
   }
 }
 
