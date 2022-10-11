@@ -52,8 +52,29 @@ class Room {
       .collection("rooms")
       .find(query)
       .toArray();
-      
+
     //map array of room documents into array of Room class objects
+    const mapOneDocument = function (document) {
+      return Room.fromMongoDBDocumentToRoom(document);
+    };
+    return documents.map(mapOneDocument);
+  }
+
+  //find rooms which contains all specified user ids
+  static async findManyByUserIds(userIds) {
+    //query filter
+    const query = {
+      friends: { $all: userIds },
+    };
+
+    //run query
+    const documents = await db
+      .getDb()
+      .collection("rooms")
+      .find(query)
+      .toArray();
+
+    //map array of user documents into array of User class objects
     const mapOneDocument = function (document) {
       return Room.fromMongoDBDocumentToRoom(document);
     };

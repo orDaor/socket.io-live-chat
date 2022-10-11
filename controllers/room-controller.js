@@ -18,7 +18,20 @@ async function accetpInvitationRequest(req, res, next) {
     return;
   }
 
-  //TODO: check if this user is already active inside a room with the inviter
+  //check if this user is already active inside any with the inviter
+  let rooms;
+  try {
+    rooms = await Room.findManyByUserIds([res.locals.userId, inviter.userId]);
+  } catch (error) {
+    next(error);
+    return;
+  }
+
+  //these users are already connected inside a room
+  if (rooms.length > 0) {
+    next(new Error("Users are already connected"));
+    return;
+  }
 
   //inviter was found, create a new room where to place this user together with the inviter
   const room = new Room([res.locals.userId, inviter.userId]);
