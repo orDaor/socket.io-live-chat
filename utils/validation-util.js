@@ -40,10 +40,6 @@ function message(message, loggingEnabled = true) {
   const validatedRoomId = message.roomId.trim();
   const roomIdOk = validatedRoomId.length > 5;
 
-  //creation date
-  const validatedCreationDate = message.creationDate.trim();
-  const creationDateOk = validatedCreationDate;
-
   //temp message id
   const validatedTempMessageId = message.tempMessageId.trim();
   const tempMessageIdOk = validatedTempMessageId > 5;
@@ -51,14 +47,12 @@ function message(message, loggingEnabled = true) {
   if (loggingEnabled) {
     console.log(`textOk: ${!!textOk}`);
     console.log(`roomIdOk: ${!!roomIdOk}`);
-    console.log(`creationDateOk: ${!!creationDateOk}`);
   }
 
-  if (textOk && roomIdOk && creationDateOk && tempMessageIdOk) {
+  if (textOk && roomIdOk && tempMessageIdOk) {
     return {
       validatedText: validatedText,
       validatedRoomId: validatedRoomId,
-      validatedCreationDate: validatedCreationDate,
       validatedTempMessageId: validatedTempMessageId,
     };
   } else {

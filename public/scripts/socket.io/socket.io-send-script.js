@@ -53,7 +53,6 @@ function sendMessage(event) {
     false,
     message.tempMessageId,
     message.text,
-    new Date(), //now
     "right",
     true,
     "smooth"

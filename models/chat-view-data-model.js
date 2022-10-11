@@ -67,8 +67,8 @@ class ChatViewData {
       if (!chat_1_messagesNumber) {
         if (!chat_1.errorList.includes(1002)) {
           //chat 1 has no messages because no messages were sent yet
-          //Then consider this as recent
-          chat_1_lastMessageCreationDate = dateNow;
+          //Then consider this as old
+          chat_1_lastMessageCreationDate = 0; //dateNow;
         } else {
           //chat 1 has no messages because no messages server failed to fetch them
           //Then consider this as old
@@ -88,8 +88,8 @@ class ChatViewData {
       if (!chat_2_messagesNumber) {
         if (!chat_2.errorList.includes(1002)) {
           //chat 2 has no messages because no messages were sent yet
-          //Then consider this as recent
-          chat_2_lastMessageCreationDate = dateNow;
+          //Then consider this as old
+          chat_2_lastMessageCreationDate = 0; //dateNow;
         } else {
           //chat 2 has no messages because no messages server failed to fetch them
           //Then consider this as old

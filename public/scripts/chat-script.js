@@ -4,7 +4,6 @@ function displayOneMessage(
   isErrorMessage,
   messageId,
   text,
-  creationDate, //TODO
   side,
   autoScrollToBottom,
   scrollBehavior
@@ -65,27 +64,19 @@ function displayAllMessages(messages, scrollBahavior) {
   cleanAllMessages();
   //loop through received messages
   for (const message of messages) {
+    let messageId;
+    let side;
     //display on left if friend is sender, display on right if this user is the sender
     //NOTE: we scroll after all messages are loaded
     if (message.senderIsViewer) {
-      displayOneMessage(
-        false,
-        message.messageId,
-        message.text,
-        message.creationDate,
-        "right",
-        false
-      );
+      messageId = message.messageId;
+      side = "right";
     } else {
-      displayOneMessage(
-        false,
-        "",
-        message.text,
-        message.creationDate,
-        "left",
-        false
-      );
+      messageId = "";
+      side = "left";
     }
+
+    displayOneMessage(false, messageId, message.text, side, false);
   }
 
   //scroll to the bottom

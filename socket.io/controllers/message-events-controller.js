@@ -44,8 +44,8 @@ async function onSend(socket, message, sendAck) {
   const fullMessage = new Message(
     validatedMessage.validatedText,
     validatedMessage.validatedRoomId, //recipient
-    socket.userId, //sender
-    validatedMessage.validatedCreationDate
+    socket.userId //sender
+    //creation date = now
   );
 
   //save message in the DB
@@ -86,9 +86,6 @@ async function onSend(socket, message, sendAck) {
   socket
     .to(fullMessage.roomId)
     .emit("message-receive-broadcast", broadcastData);
-
-  // console.log(broadcastData);
-  // console.log(fullMessage);
 
   //send ack ok
   ackData.ok = true;

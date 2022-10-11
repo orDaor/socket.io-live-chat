@@ -169,7 +169,7 @@ function hideMainErrorInfo() {
 //display error message
 function displayMainErrorInfo(info) {
   const isErrorMessage = true;
-  displayOneMessage(isErrorMessage, null, info, null, null, true);
+  displayOneMessage(isErrorMessage, null, info, null, true, "smooth");
 }
 
 //display error info for one message

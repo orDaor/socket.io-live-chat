@@ -65,7 +65,6 @@ function onMessageReceiveBroadcast(broadcastData) {
       false,
       "",
       broadcastData.message.text,
-      broadcastData.message.creationDate,
       "left",
       true, //to be checked
       "smooth"
