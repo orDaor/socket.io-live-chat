@@ -63,7 +63,7 @@ async function onSend(socket, message, sendAck) {
   fullMessage.messageId = messageId;
 
   //find user names in the destination room
-  let friends;
+  let friends = [];
   let friendsNames = [];
   let errorList = [];
   try {
