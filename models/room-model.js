@@ -113,6 +113,16 @@ class Room {
     }
   }
 
+  //check whether a room contains a specific user or not
+  containsUser(userId) {
+    const userIndex = this.friends.indexOf(userId);
+    if (userIndex > -1) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
   //generate mongodb document from Room class obj
   fromRoomToMongoDBDocument() {
     return {

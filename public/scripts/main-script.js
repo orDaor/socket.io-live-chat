@@ -52,6 +52,7 @@ socket.on("message-receive-broadcast", onMessageReceiveBroadcast);
 //global variables
 let initializationDoneGlobal = false;
 let chatListGlobal = [];
+let lastViewedRoomIdGlobal = "";
 
 //initialization
 initAfterPageLoaded();

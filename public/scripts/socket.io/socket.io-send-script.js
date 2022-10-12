@@ -24,7 +24,7 @@ function fetchInvitationLink() {
   });
 }
 
-//emit a message on the websocket connection
+//send a chat message
 function sendMessage(event) {
   event.preventDefault();
   const errorInfo = "An error occured";
@@ -78,4 +78,18 @@ function sendMessage(event) {
 
   //clean form input
   event.target.querySelector("textarea[name='message']").value = "";
+}
+
+//tells the server this user viewd a specific chat room
+function registerOneChatView(roomId) {
+  //stop if user wants to view the same last viewed room
+  if (roomId === lastViewedRoomIdGlobal) {
+    return;
+  }
+
+  //request to save this chat view
+  socket.emit("room-view", roomId);
+
+  //memorize last viewed room
+  lastViewedRoomIdGlobal = roomId;
 }
