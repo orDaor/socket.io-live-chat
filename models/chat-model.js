@@ -21,9 +21,9 @@ class Chat {
     this.friends = room.friends; //array of user ids
 
     //exclude viewer id from friends list
-    const index = this.friends.indexOf(this.viewerId);
-    if (index > -1) {
-      this.friends.splice(index, 1);
+    const viewerIndexInRoom = this.friends.indexOf(this.viewerId);
+    if (viewerIndexInRoom > -1) {
+      this.friends.splice(viewerIndexInRoom, 1);
     } else {
       throw new Error("Can not find the viewerId in the room");
     }
@@ -33,6 +33,9 @@ class Chat {
 
     //messages exchanged in this chat (viewer's ones are included)
     this.messages = []; //array of MessageViewData class objects
+
+    //last date the viewerId user viewed this chat
+    this.lastViewDate = room.lastViewDates[viewerIndexInRoom];
   }
 
   //collect friend names for this room

@@ -83,9 +83,9 @@ function sendMessage(event) {
 //tells the server this user viewd a specific chat room
 function registerOneChatView(roomId) {
   //stop if user wants to view the same last viewed room
-  if (roomId === lastViewedRoomIdGlobal) {
-    return;
-  }
+  // if (roomId === lastViewedRoomIdGlobal) {
+  //   return;
+  // }
 
   //request to save this chat view
   socket.emit("room-view", roomId);

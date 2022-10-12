@@ -5,13 +5,29 @@ const ObjectId = require("mongodb").ObjectId;
 const db = require("../data/database");
 
 class Room {
-  constructor(friends, lastActivityDate, roomId) {
-    this.friends = friends; //array of user Ids as normal strings
+  constructor(friends, lastViewDates, lastActivityDate, roomId) {
+    //date this room is created
+    const dateNow = new Date();
+
+    //array of user Ids as normal strings
+    this.friends = friends;
+
+    //array of dates
+    if (lastViewDates) {
+      this.lastViewDates = lastViewDates;
+    } else {
+      this.lastViewDates = this.friends.map(function (userId) {
+        return dateNow;
+      });
+    }
+
+    //last date when a message was sent in this room context
     if (lastActivityDate) {
       this.lastActivityDate = lastActivityDate;
     } else {
-      this.lastActivityDate = new Date(); //now
+      this.lastActivityDate = dateNow;
     }
+
     if (roomId) {
       this.roomId = roomId.toString();
     }
@@ -19,7 +35,12 @@ class Room {
 
   //generate Room class obj from mongodb document
   static fromMongoDBDocumentToRoom(document) {
-    return new Room(document.friends, document.lastActivityDate, document._id);
+    return new Room(
+      document.friends,
+      document.lastViewDates,
+      document.lastActivityDate,
+      document._id
+    );
   }
 
   //find a room by its id
@@ -117,16 +138,22 @@ class Room {
   containsUser(userId) {
     const userIndex = this.friends.indexOf(userId);
     if (userIndex > -1) {
-      return true;
+      return userIndex;
     } else {
-      return false;
+      return -1;
     }
+  }
+
+  //update the valie of on last view date
+  setOneLastViewDate(arrIndex, date) {
+    this.lastViewDates[arrIndex] = date;
   }
 
   //generate mongodb document from Room class obj
   fromRoomToMongoDBDocument() {
     return {
       friends: this.friends,
+      lastViewDates: this.lastViewDates,
       lastActivityDate: this.lastActivityDate,
     };
   }

@@ -12,11 +12,18 @@ async function registerOneChatView(socket, roomId) {
   }
 
   //check if user if present inside this room
-  if (!room.containsUser(socket.userId)) {
+  const userIndexInRoom = room.containsUser(socket.userId);
+  if (userIndexInRoom === -1) {
     return;
   }
 
-  //TODO: save view in the room ??
+  //update last date view for this user
+  room.setOneLastViewDate(userIndexInRoom, new Date());
+
+  //update the room in the DB
+  room.save().catch(function (error) {
+    return;
+  });
 }
 
 //exports

@@ -2,7 +2,6 @@
 function onMessageReceiveBroadcast(broadcastData) {
   //init
   let thisUserName = localStorage.getItem("user-name");
-  console.log(broadcastData.senderName);
   //check if the room id to which the received message points, is in the chatListGlobal array
   const destinationChatIndexGlobal = chatListGlobal.findIndex(function (chat) {
     return chat.roomId === broadcastData.roomId;
