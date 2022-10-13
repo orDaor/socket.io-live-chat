@@ -167,7 +167,6 @@
   padding: 1rem 1rem;
   display: inline-block;
   border-radius: var(--friends-selection-border-radius);
-  font-weight: bold;
   font-size: var(--font-size-2);
   color: var(--color-grey-500);
 }
@@ -215,7 +214,6 @@
 
   .friend-chat-item-selected {
     background-color: var(--color-primary-200);
-    font-weight: bold;
     cursor: auto;
   }
 

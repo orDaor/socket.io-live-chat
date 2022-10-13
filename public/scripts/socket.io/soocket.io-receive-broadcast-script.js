@@ -23,14 +23,15 @@ function onMessageReceiveBroadcast(broadcastData) {
       friendsNames: broadcastData.friendsNames,
       messages: [broadcastData.message],
       roomId: broadcastData.roomId,
+      viewed: false, //new chat that needs to be viewed
     };
 
     //enter new chat right at the beginning of chat list
     chatListGlobal.unshift(newChat);
 
     //display new chat
-    displayOneChat(newChat.roomId, newChat.friendsNames, false, "prepend");
-    setChatItemAsUnread(newChat.roomId);
+    displayOneChat(broadcastData.roomId, newChat.friendsNames, false, "prepend");
+    setChatItemAsUnread(broadcastData.roomId);
     return;
   }
 
@@ -39,6 +40,10 @@ function onMessageReceiveBroadcast(broadcastData) {
   chatListGlobal[destinationChatIndexGlobal].messages.push(
     broadcastData.message
   );
+
+  //new content needs to be viewed on this chat
+  chatListGlobal[destinationChatIndexGlobal].viewed = false;
+
   //move the targetted chat to first position
   chatListGlobal.unshift(chatListGlobal[destinationChatIndexGlobal]);
   chatListGlobal.splice(destinationChatIndexGlobal + 1, 1);
@@ -47,7 +52,7 @@ function onMessageReceiveBroadcast(broadcastData) {
   let chatListDOM = document.querySelectorAll(".friend-chat-item");
   const chatListDOMArray = Array.from(chatListDOM); //this is needed because chatListDOM is not an array
   const destinationChatIndexDOM = chatListDOMArray.findIndex(function (chat) {
-    return chat.dataset.roomId === chatListGlobal[0].roomId;
+    return chat.dataset.roomId === broadcastData.roomId;
   });
 
   //friend chat item not found
@@ -65,15 +70,38 @@ function onMessageReceiveBroadcast(broadcastData) {
 
   //friend chat item found, check whether it is selected or not
   if (chatListDOM[0].classList.contains("friend-chat-item-selected")) {
-    //enter the message in the message list
-    displayOneMessage(
-      false,
-      "",
-      broadcastData.message.text,
-      "left",
-      true, //to be checked
-      "smooth"
-    );
+    //se chat to viewed
+    chatListGlobal[0].viewed = true;
+    //tell the server this user is viewing this chat
+    registerOneChatView(broadcastData.roomId);
+
+    //when arrives the new messages in desktop view, before displaying it,
+    //chek if scroll position is already at the bottom, then scroll
+    const messagesListElement = chatSectionElement.querySelector("ul");
+    let scrollToBottomRequest = false;
+
+    //check if message list is already scrolled at bottom
+    const isMessagesListAtBottom =
+      Math.abs(
+        messagesListElement.scrollTop +
+          messagesListElement.clientHeight -
+          messagesListElement.scrollHeight
+      ) < 5;
+
+    //scroll to bottom request
+    if (isMessagesListAtBottom) {
+      scrollToBottomRequest = true;
+    }
+
+    //enter the message in the message list without scrolling
+    displayOneMessage(false, "", broadcastData.message.text, "left");
+
+    //scroll to bottom
+    if (scrollToBottomRequest) {
+      scrollToBottomRequest = false;
+      scrollToBottomOfMessagesList("smooth");
+    }
+
     //in case of mobile view and only chat list is visible
     const isFriendsSectionVisibleOnMobile =
       window.innerWidth < 768 &&
@@ -82,12 +110,12 @@ function onMessageReceiveBroadcast(broadcastData) {
 
     //still notify a new message is received (mark as UN-read)
     if (isFriendsSectionVisibleOnMobile) {
-      setChatItemAsRead(chatListDOM[0].dataset.roomId);
-      setChatItemAsUnread(chatListDOM[0].dataset.roomId);
+      setChatItemAsRead(broadcastData.roomId);
+      setChatItemAsUnread(broadcastData.roomId);
     }
   } else {
     //mark as UN-read
-    setChatItemAsRead(chatListDOM[0].dataset.roomId);
-    setChatItemAsUnread(chatListDOM[0].dataset.roomId);
+    setChatItemAsRead(broadcastData.roomId);
+    setChatItemAsUnread(broadcastData.roomId);
   }
 }

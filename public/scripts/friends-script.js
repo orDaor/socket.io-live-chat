@@ -130,8 +130,16 @@ function selectOneChat(event) {
     ".friend-chat-status"
   );
 
-  //remove un-read chat item status if present
-  setChatItemAsRead(selectedRoomId);
+  //check if this chat list item is marked as UN-read
+  if (
+    selectedFriendChatItemElement.classList.contains("friend-chat-item-unread")
+  ) {
+    //remove un-read chat item status if present
+    setChatItemAsRead(selectedRoomId);
+    getChatByRoomId(selectedRoomId).viewed = true;
+    //tell the server this user is viewing this chat
+    registerOneChatView(selectedRoomId);
+  }
 
   //in mobile view, show only chat section
   if (window.innerWidth < 768) {
@@ -166,12 +174,7 @@ function selectOneChat(event) {
   }
 
   //display all messages for this chat
-  for (const chat of chatListGlobal) {
-    if (chat.roomId === selectedRoomId) {
-      displayAllMessages(chat.messages, "auto");
-      break;
-    }
-  }
+  displayAllMessages(getChatByRoomId(selectedRoomId).messages, "auto");
 }
 
 //set one chat online status
@@ -283,6 +286,15 @@ function setChatItemAsRead(roomId) {
         chat.removeChild(unreadNoty);
       }
       return;
+    }
+  }
+}
+
+//get a pointer to a chat with a specific roomId in the chatListGlobal array
+function getChatByRoomId(roomId) {
+  for (const chat of chatListGlobal) {
+    if (chat.roomId === roomId) {
+      return chat;
     }
   }
 }
