@@ -95,6 +95,11 @@ function displayFriendsAndChatSectionOnWidhtChange(event) {
       hideChatSection();
     }
   }
+
+  //mark selected chat item as read when screen gets bigger
+  if (window.innerWidth >= 768) {
+    setChatItemAsRead(selectedChatItemGlobal.dataset.roomId);
+  }
 }
 
 //scroll to the bottom of the chat list

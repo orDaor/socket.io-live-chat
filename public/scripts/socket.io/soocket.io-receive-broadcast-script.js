@@ -26,12 +26,17 @@ function onMessageReceiveBroadcast(broadcastData) {
       viewed: false, //new chat that needs to be viewed
     };
 
-    //enter new chat right at the beginning of chat list
-    chatListGlobal.unshift(newChat);
+    //enter new chat in the chat list
+    chatListGlobal.push(newChat);
 
     //display new chat
-    displayOneChat(broadcastData.roomId, newChat.friendsNames, false, "prepend");
-    setChatItemAsUnread(broadcastData.roomId);
+    displayOneChat(
+      broadcastData.roomId,
+      newChat.friendsNames,
+      false,
+      "prepend",
+      newChat.viewed
+    );
     return;
   }
 
@@ -44,34 +49,14 @@ function onMessageReceiveBroadcast(broadcastData) {
   //new content needs to be viewed on this chat
   chatListGlobal[destinationChatIndexGlobal].viewed = false;
 
-  //move the targetted chat to first position
-  chatListGlobal.unshift(chatListGlobal[destinationChatIndexGlobal]);
-  chatListGlobal.splice(destinationChatIndexGlobal + 1, 1);
-
-  //find chat on screen in the friends list
-  let chatListDOM = document.querySelectorAll(".friend-chat-item");
-  const chatListDOMArray = Array.from(chatListDOM); //this is needed because chatListDOM is not an array
-  const destinationChatIndexDOM = chatListDOMArray.findIndex(function (chat) {
-    return chat.dataset.roomId === broadcastData.roomId;
-  });
-
-  //friend chat item not found
-  if (destinationChatIndexDOM === -1) {
-    throw new Error("Destination chat on screen not found");
-  }
-
   //move the targetted chat on screen at first position
-  chatListDOM[destinationChatIndexDOM].parentElement.prepend(
-    chatListDOM[destinationChatIndexDOM]
-  );
+  const friendChatItemElement = getChatItemByRoomId(broadcastData.roomId);
+  friendChatItemElement.parentElement.prepend(friendChatItemElement);
 
-  //get updated chat list items array after sorting
-  chatListDOM = document.querySelectorAll(".friend-chat-item");
-
-  //friend chat item found, check whether it is selected or not
-  if (chatListDOM[0].classList.contains("friend-chat-item-selected")) {
+  //check whether destination chat is selected or not
+  if (friendChatItemElement.classList.contains("friend-chat-item-selected")) {
     //se chat to viewed
-    chatListGlobal[0].viewed = true;
+    chatListGlobal[destinationChatIndexGlobal].viewed = true;
     //tell the server this user is viewing this chat
     registerOneChatView(broadcastData.roomId);
 

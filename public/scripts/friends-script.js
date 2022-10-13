@@ -30,7 +30,7 @@ function setActiveChatOnlineStatus(selectedChatStatusElement) {
 }
 
 //display one chat
-function displayOneChat(roomId, friendsNames, isOnline, position) {
+function displayOneChat(roomId, friendsNames, isOnline, position, viewed) {
   const friendChatItemContainerElement = document.createElement("div");
   friendChatItemContainerElement.classList.add("friend-chat-main-info");
   const friendChatItemElement = document.createElement("li");
@@ -66,6 +66,11 @@ function displayOneChat(roomId, friendsNames, isOnline, position) {
   } else if (position === "prepend") {
     friendSectionListElement.prepend(friendChatItemElement);
   }
+
+  //check if the chat to display has new content to be visualized
+  if (!viewed) {
+    setChatItemAsUnread(roomId);
+  }
 }
 
 //hide one chat
@@ -82,7 +87,13 @@ function hideOneChat(roomId) {
 //display all chats
 function displayChatList(chatList) {
   for (const chat of chatList) {
-    displayOneChat(chat.roomId, chat.friendsNames, false, "append"); //TODO: pass isOnline parameter
+    displayOneChat(
+      chat.roomId,
+      chat.friendsNames,
+      false,
+      "append",
+      chat.viewed
+    ); //TODO: pass isOnline parameter
   }
 }
 
@@ -136,7 +147,7 @@ function selectOneChat(event) {
   ) {
     //remove un-read chat item status if present
     setChatItemAsRead(selectedRoomId);
-    getChatByRoomId(selectedRoomId).viewed = true;
+    getChatGlobalByRoomId(selectedRoomId).viewed = true;
     //tell the server this user is viewing this chat
     registerOneChatView(selectedRoomId);
   }
@@ -159,6 +170,7 @@ function selectOneChat(event) {
 
   //select li item
   selectedFriendChatItemElement.classList.add("friend-chat-item-selected");
+  selectedChatItemGlobal = selectedFriendChatItemElement;
 
   //copy the selected friend name, chat online status and id in the active friends section
   setActiveChatRoomId(selectedRoomId);
@@ -174,7 +186,7 @@ function selectOneChat(event) {
   }
 
   //display all messages for this chat
-  displayAllMessages(getChatByRoomId(selectedRoomId).messages, "auto");
+  displayAllMessages(getChatGlobalByRoomId(selectedRoomId).messages, "auto");
 }
 
 //set one chat online status
@@ -291,9 +303,20 @@ function setChatItemAsRead(roomId) {
 }
 
 //get a pointer to a chat with a specific roomId in the chatListGlobal array
-function getChatByRoomId(roomId) {
+function getChatGlobalByRoomId(roomId) {
   for (const chat of chatListGlobal) {
     if (chat.roomId === roomId) {
+      return chat;
+    }
+  }
+}
+
+//get a pointer to a specific list item representing a chat
+function getChatItemByRoomId(roomId) {
+  const friendChatItems =
+    friendsSectionElement.querySelectorAll(".friend-chat-item");
+  for (const chat of friendChatItems) {
+    if (chat.dataset.roomId === roomId) {
       return chat;
     }
   }
