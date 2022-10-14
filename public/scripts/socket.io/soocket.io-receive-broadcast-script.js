@@ -55,46 +55,50 @@ function onMessageReceiveBroadcast(broadcastData) {
 
   //check whether destination chat is selected or not
   if (friendChatItemElement.classList.contains("friend-chat-item-selected")) {
-    //se chat to viewed
-    chatListGlobal[destinationChatIndexGlobal].viewed = true;
-    //tell the server this user is viewing this chat
-    registerOneChatView(broadcastData.roomId);
+    if (
+      window.innerWidth >= 768 ||
+      (window.innerWidth < 768 &&
+        chatSectionElement.style.display === "flex" &&
+        friendsSectionElement.style.display === "none")
+    ) {
+      //se chat to viewed
+      chatListGlobal[destinationChatIndexGlobal].viewed = true;
+      //tell the server this user is viewing this chat
+      registerOneChatView(broadcastData.roomId);
 
-    //when arrives the new messages in desktop view, before displaying it,
-    //chek if scroll position is already at the bottom, then scroll
-    const messagesListElement = chatSectionElement.querySelector("ul");
-    let scrollToBottomRequest = false;
+      //when arrives the new messages in desktop view, before displaying it,
+      //chek if scroll position is already at the bottom, then scroll
+      const messagesListElement = chatSectionElement.querySelector("ul");
+      let scrollToBottomRequest = false;
 
-    //check if message list is already scrolled at bottom
-    const isMessagesListAtBottom =
-      Math.abs(
-        messagesListElement.scrollTop +
-          messagesListElement.clientHeight -
-          messagesListElement.scrollHeight
-      ) < 5;
+      //check if message list is already scrolled at bottom
+      const isMessagesListAtBottom =
+        Math.abs(
+          messagesListElement.scrollTop +
+            messagesListElement.clientHeight -
+            messagesListElement.scrollHeight
+        ) < 5;
 
-    //scroll to bottom request
-    if (isMessagesListAtBottom) {
-      scrollToBottomRequest = true;
-    }
+      //scroll to bottom request
+      if (isMessagesListAtBottom) {
+        scrollToBottomRequest = true;
+      }
 
-    //enter the message in the message list without scrolling
-    displayOneMessage(false, "", broadcastData.message.text, "left");
+      //enter the message in the message list without scrolling
+      displayOneMessage(false, "", broadcastData.message.text, "left");
 
-    //scroll to bottom
-    if (scrollToBottomRequest) {
-      scrollToBottomRequest = false;
-      scrollToBottomOfMessagesList("smooth");
-    }
-
-    //in case of mobile view and only chat list is visible
-    const isFriendsSectionVisibleOnMobile =
+      //scroll to bottom
+      if (scrollToBottomRequest) {
+        scrollToBottomRequest = false;
+        scrollToBottomOfMessagesList("smooth");
+      }
+    } else if (
       window.innerWidth < 768 &&
       chatSectionElement.style.display === "none" &&
-      friendsSectionElement.style.display === "block";
-
-    //still notify a new message is received (mark as UN-read)
-    if (isFriendsSectionVisibleOnMobile) {
+      friendsSectionElement.style.display === "block"
+    ) {
+      //enter the message in the message list without scrolling
+      displayOneMessage(false, "", broadcastData.message.text, "left");
       setChatItemAsRead(broadcastData.roomId);
       setChatItemAsUnread(broadcastData.roomId);
     }

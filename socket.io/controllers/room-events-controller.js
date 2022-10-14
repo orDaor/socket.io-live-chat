@@ -20,6 +20,10 @@ async function registerOneChatView(socket, roomId) {
   //update last date view for this user
   room.setOneLastViewDate(userIndexInRoom, new Date());
 
+  // console.log(
+  //   `Save view for user ${room.friends[userIndexInRoom]} in room ${room.roomId}`
+  // );
+
   //update the room in the DB
   room.save().catch(function (error) {
     return;

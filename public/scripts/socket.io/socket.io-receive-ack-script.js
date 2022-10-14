@@ -26,6 +26,6 @@ function onMessageSendAck(ackData) {
   chat.messages.push(ackData.message);
 
   //move the targetted chat on screen at first position
-  const friendChatItemElement = getChatItemByRoomId(broadcastData.roomId);
+  const friendChatItemElement = getChatItemByRoomId(ackData.roomId);
   friendChatItemElement.parentElement.prepend(friendChatItemElement);
 }

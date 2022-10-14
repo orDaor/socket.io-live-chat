@@ -145,18 +145,16 @@ function selectOneChat(event) {
   if (
     selectedFriendChatItemElement.classList.contains("friend-chat-item-unread")
   ) {
-    //remove un-read chat item status if present
-    setChatItemAsRead(selectedRoomId);
-    getChatGlobalByRoomId(selectedRoomId).viewed = true;
-    //tell the server this user is viewing this chat
-    registerOneChatView(selectedRoomId);
-  }
-
-  //in mobile view, show only chat section
-  if (window.innerWidth < 768) {
-    hideFriendsSection();
-    displayChatSection();
-    scrollToBottomOfMessagesList("auto");
+    //remove un-read chat item status if present, for big screen, after all chat loaded first time
+    if (
+      (initializationDoneGlobal && window.innerWidth < 768) ||
+      window.innerWidth >= 768
+    ) {
+      setChatItemAsRead(selectedRoomId);
+      getChatGlobalByRoomId(selectedRoomId).viewed = true;
+      //tell the server this user is viewing this chat
+      registerOneChatView(selectedRoomId);
+    }
   }
 
   //if already selected, stop!
@@ -165,28 +163,39 @@ function selectOneChat(event) {
       "friend-chat-item-selected"
     )
   ) {
+    //in mobile view, show only chat section
+    if (initializationDoneGlobal && window.innerWidth < 768) {
+      hideFriendsSection();
+      displayChatSection();
+      scrollToBottomOfMessagesList("auto");
+    }
     return;
   }
 
   //select li item
   selectedFriendChatItemElement.classList.add("friend-chat-item-selected");
-  selectedChatItemGlobal = selectedFriendChatItemElement;
 
   //copy the selected friend name, chat online status and id in the active friends section
   setActiveChatRoomId(selectedRoomId);
   setActiveFriendName(selectedFriendNameElement.textContent);
   setActiveChatOnlineStatus(selectedChatStatusElement);
 
-  //remove selected style from other chats in the list
-  const chatList = document.querySelectorAll(".friend-chat-item");
-  for (const chat of chatList) {
-    if (chat.dataset.roomId !== selectedRoomId) {
-      chat.classList.remove("friend-chat-item-selected");
-    }
+  //remove selection from previous selected chat item
+  if (selectedChatItemGlobal) {
+    selectedChatItemGlobal.classList.remove("friend-chat-item-selected");
   }
+  //memory for selected chat item
+  selectedChatItemGlobal = selectedFriendChatItemElement;
 
   //display all messages for this chat
   displayAllMessages(getChatGlobalByRoomId(selectedRoomId).messages, "auto");
+
+  //in mobile view, show only chat section
+  if (initializationDoneGlobal && window.innerWidth < 768) {
+    hideFriendsSection();
+    displayChatSection();
+    scrollToBottomOfMessagesList("auto");
+  }
 }
 
 //set one chat online status
