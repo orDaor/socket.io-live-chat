@@ -181,8 +181,15 @@ function selectOneChat(event) {
     return;
   }
 
-  //select li item
+  //not already selected, then select li item
   selectedFriendChatItemElement.classList.add("friend-chat-item-selected");
+
+  //reset "is typing" info and timer
+  hideIsTypingInfo();
+  clearTimeout(isTypingTimerId_receive);
+  clearTimeout(isTypingTimerId_send);
+  isTypingTimerActive_receive = false;
+  isTypingTimerActive_send = false;
 
   //copy the selected friend name, chat online status and id in the active friends section
   setActiveChatRoomId(selectedRoomId);

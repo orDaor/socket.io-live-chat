@@ -117,3 +117,35 @@ function onMessageReceiveBroadcast(broadcastData) {
     setChatItemAsUnread(broadcastData.roomId);
   }
 }
+
+//broadcast message telling someone in a given room is typing
+function onRoomIsTypingBroadcast(broadcastData) {
+  //target chat room where someone is tying
+  const roomId = broadcastData;
+  const activeFriendsElement =
+    chatSectionElement.querySelector(".active-friends");
+
+  //chat where someone is typing is selected
+  if (activeFriendsElement.dataset.roomId === roomId) {
+    //we can not display "is typing" message while timer is stilla active
+    if (isTypingTimerActive_receive) {
+      return;
+    }
+
+    //timer config
+    isTypingTimerActive_receive = true;
+
+    //start timer
+    isTypingTimerId_receive = setTimeout(function () {
+      isTypingTimerActive_receive = false;
+      hideIsTypingInfo();
+    }, isTypingTimerDelay_receive);
+
+    //display "is typing info"
+    displayIsTypingInfo();
+    return;
+  }
+
+  //chat where someone is typing is NOT selected
+  //TODO: display "typing" in the friends list
+}

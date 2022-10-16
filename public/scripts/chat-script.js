@@ -109,3 +109,22 @@ function setMessageId(messageId, tempMessageId) {
     }
   }
 }
+
+//display "is typing" info tight above the text area
+function displayIsTypingInfo() {
+  const chatForm = chatSectionElement.querySelector(".chat-actions");
+  const isTypingElement = document.createElement("p");
+  isTypingElement.classList.add("is-typing-info");
+  isTypingElement.textContent = "typing...";
+  chatForm.append(isTypingElement);
+}
+
+//hide "is typing" info tight above the text area
+function hideIsTypingInfo() {
+  const isTypingElement = chatSectionElement.querySelector(
+    ".chat-actions .is-typing-info"
+  );
+  if (isTypingElement) {
+    isTypingElement.parentElement.removeChild(isTypingElement);
+  }
+}

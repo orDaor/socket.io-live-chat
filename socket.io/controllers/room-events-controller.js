@@ -30,7 +30,19 @@ async function registerOneChatView(socket, roomId) {
   });
 }
 
+//broadcast "is typing" status to socket in a room
+function sendIsTypingStatus(socket, roomId) {
+  //check if user is assigned to this room where he/she wants to broadcast
+  if (!socket.rooms.has(roomId)) {
+    return;
+  }
+
+  //broadcase "is typing" event to other suers in the room
+  socket.to(roomId).emit("room-is-typing-broadcast", roomId);
+}
+
 //exports
 module.exports = {
   registerOneChatView: registerOneChatView,
+  sendIsTypingStatus: sendIsTypingStatus,
 };

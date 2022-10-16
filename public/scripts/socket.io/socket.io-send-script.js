@@ -82,14 +82,27 @@ function sendMessage(event) {
 
 //tells the server this user viewd a specific chat room
 function registerOneChatView(roomId) {
-  //stop if user wants to view the same last viewed room
-  // if (roomId === lastViewedRoomIdGlobal) {
-  //   return;
-  // }
-
   //request to save this chat view
   socket.emit("room-view", roomId);
+}
 
-  //memorize last viewed room
-  lastViewedRoomIdGlobal = roomId;
+//tell the other users in the room when a message is typing
+function sendIsTypingStatus(event) {
+  //if a typing timer is already active, stop
+  if (isTypingTimerActive_send) {
+    return;
+  }
+
+  //room in which we are typing
+  const roomId =
+    chatSectionElement.querySelector(".active-friends").dataset.roomId;
+
+  //timer config
+  isTypingTimerActive_send = true;
+
+  //Sending the typing info will be possible ONLY with minumum freuqnecy of "delay"
+  isTypingTimerId_send = setTimeout(function () {
+    isTypingTimerActive_send = false;
+  }, isTypingTimerDelay_send);
+  socket.emit("room-is-typing", roomId);
 }
