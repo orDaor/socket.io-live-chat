@@ -87,6 +87,7 @@ function hideOneChat(roomId) {
 //display all chats
 function displayChatList(chatList) {
   for (const chat of chatList) {
+    //Create a new friend chat item and display it
     displayOneChat(
       chat.roomId,
       chat.friendsNames,
@@ -94,6 +95,10 @@ function displayChatList(chatList) {
       "append",
       chat.viewed
     ); //TODO: pass isOnline parameter
+    //update new messages counter
+    if (!chat.viewed) {
+      updateNewMessagesCount("increment");
+    }
   }
 }
 
@@ -151,7 +156,11 @@ function selectOneChat(event) {
       window.innerWidth >= 768
     ) {
       setChatItemAsRead(selectedRoomId);
-      getChatGlobalByRoomId(selectedRoomId).viewed = true;
+      const chatGlobal = getChatGlobalByRoomId(selectedRoomId);
+      if (!chatGlobal.viewed) {
+        updateNewMessagesCount("decrement");
+      }
+      chatGlobal.viewed = true;
       //tell the server this user is viewing this chat
       registerOneChatView(selectedRoomId);
     }
@@ -270,11 +279,28 @@ function hideInvitationLink() {
 }
 
 //set counter of new messages
-function setNewMessagesCount(count) {
-  const newMessagesCount = friendsSectionElement.querySelector(
+function updateNewMessagesCount(action) {
+  //actual count
+  const newMessagesCountElement = friendsSectionElement.querySelector(
     ".friends-control .new-messages-count"
   );
-  newMessagesCount.textContent = count;
+
+  //increment or decrement
+  if (action === "increment") {
+    // (+ 1)
+    newMessagesCountElement.textContent = (
+      +newMessagesCountElement.textContent + 1
+    ).toString();
+  } else if (action === "decrement") {
+    if (!+newMessagesCountElement.textContent) {
+      //if count = 0 should not decrement further
+      return;
+    }
+    // (- 1)
+    newMessagesCountElement.textContent = (
+      +newMessagesCountElement.textContent - 1
+    ).toString();
+  }
 }
 
 //mark a friend chat item as UNread

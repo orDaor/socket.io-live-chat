@@ -35,8 +35,11 @@ function onMessageReceiveBroadcast(broadcastData) {
       newChat.friendsNames,
       false,
       "prepend",
-      newChat.viewed
+      newChat.viewed //false
     );
+
+    //update notification counter
+    updateNewMessagesCount("increment");
     return;
   }
 
@@ -47,6 +50,9 @@ function onMessageReceiveBroadcast(broadcastData) {
   );
 
   //new content needs to be viewed on this chat
+  if (chatListGlobal[destinationChatIndexGlobal].viewed) {
+    updateNewMessagesCount("increment");
+  }
   chatListGlobal[destinationChatIndexGlobal].viewed = false;
 
   //move the targetted chat on screen at first position
@@ -62,6 +68,9 @@ function onMessageReceiveBroadcast(broadcastData) {
         friendsSectionElement.style.display === "none")
     ) {
       //se chat to viewed
+      if (!chatListGlobal[destinationChatIndexGlobal].viewed) {
+        updateNewMessagesCount("decrement");
+      }
       chatListGlobal[destinationChatIndexGlobal].viewed = true;
       //tell the server this user is viewing this chat
       registerOneChatView(broadcastData.roomId);

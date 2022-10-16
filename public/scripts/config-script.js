@@ -97,12 +97,16 @@ function displayFriendsAndChatSectionOnWidhtChange(event) {
   }
 
   //mark selected chat item as read when screen gets bigger
-  if (window.innerWidth >= 768) {
+  if (window.innerWidth >= 768 && selectedChatItemGlobal) {
     if (selectedChatItemGlobal.classList.contains("friend-chat-item-unread")) {
       setChatItemAsRead(selectedChatItemGlobal.dataset.roomId);
-      getChatGlobalByRoomId(
+      const chatGlobal = getChatGlobalByRoomId(
         selectedChatItemGlobal.dataset.roomId
-      ).viewed = true;
+      );
+      if (!chatGlobal.viewed) {
+        updateNewMessagesCount("decrement");
+      }
+      chatGlobal.viewed = true;
       //tell the server the user is viewing new content for this chat
       registerOneChatView(selectedChatItemGlobal.dataset.roomId);
     }
