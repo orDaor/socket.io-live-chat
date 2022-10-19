@@ -64,6 +64,7 @@ function onMessageReceiveBroadcast(broadcastData) {
     //reset "is typing" info and timer
     hideIsTypingInfo();
     clearTimeout(isTypingTimerId_receive);
+    isTypingTimerId_receive = null;
     isTypingTimerActive_receive = false;
 
     //handle th received message

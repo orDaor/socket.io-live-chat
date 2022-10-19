@@ -187,7 +187,9 @@ function selectOneChat(event) {
   //reset "is typing" info and timer
   hideIsTypingInfo();
   clearTimeout(isTypingTimerId_receive);
+  isTypingTimerId_receive = null;
   clearTimeout(isTypingTimerId_send);
+  isTypingTimerId_send = null;
   isTypingTimerActive_receive = false;
   isTypingTimerActive_send = false;
 
