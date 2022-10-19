@@ -54,19 +54,28 @@ socket.on("connect_error", onSocketConnecError);
 //socket boradcast event listeners
 socket.on("message-receive-broadcast", onMessageReceiveBroadcast);
 socket.on("room-is-typing-broadcast", onRoomIsTypingBroadcast);
+socket.on("room-is-online-broadcast", onRoomIsOnlineBroadcast);
 
 //global variables
 let initializationDoneGlobal = false;
 let chatListGlobal = [];
 let selectedChatItemGlobal;
 
-//timers
+//timer: send "is typing" info
 let isTypingTimerId_send;
 let isTypingTimerActive_send = false;
-let isTypingTimerDelay_send = 1300;
+let isTypingTimerDelay_send = 1500;
+
+//timer: display "is typing info" in the selected chat
 let isTypingTimerId_receive;
 let isTypingTimerActive_receive = false;
-let isTypingTimerDelay_receive = 1000;
+let isTypingTimerDelay_receive = 3000;
+
+//timer: send "i am online" info to users in the rooms I am in
+let iAmOnlineTimerDelay = 1500;
+
+//timer: "friend is online timer delay"
+let friendIsOnlineTimerDelay = 3000;
 
 //initialization
 initAfterPageLoaded();

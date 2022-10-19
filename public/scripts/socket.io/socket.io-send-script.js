@@ -82,12 +82,20 @@ function sendMessage(event) {
 
 //tells the server this user viewd a specific chat room
 function registerOneChatView(roomId) {
+  //socket not connected
+  if (!socket.connected) {
+    return;
+  }
   //request to save this chat view
   socket.emit("room-view", roomId);
 }
 
 //tell the other users in the room when a message is typing
 function sendIsTypingStatus(event) {
+  //socket not connected
+  if (!socket.connected) {
+    return;
+  }
   //if a typing timer is already active, stop
   if (isTypingTimerActive_send) {
     return;
@@ -105,4 +113,16 @@ function sendIsTypingStatus(event) {
     isTypingTimerActive_send = false;
   }, isTypingTimerDelay_send);
   socket.emit("room-is-typing", roomId);
+}
+
+//online status: tell the suers in the rooms you are in, that you are alive
+function sendOnlineStatus() {
+  //socket not connected
+  if (!socket.connected) {
+    //stop sending cyclycally
+    return;
+  }
+
+  //send status
+  socket.emit("room-is-online", {});
 }

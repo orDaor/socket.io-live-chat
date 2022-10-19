@@ -61,8 +61,16 @@ async function initAfterLogin(token) {
     return;
   }
 
-  //memorize chat list in global variable
-  chatListGlobal = chatList;
+  //memorize chat list in global variable, add online status timer content for each chat
+  chatListGlobal = chatList.map(function (chat) {
+    return {
+      ...chat,
+      onlineStatusTimer: {
+        timerId: null,
+        active: false,
+      },
+    };
+  });
 
   //no chats found
   if (chatListGlobal.length === 0) {

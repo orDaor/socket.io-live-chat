@@ -12,6 +12,11 @@ function listenToRoomEvents(io, socket) {
   socket.on("room-is-typing", function (roomId) {
     roomEventsController.sendIsTypingStatus(socket, roomId);
   });
+
+  //broad cast "i am alive" status
+  socket.on("room-is-online", function (emptyObj) {
+    roomEventsController.sendOnlineStatus(socket);
+  });
 }
 
 //exports

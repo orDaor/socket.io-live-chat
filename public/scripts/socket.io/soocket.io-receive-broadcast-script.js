@@ -61,6 +61,12 @@ function onMessageReceiveBroadcast(broadcastData) {
 
   //check whether destination chat is selected or not
   if (friendChatItemElement.classList.contains("friend-chat-item-selected")) {
+    //reset "is typing" info and timer
+    hideIsTypingInfo();
+    clearTimeout(isTypingTimerId_receive);
+    isTypingTimerActive_receive = false;
+
+    //handle th received message
     if (
       window.innerWidth >= 768 ||
       (window.innerWidth < 768 &&
@@ -118,34 +124,86 @@ function onMessageReceiveBroadcast(broadcastData) {
   }
 }
 
-//broadcast message telling someone in a given room is typing
+//someone in a give room is typing
 function onRoomIsTypingBroadcast(broadcastData) {
   //target chat room where someone is tying
   const roomId = broadcastData;
   const activeFriendsElement =
     chatSectionElement.querySelector(".active-friends");
 
-  //chat where someone is typing is selected
-  if (activeFriendsElement.dataset.roomId === roomId) {
-    //we can not display "is typing" message while timer is stilla active
-    if (isTypingTimerActive_receive) {
-      return;
-    }
+  //"is typing" status is displayed only on selected chat
+  if (activeFriendsElement.dataset.roomId !== roomId) {
+    return;
+  }
 
+  //we can not display "is typing" message while timer is stilla active
+  if (isTypingTimerActive_receive) {
+    //clear current active timer
+    clearTimeout(isTypingTimerId_receive);
+
+    //start new timer
+    isTypingTimerId_receive = setTimeout(function () {
+      isTypingTimerId_receive = null;
+      isTypingTimerActive_receive = false;
+      hideIsTypingInfo();
+    }, isTypingTimerDelay_receive);
+  } else {
     //timer config
     isTypingTimerActive_receive = true;
 
     //start timer
     isTypingTimerId_receive = setTimeout(function () {
+      isTypingTimerId_receive = null;
       isTypingTimerActive_receive = false;
       hideIsTypingInfo();
     }, isTypingTimerDelay_receive);
 
     //display "is typing info"
     displayIsTypingInfo();
+  }
+}
+
+//someone in a given room is telling it is alive (online)
+function onRoomIsOnlineBroadcast(broadcastData) {
+  //find chat room in global chat list
+  const roomId = broadcastData;
+  const chatGlobal = getChatGlobalByRoomId(roomId);
+  if (!chatGlobal) {
     return;
   }
 
-  //chat where someone is typing is NOT selected
-  //TODO: display "typing" in the friends list
+  //find chat room in friends list
+  const friendChatItem = getChatItemByRoomId(roomId);
+  if (!friendChatItem) {
+    return;
+  }
+
+  //friend is already online
+  if (chatGlobal.onlineStatusTimer.active) {
+    //clear timer and start a new one
+    clearTimeout(chatGlobal.onlineStatusTimer.timerId);
+    chatGlobal.onlineStatusTimer.timerId = setTimeout(function () {
+      //display friend as offline
+      setOneChatOnlineStatus(friendChatItem, false);
+      //timer for this chat is not active
+      chatGlobal.onlineStatusTimer.active = false;
+      chatGlobal.onlineStatusTimer.timerId = null;
+    }, friendIsOnlineTimerDelay);
+    //
+  } else {
+    //display friend online status on screen
+    setOneChatOnlineStatus(friendChatItem, true);
+
+    //memorize friend is online in this chat room, by activating timer
+    chatGlobal.onlineStatusTimer.timerId = setTimeout(function () {
+      //display friend as offline
+      setOneChatOnlineStatus(friendChatItem, false);
+      //timer for this chat is not active
+      chatGlobal.onlineStatusTimer.active = false;
+      chatGlobal.onlineStatusTimer.timerId = null;
+    }, friendIsOnlineTimerDelay);
+
+    //timer active flag
+    chatGlobal.onlineStatusTimer.active = true;
+  }
 }

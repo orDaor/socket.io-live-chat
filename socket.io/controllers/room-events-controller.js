@@ -1,7 +1,7 @@
 //imports custom
 const Room = require("../../models/room-model");
 
-//save the info that the user viewd a specific chat
+//register the info that the user viewd a specific chat
 async function registerOneChatView(socket, roomId) {
   //check if the room exists
   let room;
@@ -41,8 +41,21 @@ function sendIsTypingStatus(socket, roomId) {
   socket.to(roomId).emit("room-is-typing-broadcast", roomId);
 }
 
+//broadcast "i am alive" status coming from one user, to other users in the
+//room this user is in
+function sendOnlineStatus(socket) {
+  //loop through rooms in which this user is. For each targetted
+  //room, broadcast the "i am alive" status to other users
+  socket.rooms.forEach(function (roomId) {
+    if (roomId !== socket.id) {
+      socket.to(roomId).emit("room-is-online-broadcast", roomId);
+    }
+  });
+}
+
 //exports
 module.exports = {
   registerOneChatView: registerOneChatView,
   sendIsTypingStatus: sendIsTypingStatus,
+  sendOnlineStatus: sendOnlineStatus,
 };

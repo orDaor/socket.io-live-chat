@@ -4,6 +4,9 @@ function onSocketConnect() {
   console.log(`Connected with soket.id = ${socket.id}`);
   //NOTE: "connect" means both connect and re-connect (connect after connection was closed)
   //NOTE: on "conenct" event, a new unique socket id is assigned to the socket (before connection there is no id)
+
+  //async: send cyclycally "I am alive" status on the socket
+  setInterval(sendOnlineStatus, iAmOnlineTimerDelay);
 }
 
 //socket was closed
@@ -32,7 +35,9 @@ function onSocketConnecError(error) {
   }
 
   //failed because server refused connection
-  console.log(`Connection attempt failed because: ${error.message} (${error.data.description})`);
+  console.log(
+    `Connection attempt failed because: ${error.message} (${error.data.description})`
+  );
 
   if (error.data.code === 401 || error.data.code === 403) {
     //autentication error

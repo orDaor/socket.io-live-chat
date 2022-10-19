@@ -215,25 +215,23 @@ function selectOneChat(event) {
 }
 
 //set one chat online status
-function setOneChatOnlineStatus(roomId, isOnline) {
-  const chatList = document.querySelectorAll(".friend-chat-item");
-  for (const chat of chatList) {
-    if (chat.dataset.roomId === roomId) {
-      const friendChatStatusElement = chat.querySelector(".friend-chat-status");
-      if (isOnline) {
-        friendChatStatusElement.classList.add("friend-chat-status-online");
-        friendChatStatusElement.classList.remove("friend-chat-status-offline");
-      } else {
-        friendChatStatusElement.classList.add("friend-chat-status-offline");
-        friendChatStatusElement.classList.remove("friend-chat-status-online");
-      }
-      //if this element is also selected, then update accordlingly active chat online status as well
-      if (chat.classList.contains("friend-chat-item-selected")) {
-        setActiveChatOnlineStatus(friendChatStatusElement);
-      }
-      return;
-    }
+function setOneChatOnlineStatus(chat, isOnline) {
+  const friendChatStatusElement = chat.querySelector(".friend-chat-status");
+  if (!friendChatStatusElement) {
+    return;
   }
+  if (isOnline) {
+    friendChatStatusElement.classList.add("friend-chat-status-online");
+    friendChatStatusElement.classList.remove("friend-chat-status-offline");
+  } else {
+    friendChatStatusElement.classList.add("friend-chat-status-offline");
+    friendChatStatusElement.classList.remove("friend-chat-status-online");
+  }
+  //if this element is also selected, then update accordlingly active chat online status as well
+  if (chat.classList.contains("friend-chat-item-selected")) {
+    setActiveChatOnlineStatus(friendChatStatusElement);
+  }
+  return;
 }
 
 //display invitaion link
@@ -307,6 +305,14 @@ function updateNewMessagesCount(action) {
     newMessagesCountElement.textContent = (
       +newMessagesCountElement.textContent - 1
     ).toString();
+  }
+
+  //update notification in the window title
+  const documentTitle = document.querySelector("title");
+  if (+newMessagesCountElement.textContent) {
+    documentTitle.textContent = `(${newMessagesCountElement.textContent}) Live Chat`;
+  } else {
+    documentTitle.textContent = "Live Chat";
   }
 }
 
