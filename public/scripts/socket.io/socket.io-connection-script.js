@@ -5,8 +5,13 @@ function onSocketConnect() {
   //NOTE: "connect" means both connect and re-connect (connect after connection was closed)
   //NOTE: on "conenct" event, a new unique socket id is assigned to the socket (before connection there is no id)
 
-  //async: send cyclycally "I am alive" status on the socket
-  setInterval(sendOnlineStatus, iAmOnlineTimerDelay);
+  //send cyclycally "I am alive" status on the socket
+  if (!iAmOnlineTimerActive) {
+    setInterval(sendOnlineStatus, iAmOnlineTimerDelay);
+    iAmOnlineTimerActive = true;
+    //NOTE: iAmOnlineTimerActive --> prevents from starting multiple paralell "setInterval"
+    //      processes when re-connecting
+  }
 }
 
 //socket was closed

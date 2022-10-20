@@ -73,6 +73,7 @@ let isTypingTimerDelay_receive = 3000;
 
 //timer: send "i am online" info to users in the rooms I am in
 let iAmOnlineTimerDelay = 1500;
+let iAmOnlineTimerActive = false;
 
 //timer: "friend is online timer delay"
 let friendIsOnlineTimerDelay = 3000;
