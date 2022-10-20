@@ -34,9 +34,6 @@ function getHtmlContentSignUpInForm(action, alternativeAction) {
   </form>`;
 }
 
-const messagesLoadingErrorInfo = `We were not able to load your messages.
-Please try again by clicking this button or reloading the page!`;
-
 function getHtmlContentInitInfo(title, info, action, optionalAction, data) {
   //optional action
   let optionalHtmlContent = "";

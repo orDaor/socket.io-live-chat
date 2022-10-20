@@ -99,7 +99,7 @@ function displayFriendsAndChatSectionOnWidhtChange(event) {
   //mark selected chat item as read when screen gets bigger
   if (window.innerWidth >= 768 && selectedChatItemGlobal) {
     if (selectedChatItemGlobal.classList.contains("friend-chat-item-unread")) {
-      setChatItemAsRead(selectedChatItemGlobal.dataset.roomId);
+      setChatItemAsRead(selectedChatItemGlobal);
       const chatGlobal = getChatGlobalByRoomId(
         selectedChatItemGlobal.dataset.roomId
       );
@@ -190,40 +190,30 @@ function displayMainErrorInfo(info) {
 }
 
 //display error info for one message
-function displayOneMessageErrorInfo(messageId, info) {
-  const messages = document.querySelectorAll(".message-item");
-  for (const message of messages) {
-    if (message.dataset.messageId === messageId) {
-      //add a line break before the error info
-      const lineBreakELement = document.createElement("p");
-      lineBreakELement.classList.add("line-break-control");
-      message.append(lineBreakELement);
-      //find the message and add below it the error info
-      const errorTextElement = document.createElement("p");
-      errorTextElement.classList.add("message-item-error");
-      const spanErrorTextELement = document.createElement("span");
-      spanErrorTextELement.textContent = info;
-      errorTextElement.append(spanErrorTextELement);
-      message.append(errorTextElement);
-      return;
-    }
-  }
+function displayOneMessageErrorInfo(message, info) {
+  //add a line break before the error info
+  const lineBreakELement = document.createElement("p");
+  lineBreakELement.classList.add("line-break-control");
+  message.append(lineBreakELement);
+  //find the message and add below it the error info
+  const errorTextElement = document.createElement("p");
+  errorTextElement.classList.add("message-item-error");
+  const spanErrorTextELement = document.createElement("span");
+  spanErrorTextELement.textContent = info;
+  errorTextElement.append(spanErrorTextELement);
+  message.append(errorTextElement);
 }
 
 //display error info for one message
-function hideOneMessageErrorInfo(messageId) {
-  const messages = document.querySelectorAll(".message-item");
-  for (const message of messages) {
-    if (message.dataset.messageId === messageId) {
-      //find the message and remove its error info
-      const messageItemError = message.querySelector(".message-item-error");
-      if (messageItemError) {
-        message.removeChild(messageItemError);
-        //remove also line break
-        const lineBreak = message.querySelector(".line-break-control");
-        message.removeChild(lineBreak);
-        return;
-      }
+function hideOneMessageErrorInfo(message) {
+  //find the message and remove its error info
+  const messageItemError = message.querySelector(".message-item-error");
+  if (messageItemError) {
+    message.removeChild(messageItemError);
+    //remove also line break
+    const lineBreak = message.querySelector(".line-break-control");
+    if (lineBreak) {
+      message.removeChild(lineBreak);
     }
   }
 }

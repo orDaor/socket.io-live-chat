@@ -69,19 +69,13 @@ function displayOneChat(roomId, friendsNames, isOnline, position, viewed) {
 
   //check if the chat to display has new content to be visualized
   if (!viewed) {
-    setChatItemAsUnread(roomId);
+    setChatItemAsUnread(friendChatItemElement);
   }
 }
 
 //hide one chat
-function hideOneChat(roomId) {
-  const chatList = document.querySelectorAll(".friend-chat-item");
-  for (const chat of chatList) {
-    if (chat.dataset.roomId === roomId) {
-      chat.parentElement.removeChild(chat);
-      return;
-    }
-  }
+function hideOneChat(chat) {
+  chat.parentElement.removeChild(chat);
 }
 
 //display all chats
@@ -146,6 +140,9 @@ function selectOneChat(event) {
     ".friend-chat-status"
   );
 
+  //corresponding chat in global list
+  const chatGlobal = getChatGlobalByRoomId(selectedRoomId);
+
   //check if this chat list item is marked as UN-read
   if (
     selectedFriendChatItemElement.classList.contains("friend-chat-item-unread")
@@ -155,8 +152,7 @@ function selectOneChat(event) {
       (initializationDoneGlobal && window.innerWidth < 768) ||
       window.innerWidth >= 768
     ) {
-      setChatItemAsRead(selectedRoomId);
-      const chatGlobal = getChatGlobalByRoomId(selectedRoomId);
+      setChatItemAsRead(selectedFriendChatItemElement);
       if (!chatGlobal.viewed) {
         updateNewMessagesCount("decrement");
       }
@@ -206,7 +202,7 @@ function selectOneChat(event) {
   selectedChatItemGlobal = selectedFriendChatItemElement;
 
   //display all messages for this chat
-  displayAllMessages(getChatGlobalByRoomId(selectedRoomId).messages, "auto");
+  displayAllMessages(chatGlobal.messages, "auto");
 
   //in mobile view, show only chat section
   if (initializationDoneGlobal && window.innerWidth < 768) {
@@ -319,36 +315,24 @@ function updateNewMessagesCount(action) {
 }
 
 //mark a friend chat item as UNread
-function setChatItemAsUnread(roomId) {
-  const chatList = document.querySelectorAll(".friend-chat-item");
-  for (const chat of chatList) {
-    if (chat.dataset.roomId === roomId) {
-      //set unread
-      chat.classList.add("friend-chat-item-unread");
-      //add unread noty
-      const unreadNoty = document.createElement("div");
-      unreadNoty.classList.add("friend-chat-noty");
-      unreadNoty.textContent = "(!)";
-      chat.appendChild(unreadNoty);
-      return;
-    }
-  }
+function setChatItemAsUnread(chat) {
+  //set unread
+  chat.classList.add("friend-chat-item-unread");
+  //add unread noty
+  const unreadNoty = document.createElement("div");
+  unreadNoty.classList.add("friend-chat-noty");
+  unreadNoty.textContent = "(!)";
+  chat.appendChild(unreadNoty);
 }
 
 //mark a friend chat item as Read
-function setChatItemAsRead(roomId) {
-  const chatList = document.querySelectorAll(".friend-chat-item");
-  for (const chat of chatList) {
-    if (chat.dataset.roomId === roomId) {
-      //remove unread
-      chat.classList.remove("friend-chat-item-unread");
-      //remove unread noty
-      const unreadNoty = chat.querySelector(".friend-chat-noty");
-      if (unreadNoty) {
-        chat.removeChild(unreadNoty);
-      }
-      return;
-    }
+function setChatItemAsRead(chat) {
+  //remove unread
+  chat.classList.remove("friend-chat-item-unread");
+  //remove unread noty
+  const unreadNoty = chat.querySelector(".friend-chat-noty");
+  if (unreadNoty) {
+    chat.removeChild(unreadNoty);
   }
 }
 

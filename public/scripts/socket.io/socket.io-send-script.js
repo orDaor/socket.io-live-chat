@@ -49,7 +49,7 @@ function sendMessage(event) {
   }
 
   //display message right when sending it
-  displayOneMessage(
+  const displayedMessage = displayOneMessage(
     false,
     message.tempMessageId,
     message.text,
@@ -60,14 +60,14 @@ function sendMessage(event) {
 
   //user not connected...
   if (!socket.connected) {
-    displayOneMessageErrorInfo(message.tempMessageId, errorInfo);
+    displayOneMessageErrorInfo(displayedMessage, errorInfo);
     return;
   }
 
   //start ack timeout: callback executed if ack is not received within delay
   const timerId = setTimeout(function () {
-    hideOneMessageErrorInfo(message.tempMessageId);
-    displayOneMessageErrorInfo(message.tempMessageId, errorInfo);
+    hideOneMessageErrorInfo(displayedMessage);
+    displayOneMessageErrorInfo(displayedMessage, errorInfo);
   }, delay);
 
   //send (emit) a event with a message to the server

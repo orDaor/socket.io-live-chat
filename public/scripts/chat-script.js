@@ -28,9 +28,6 @@ function displayOneMessage(
   spanMessageTextElement.textContent = text;
   messageTextElement.appendChild(spanMessageTextElement);
   messageListItemElement.appendChild(messageTextElement);
-  //append the list item element inside the messages list
-  const messagesListElement = chatSectionElement.querySelector("ul");
-  messagesListElement.appendChild(messageListItemElement);
 
   //if it is error message display an "x" for closing it
   if (isErrorMessage) {
@@ -52,10 +49,16 @@ function displayOneMessage(
     messageTextElement.appendChild(messageActionElement);
   }
 
+  //append the list item element inside the messages list
+  const messagesListElement = chatSectionElement.querySelector("ul");
+  messagesListElement.appendChild(messageListItemElement);
+
   //scroll the message list at the bottom
   if (autoScrollToBottom) {
     scrollToBottomOfMessagesList(scrollBehavior);
   }
+
+  return messageListItemElement;
 }
 
 //display array of messages received on the socket
@@ -89,25 +92,13 @@ function cleanAllMessages() {
 }
 
 //delete a message from screen
-function hideOneMessage(messageId) {
-  const messages = document.querySelectorAll(".message-item");
-  for (const message of messages) {
-    if (message.dataset.messageId === messageId) {
-      message.parentElement.removeChild(message);
-      return;
-    }
-  }
+function hideOneMessage(message) {
+  message.parentElement.removeChild(message);
 }
 
 //set message id on the page
-function setMessageId(messageId, tempMessageId) {
-  const messages = document.querySelectorAll(".message-item");
-  for (const message of messages) {
-    if (message.dataset.messageId === tempMessageId) {
-      message.dataset.messageId = messageId;
-      return;
-    }
-  }
+function setMessageId(message, messageId) {
+  message.dataset.messageId = messageId;
 }
 
 //display "is typing" info tight above the text area
@@ -126,5 +117,15 @@ function hideIsTypingInfo() {
   );
   if (isTypingElement) {
     isTypingElement.parentElement.removeChild(isTypingElement);
+  }
+}
+
+//get message item by room id
+function getMessageItemByMessageId(messageId) {
+  const messages = chatSectionElement.querySelectorAll(".message-item");
+  for (const message of messages) {
+    if (message.dataset.messageId === messageId) {
+      return message;
+    }
   }
 }

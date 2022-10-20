@@ -115,13 +115,13 @@ function onMessageReceiveBroadcast(broadcastData) {
     ) {
       //enter the message in the message list without scrolling
       displayOneMessage(false, "", broadcastData.message.text, "left");
-      setChatItemAsRead(broadcastData.roomId);
-      setChatItemAsUnread(broadcastData.roomId);
+      setChatItemAsRead(friendChatItemElement);
+      setChatItemAsUnread(friendChatItemElement);
     }
   } else {
     //mark as UN-read
-    setChatItemAsRead(broadcastData.roomId);
-    setChatItemAsUnread(broadcastData.roomId);
+    setChatItemAsRead(friendChatItemElement);
+    setChatItemAsUnread(friendChatItemElement);
   }
 }
 

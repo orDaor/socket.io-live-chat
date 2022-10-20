@@ -12,14 +12,17 @@ function onUserFetchInvitationLinkAck(ackData) {
 
 //process ack from server on message send ack
 function onMessageSendAck(ackData) {
+  //dislayed target message
+  const displayedMessage = getMessageItemByMessageId(ackData.tempMessageId);
+
   //message not sent (not saved and not forwarded to the users in the room)
   if (!ackData.ok) {
-    displayOneMessageErrorInfo(ackData.tempMessageId, ackData.info);
+    displayOneMessageErrorInfo(displayedMessage, ackData.info);
     return;
   }
 
   //response ok, update message id on screen
-  setMessageId(ackData.message.messageId, ackData.tempMessageId);
+  setMessageId(displayedMessage, ackData.message.messageId);
 
   //add message in chatListGlobal, in the destination chat room
   const chat = getChatGlobalByRoomId(ackData.roomId);
