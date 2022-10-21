@@ -6,6 +6,7 @@ const jwt = require("jsonwebtoken");
 const validation = require("../utils/validation-util");
 const authentication = require("../utils/authentication-util");
 const User = require("../models/user-model");
+const Room = require("../models/room-model");
 
 //time constants
 const oneHour_s = 60 * 60; //s
@@ -140,28 +141,27 @@ async function login(req, res, next) {
 
 //invitation link handling
 async function handleInvitationLink(req, res, next) {
-  //who is inviting the user who sent this request?
-  //Check whether he exists
+  //id of the room where this user is invited
   const invitationId = req.params.invitationId;
 
-  //look for the user who issued this invitation link
-  let inviter;
+  //init invitation info to be sent back in the response page
   let locals = res.locals;
   locals.invitationInfo = {};
   locals.invitationInfo.invitationId = invitationId;
+
+  //check if the user can actually access this room
+  let result;
   try {
-    inviter = await User.findByInvitationId(invitationId);
+    result = await Room.checkAvailability(invitationId);
   } catch (error) {
-    //the user who issued this link was not found, so this link is not valid
+    //client will display error message
     locals.invitationInfo.inviterName = "";
-    //response
     res.render("chat");
     return;
   }
 
-  //the user who issued this link was found
-  locals.invitationInfo.inviterName = inviter.name;
-
+  //the user who issued the invitation link
+  locals.invitationInfo.inviterName = result.inviter.name;
   //response
   res.render("chat");
 }

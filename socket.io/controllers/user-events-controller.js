@@ -13,7 +13,7 @@ async function onUserFetchInvitationLink(socket, emptyObj, sendAck) {
   //user asking for the link
   const userId = socket.userId;
 
-  //check whether user pointed by this token still exists
+  //check whether user still exist
   let user;
   try {
     user = await User.findById(userId);
@@ -25,11 +25,34 @@ async function onUserFetchInvitationLink(socket, emptyObj, sendAck) {
     return;
   }
 
-  //user exists, generate unique invitation link
-  user.invitationId = uuid();
-
+  //check if this user already generated an invitation link
+  let room;
   try {
-    await user.save();
+    room = await Room.findWithOneUerWaiting(user.userId);
+  } catch (error) {
+    ackData.ok = false;
+    ackData.info = "An error occured. Maybe try again later?";
+    sendAck(ackData);
+    console.log(error);
+    return;
+  }
+
+  //a link was already generated, because a room where only this user is waiting was found
+  if (room) {
+    ackData.ok = true;
+    ackData.invitationLink = room.getInvitationLink();
+    sendAck(ackData);
+    return;
+  }
+
+  //no link was already generated, so we can create a new one.
+  //Create a chat room for this user, where it can invite other users. Then
+  //the invitation link will point to this room
+  room = new Room([user.userId]);
+  let roomId;
+  try {
+    roomId = await room.save();
+    room.roomId = roomId.toString();
   } catch (error) {
     ackData.ok = false;
     ackData.info = "An error occured. Maybe try again later?";
@@ -39,7 +62,7 @@ async function onUserFetchInvitationLink(socket, emptyObj, sendAck) {
   }
 
   ackData.ok = true;
-  ackData.invitationLink = user.getInvitationLink();
+  ackData.invitationLink = room.getInvitationLink();
   sendAck(ackData);
 }
 

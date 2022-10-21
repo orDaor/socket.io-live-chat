@@ -3,6 +3,13 @@ const ObjectId = require("mongodb").ObjectId;
 
 //imports custom
 const db = require("../data/database");
+const User = require("../models/user-model");
+
+//environment variable for the website domain
+let domain = "http://localhost:3000";
+if (process.env.DOMAIN) {
+  domain = process.env.DOMAIN;
+}
 
 class Room {
   constructor(friends, lastViewDates, lastActivityDate, roomId) {
@@ -102,6 +109,25 @@ class Room {
     return documents.map(mapOneDocument);
   }
 
+  //find a room where a specific user is waiting for a friend to accept his invitation
+  static async findWithOneUerWaiting(userId) {
+    //query filter
+    const query = {
+      $and: [{ friends: { $size: 1 } }, { friends: { $in: [userId] } }],
+    };
+
+    //run query
+    const document = await db.getDb().collection("rooms").findOne(query);
+
+    //no room was found
+    if (!document) {
+      return document; //undefined
+    }
+
+    //a room was found, return room class obj
+    return Room.fromMongoDBDocumentToRoom(document);
+  }
+
   //delete a room by its id
   static async deleteById(roomId) {
     const query = { _id: new ObjectId(roomId) };
@@ -109,6 +135,27 @@ class Room {
     if (!result.deletedCount) {
       throw new Error("No room was deleted");
     }
+  }
+
+  //check if this room is available (if a user can enter this room)
+  static async checkAvailability(roomId) {
+    //check if a room with id = invitation id exist
+    const room = await Room.findById(roomId);
+
+    //there should be only 1 user in this room waiting for another one to join
+    if (room.friends.length !== 1) {
+      throw new Error("Only 1 user should be waiting inside this room");
+    }
+
+    //look for the user who generated this link
+    const inviterId = room.friends[0];
+    const inviter = await User.findById(inviterId);
+
+    //return the available room and the inviter inside of it
+    return {
+      room: room,
+      inviter: inviter,
+    };
   }
 
   //save a new room or update an existing one
@@ -156,6 +203,11 @@ class Room {
       lastViewDates: this.lastViewDates,
       lastActivityDate: this.lastActivityDate,
     };
+  }
+
+  //generate invitation link for connecting with this user
+  getInvitationLink() {
+    return domain + "/user/invitation/" + this.roomId;
   }
 }
 

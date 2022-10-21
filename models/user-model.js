@@ -4,14 +4,8 @@ const ObjectId = require("mongodb").ObjectId;
 //imports custom
 const db = require("../data/database");
 
-//environment variable for the website domain
-let domain = "http://localhost:3000";
-if (process.env.DOMAIN) {
-  domain = process.env.DOMAIN;
-}
-
 class User {
-  constructor(name, password, regitrationDate, invitationId, userId) {
+  constructor(name, password, regitrationDate, userId) {
     this.name = name;
     this.password = password;
 
@@ -20,8 +14,6 @@ class User {
     } else {
       this.regitrationDate = new Date(); //now
     }
-
-    this.invitationId = invitationId;
 
     if (userId) {
       this.userId = userId.toString();
@@ -34,7 +26,6 @@ class User {
       document.name,
       document.password,
       document.regitrationDate,
-      document.invitationId,
       document._id
     );
   }
@@ -102,23 +93,6 @@ class User {
     return User.fromMongoDBDocumentToUser(document);
   }
 
-  //find a user by invitation id
-  static async findByInvitationId(invitationId) {
-    //define query filter
-    const query = { invitationId: invitationId };
-
-    //run query
-    const document = await db.getDb().collection("users").findOne(query);
-
-    //no user found
-    if (!document) {
-      throw new Error("No user found with this invitation id");
-    }
-
-    //return user class obj
-    return User.fromMongoDBDocumentToUser(document);
-  }
-
   //delete a user by its id
   static async deleteById(userId) {
     const query = { _id: new ObjectId(userId) };
@@ -150,18 +124,12 @@ class User {
     }
   }
 
-  //generate invitation link for connecting with this user
-  getInvitationLink() {
-    return domain + "/user/invitation/" + this.invitationId;
-  }
-
   //generate mongodb document from User class obj
   fromUserToMongoDBDocument() {
     return {
       name: this.name,
       password: this.password,
       regitrationDate: this.regitrationDate,
-      invitationId: this.invitationId,
     };
   }
 }
