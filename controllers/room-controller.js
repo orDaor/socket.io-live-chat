@@ -25,6 +25,7 @@ async function accetpInvitationRequest(req, res, next) {
 
   //enter the user in the room he is invited in
   result.room.friends.push(res.locals.userId);
+  result.room.lastViewDates.push(new Date()); //now
   try {
     await result.room.save();
   } catch (error) {
