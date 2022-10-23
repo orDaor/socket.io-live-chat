@@ -68,12 +68,22 @@ class Room {
   }
 
   //find rooms where a specific user is active
-  static async findManyByUserId(userId) {
+  static async findManyByUserId(userId, includeDocsWithUserAlone) {
     //query filter: look for all rooms where the user with
     //userId is active (contained in the friends list)
-    const query = {
-      friends: { $in: [userId] },
-    };
+    let query;
+    if (includeDocsWithUserAlone) {
+      query = {
+        friends: { $in: [userId] },
+      };
+    } else {
+      query = {
+        $and: [
+          { friends: { $in: [userId] } },
+          { "friends.1": { $exists: true } }, //at least 2 friends in this room
+        ],
+      };
+    }
 
     const documents = await db
       .getDb()
