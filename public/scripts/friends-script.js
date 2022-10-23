@@ -115,7 +115,7 @@ function selectOneChat(event) {
       let iterationCount = 0;
       while (
         !selectedFriendChatItemElement.classList.contains("friend-chat-item") &&
-        iterationCount < 20 //max iterations allowed to avoid infinite loos
+        iterationCount < 20 //max iterations allowed to avoid infinite loop
       ) {
         selectedFriendChatItemElement =
           selectedFriendChatItemElement.parentElement;
@@ -132,6 +132,30 @@ function selectOneChat(event) {
       friendsSectionElement.querySelector("ul li");
   }
 
+  //if already selected, stop!
+  if (
+    selectedFriendChatItemElement.classList.contains(
+      "friend-chat-item-selected"
+    )
+  ) {
+    if (window.innerWidth < 768) {
+      hideFriendsSection();
+      displayChatSection();
+      scrollToBottomOfMessagesList("auto");
+      return;
+    }
+  }
+
+  //not already selected, then select li item
+  selectedFriendChatItemElement.classList.add("friend-chat-item-selected");
+
+  //remove selection from previous selected chat item
+  if (selectedChatItemGlobal) {
+    selectedChatItemGlobal.classList.remove("friend-chat-item-selected");
+  }
+  //memory for selected chat item
+  selectedChatItemGlobal = selectedFriendChatItemElement;
+
   //gather selected chat item data
   const selectedFriendNameElement =
     selectedFriendChatItemElement.querySelector(".friend-chat-name");
@@ -147,38 +171,15 @@ function selectOneChat(event) {
   if (
     selectedFriendChatItemElement.classList.contains("friend-chat-item-unread")
   ) {
-    //remove un-read chat item status if present, for big screen, after all chat loaded first time
-    if (
-      (initializationDoneGlobal && window.innerWidth < 768) ||
-      window.innerWidth >= 768
-    ) {
-      setChatItemAsRead(selectedFriendChatItemElement);
-      if (!chatGlobal.viewed) {
-        updateNewMessagesCount("decrement");
-      }
-      chatGlobal.viewed = true;
-      //tell the server this user is viewing this chat
-      registerOneChatView(selectedRoomId);
+    //remove un-read chat item status if present
+    setChatItemAsRead(selectedFriendChatItemElement);
+    if (!chatGlobal.viewed) {
+      updateNewMessagesCount("decrement");
     }
+    chatGlobal.viewed = true;
+    //tell the server this user is viewing this chat
+    registerOneChatView(selectedRoomId);
   }
-
-  //if already selected, stop!
-  if (
-    selectedFriendChatItemElement.classList.contains(
-      "friend-chat-item-selected"
-    )
-  ) {
-    //in mobile view, show only chat section
-    if (initializationDoneGlobal && window.innerWidth < 768) {
-      hideFriendsSection();
-      displayChatSection();
-      scrollToBottomOfMessagesList("auto");
-    }
-    return;
-  }
-
-  //not already selected, then select li item
-  selectedFriendChatItemElement.classList.add("friend-chat-item-selected");
 
   //reset "is typing" info and timer
   hideIsTypingInfo();
@@ -194,22 +195,19 @@ function selectOneChat(event) {
   setActiveFriendName(selectedFriendNameElement.textContent);
   setActiveChatOnlineStatus(selectedChatStatusElement);
 
-  //remove selection from previous selected chat item
-  if (selectedChatItemGlobal) {
-    selectedChatItemGlobal.classList.remove("friend-chat-item-selected");
-  }
-  //memory for selected chat item
-  selectedChatItemGlobal = selectedFriendChatItemElement;
-
   //display all messages for this chat
   displayAllMessages(chatGlobal.messages, "auto");
 
   //in mobile view, show only chat section
-  if (initializationDoneGlobal && window.innerWidth < 768) {
+  if (window.innerWidth < 768) {
     hideFriendsSection();
     displayChatSection();
-    scrollToBottomOfMessagesList("auto");
+  } else {
+    // >= 768
+    displayFriendsSection();
+    displayChatSection();
   }
+  scrollToBottomOfMessagesList("auto");
 }
 
 //set one chat online status

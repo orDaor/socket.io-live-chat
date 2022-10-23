@@ -61,6 +61,9 @@ async function onUserFetchInvitationLink(socket, emptyObj, sendAck) {
     return;
   }
 
+  //enter this socket in this room
+  socket.join(room.roomId);
+
   ackData.ok = true;
   ackData.invitationLink = room.getInvitationLink();
   sendAck(ackData);

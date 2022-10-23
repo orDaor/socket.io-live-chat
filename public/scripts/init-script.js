@@ -72,30 +72,14 @@ async function initAfterLogin(token) {
     };
   });
 
-  //no chats found
-  if (chatListGlobal.length === 0) {
-    hideMainLoader();
-    displayFriendsSection();
-    //upgrade connection to websocket protocol
-    socket.connect();
-    initializationDoneGlobal = true;
-    return;
+  //found some chats
+  if (chatListGlobal.length !== 0) {
+    displayChatList(chatListGlobal);
   }
 
   //some chats were found...
-
-  //populate friends section with chat list
-  displayChatList(chatListGlobal);
-
-  //select first chat in the friends section list, and populate the chat section with
-  //the messages of this first chat
-  //NOTE: with no passed parameters, 1st chat is selected by default
-  selectOneChat();
-
-  //show the friends and chat sections
   hideMainLoader();
-  displayFriendsAndChatSectionOnWidhtChange();
-  scrollToBottomOfMessagesList("auto");
+  displayFriendsSection();
 
   //upgrade connection to websocket protocol
   socket.connect();

@@ -24,6 +24,10 @@ function onMessageReceiveBroadcast(broadcastData) {
       messages: [broadcastData.message],
       roomId: broadcastData.roomId,
       viewed: false, //new chat that needs to be viewed
+      onlineStatusTimer: {
+        timerId: null,
+        active: false,
+      },
     };
 
     //enter new chat in the chat list

@@ -78,21 +78,49 @@ function hideAuthErrorInfo() {
 
 //display friends section on desktop
 function displayFriendsAndChatSectionOnWidhtChange(event) {
-  //only if auth form or init info are not visible
-  if (
+  //only if auth form and init info are not visible, it is possible to
+  //manipulate the visibility of
+  const isALlowed =
     (signUpInSectionElement.style.display === "none" ||
       signUpInSectionElement.textContent === "") &&
     (initInfoSectionElement.style.display === "none" ||
       initInfoSectionElement.textContent === "") &&
-    !document.getElementById("main-loader")
-  ) {
-    //window >= 768px
-    if (window.innerWidth >= 768) {
+    !document.getElementById("main-loader");
+
+  if (!isALlowed) {
+    return;
+  }
+
+  //window >= 768px
+  if (window.innerWidth >= 768) {
+    if (selectedChatItemGlobal) {
       displayFriendsSection();
       displayChatSection();
-    } else {
+    }
+  } else {
+    if (
+      friendsSectionElement.style.display === "block" &&
+      chatSectionElement.style.display === "none"
+    ) {
       displayFriendsSection();
       hideChatSection();
+    } else if (
+      friendsSectionElement.style.display === "none" &&
+      chatSectionElement.style.display === "flex"
+    ) {
+      hideFriendsSection();
+      displayChatSection();
+    } else if (
+      friendsSectionElement.style.display === "block" &&
+      chatSectionElement.style.display === "flex"
+    ) {
+      if (selectedChatItemGlobal) {
+        hideFriendsSection();
+        displayChatSection();
+      } else {
+        displayFriendsSection();
+        hideChatSection();
+      }
     }
   }
 
@@ -112,6 +140,18 @@ function displayFriendsAndChatSectionOnWidhtChange(event) {
     }
     scrollToBottomOfMessagesList("auto");
   }
+}
+
+//display active friends and form
+function displayActiveFriendsAndForm() {
+  chatSectionElement.querySelector(".active-friends").style.display = "flex";
+  chatSectionElement.querySelector(".chat-actions").style.display = "flex";
+}
+
+//display active friends and form
+function hideActiveFriendsAndForm() {
+  chatSectionElement.querySelector(".active-friends").style.display = "none";
+  chatSectionElement.querySelector(".chat-actions").style.display = "none";
 }
 
 //scroll to the bottom of the chat list
@@ -135,28 +175,38 @@ function displayFriendsSection() {
   friendsSectionElement.style.display = "block";
 
   //how many chats exist for this uer
-  const chatsList = friendsSectionElement.querySelectorAll(".friend-chat-item");
+  // const chatsList = friendsSectionElement.querySelectorAll(".friend-chat-item");
 
   //if no chats exist static position should apply
-  if (!chatsList.length) {
-    if (window.innerWidth >= 768) {
-      friendsSectionElement.style.position = "static";
-      friendsSectionElement.style.margin = "4rem auto";
-      friendsSectionElement.style.width = "27rem";
-    } else {
-      friendsSectionElement.style.width = "";
-      friendsSectionElement.style.position = "";
-      friendsSectionElement.style.margin = "";
-    }
-  }
+  // if (!chatsList.length) {
+  //   if (window.innerWidth >= 768) {
+  //     friendsSectionElement.style.position = "static";
+  //     friendsSectionElement.style.margin = "4rem auto";
+  //     friendsSectionElement.style.width = "27rem";
+  //   } else {
+  //     friendsSectionElement.style.width = "";
+  //     friendsSectionElement.style.position = "";
+  //     friendsSectionElement.style.margin = "";
+  //   }
+  // }
 }
 
 //display chat section
 function displayChatSection() {
-  const chatList = friendsSectionElement.querySelectorAll(".friend-chat-item");
-  if (chatList.length > 0) {
-    chatSectionElement.style.display = "flex";
-  }
+  chatSectionElement.style.display = "flex";
+  // const chatList = friendsSectionElement.querySelectorAll(".friend-chat-item");
+  // if (chatList.length > 0) {
+  //   // if (
+  //   //   chatList.length === 1 &&
+  //   //   chatList[0].classList.contains("friend-chat-item-unread")
+  //   // ) {
+  //   //   hideActiveFriendsAndForm();
+  //   //   return;
+  //   // }
+  //   displayActiveFriendsAndForm();
+  // } else {
+  //   hideActiveFriendsAndForm();
+  // }
 }
 
 //hide chat section
