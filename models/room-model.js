@@ -85,10 +85,15 @@ class Room {
       };
     }
 
+    //sorting by last activity date, from most recent (highest date value)
+    //to eldets (lowest date value)
+    const sortLogic = { lastActivityDate: -1 };
+
     const documents = await db
       .getDb()
       .collection("rooms")
       .find(query)
+      .sort(sortLogic)
       .toArray();
 
     //map array of room documents into array of Room class objects

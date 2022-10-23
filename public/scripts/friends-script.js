@@ -81,6 +81,18 @@ function hideOneChat(chat) {
 //display all chats
 function displayChatList(chatList) {
   for (const chat of chatList) {
+    //If we failed to load a chat (messages or friends names)
+    if (chat.errorList.length) {
+      //error message on friends list
+      hideFriendsListErrorInfo();
+      displayFriendsListErrorInfo(
+        "Sorryabout that. Failed to load some chats..."
+      );
+      //skip to next received chat
+      // chat.roomId = undefined;
+      continue;
+    }
+
     //Create a new friend chat item and display it
     displayOneChat(
       chat.roomId,
@@ -89,6 +101,7 @@ function displayChatList(chatList) {
       "append",
       chat.viewed
     ); //TODO: pass isOnline parameter
+
     //update new messages counter
     if (!chat.viewed) {
       updateNewMessagesCount("increment");

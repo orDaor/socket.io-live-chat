@@ -40,6 +40,7 @@
 
 .friends-control .friends-actions-buttons {
   display: flex;
+  /* flex-direction: row-reverse; */
   align-items: center;
   gap: 1.5rem;
 }
@@ -84,7 +85,7 @@
   padding: 0 1rem;
   max-height: 80%;
   overflow: auto;
-  direction: rtl;
+  /* direction: rtl; */
   background-color: var(--color-primary-150);
   border-radius: 12px;
 }
@@ -95,14 +96,14 @@
   cursor: pointer;
   border-radius: var(--friends-selection-border-radius);
   display: flex;
-  flex-direction: row-reverse;
+  /* flex-direction: row-reverse; */
   align-items: center;
   justify-content: space-between;
 }
 
 .friend-chat-item .friend-chat-main-info {
   display: flex;
-  flex-direction: row-reverse;
+  /* flex-direction: row-reverse; */
   gap: 0.5rem;
   align-items: center;
 }
@@ -137,6 +138,24 @@
 
 .friend-chat-item-unread {
   font-weight: bold;
+}
+
+.friend-chat-item-error {
+  padding: 0.75rem;
+  margin: 0.25rem 0;
+  color: var(--color-error-text);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  text-align: left;
+}
+
+.friend-chat-item-error p {
+  margin:  0;
+}
+
+.friend-chat-item-error .friend-chat-item-error-btn {
+  cursor: pointer;
 }
 
 .active-friends {

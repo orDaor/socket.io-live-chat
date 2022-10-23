@@ -30,9 +30,6 @@ async function readAll(req, res, next) {
     chatList.push(chat);
   }
 
-  //sort chats from most recent to oldest
-  ChatViewData.sortChatListFromMostRecentToOldest(chatList);
-
   //All user chats are collected in the chatList array, send it back in the response
   responseData.message = "Chats collected successfully";
   responseData.chatList = chatList; //sorted

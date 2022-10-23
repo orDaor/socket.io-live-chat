@@ -47,6 +47,12 @@ function onMessageReceiveBroadcast(broadcastData) {
     return;
   }
 
+  //if destination chat is a chat which failed to be loaded,
+  //stop here
+  if (chatListGlobal[destinationChatIndexGlobal].errorList.length) {
+    return;
+  }
+
   //the pointed chat was found, then
   //push the received message to this destination chat
   chatListGlobal[destinationChatIndexGlobal].messages.push(

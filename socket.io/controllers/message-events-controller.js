@@ -62,6 +62,12 @@ async function onSend(socket, message, sendAck) {
   //update message id
   fullMessage.messageId = messageId;
 
+  //update last activity date of the destination chat room
+  room.lastActivityDate = fullMessage.creationDate;
+  room.save().catch(function (error) {
+    //??
+  });
+
   //find user names in the destination room
   let friends = [];
   let friendsNames = [];

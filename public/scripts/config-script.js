@@ -173,40 +173,11 @@ function hideFriendsSection() {
 function displayFriendsSection() {
   //show this section
   friendsSectionElement.style.display = "block";
-
-  //how many chats exist for this uer
-  // const chatsList = friendsSectionElement.querySelectorAll(".friend-chat-item");
-
-  //if no chats exist static position should apply
-  // if (!chatsList.length) {
-  //   if (window.innerWidth >= 768) {
-  //     friendsSectionElement.style.position = "static";
-  //     friendsSectionElement.style.margin = "4rem auto";
-  //     friendsSectionElement.style.width = "27rem";
-  //   } else {
-  //     friendsSectionElement.style.width = "";
-  //     friendsSectionElement.style.position = "";
-  //     friendsSectionElement.style.margin = "";
-  //   }
-  // }
 }
 
 //display chat section
 function displayChatSection() {
   chatSectionElement.style.display = "flex";
-  // const chatList = friendsSectionElement.querySelectorAll(".friend-chat-item");
-  // if (chatList.length > 0) {
-  //   // if (
-  //   //   chatList.length === 1 &&
-  //   //   chatList[0].classList.contains("friend-chat-item-unread")
-  //   // ) {
-  //   //   hideActiveFriendsAndForm();
-  //   //   return;
-  //   // }
-  //   displayActiveFriendsAndForm();
-  // } else {
-  //   hideActiveFriendsAndForm();
-  // }
 }
 
 //hide chat section
@@ -292,6 +263,36 @@ function hideFriendsControlErrorInfo() {
     friendsControlErrorElement.parentElement.removeChild(
       friendsControlErrorElement
     );
+  }
+}
+
+//display friends section list error info
+//(tells the user if some any chat failed to laod)
+function displayFriendsListErrorInfo(info) {
+  const errorListItemElement = document.createElement("li");
+  errorListItemElement.classList.add("friend-chat-item-error");
+
+  const errorTextElement = document.createElement("p");
+  errorTextElement.textContent = info;
+
+  const closeErrorButtonELement = document.createElement("p");
+  closeErrorButtonELement.textContent = "x";
+  closeErrorButtonELement.classList.add("friend-chat-item-error-btn");
+  closeErrorButtonELement.addEventListener("click", hideFriendsListErrorInfo);
+
+  errorListItemElement.append(errorTextElement);
+  errorListItemElement.append(closeErrorButtonELement);
+
+  friendsSectionElement.querySelector("ul").prepend(errorListItemElement);
+}
+
+//hide friends section list error info
+function hideFriendsListErrorInfo() {
+  const errorListItemElement = friendsSectionElement.querySelector(
+    "ul .friend-chat-item-error"
+  );
+  if (errorListItemElement) {
+    errorListItemElement.parentElement.removeChild(errorListItemElement);
   }
 }
 
