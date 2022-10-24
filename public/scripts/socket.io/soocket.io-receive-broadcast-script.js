@@ -73,10 +73,7 @@ function onMessageReceiveBroadcast(broadcastData) {
   const messagePreviewTextElement = friendChatItemElement.querySelector(
     ".friend-chat-preview p"
   );
-  messagePreviewTextElement.textContent = getChatMessagePreview(
-    messagePreviewTextElement,
-    broadcastData.message.text
-  );
+  messagePreviewTextElement.textContent = broadcastData.message.text;
 
   //move the targetted chat on screen at first position
   friendChatItemElement.parentElement.prepend(friendChatItemElement);

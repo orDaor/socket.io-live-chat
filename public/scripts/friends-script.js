@@ -83,10 +83,7 @@ function displayOneChat(
   }
 
   //compute message preview
-  messagePreviewTextElement.textContent = getChatMessagePreview(
-    messagePreviewTextElement,
-    lastMessageText
-  );
+  messagePreviewTextElement.textContent = lastMessageText;
 
   //check if the chat to display has new content to be visualized
   if (!viewed) {
@@ -383,21 +380,10 @@ function getChatGlobalLastMessageText(chat) {
   //no messages in this chat
   const messagesNumber = chat.messages.length;
   if (!messagesNumber) {
-    return "";
+    return "No messages yet";
   }
-  //at least one message
   
+  //at least one message
   const lastMessage = chat.messages[messagesNumber - 1];
   return lastMessage.text;
-}
-
-//display message preview on friend chat list item
-function getChatMessagePreview(textContainer, fullText) {
-  //init message text preview
-  let textPreview = fullText.substring(0, 3);
-
-  //...??
-
-  //output text preview
-  return textPreview;
 }

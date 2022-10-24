@@ -138,6 +138,12 @@
   font-weight: bold;
 }
 
+.friend-chat-item .friend-chat-preview p {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
 .friend-chat-item-error {
   padding: 0.75rem;
   margin: 0.25rem 0;

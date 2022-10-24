@@ -57,6 +57,7 @@
   top: 0;
   left: -23px;
   cursor: pointer;
+  display: none;
 }
 
 .message-item p.message-item-error {

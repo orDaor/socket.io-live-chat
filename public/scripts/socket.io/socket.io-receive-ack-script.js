@@ -28,7 +28,15 @@ function onMessageSendAck(ackData) {
   const chat = getChatGlobalByRoomId(ackData.roomId);
   chat.messages.push(ackData.message);
 
-  //move the targetted chat on screen at first position
+  //select chat on screen
   const friendChatItemElement = getChatItemByRoomId(ackData.roomId);
+
+  //display message preview
+  const messagePreviewTextElement = friendChatItemElement.querySelector(
+    ".friend-chat-preview p"
+  );
+  messagePreviewTextElement.textContent = ackData.message.text;
+
+  //move the targetted chat on screen at first position
   friendChatItemElement.parentElement.prepend(friendChatItemElement);
 }
