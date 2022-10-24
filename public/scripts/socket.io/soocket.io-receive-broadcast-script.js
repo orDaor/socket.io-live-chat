@@ -39,7 +39,8 @@ function onMessageReceiveBroadcast(broadcastData) {
       newChat.friendsNames,
       false,
       "prepend",
-      newChat.viewed //false
+      newChat.viewed, //false
+      getChatGlobalLastMessageText(newChat)
     );
 
     //update notification counter
@@ -65,8 +66,19 @@ function onMessageReceiveBroadcast(broadcastData) {
   }
   chatListGlobal[destinationChatIndexGlobal].viewed = false;
 
-  //move the targetted chat on screen at first position
+  //target chat on screen
   const friendChatItemElement = getChatItemByRoomId(broadcastData.roomId);
+
+  //display message preview
+  const messagePreviewTextElement = friendChatItemElement.querySelector(
+    ".friend-chat-preview p"
+  );
+  messagePreviewTextElement.textContent = getChatMessagePreview(
+    messagePreviewTextElement,
+    broadcastData.message.text
+  );
+
+  //move the targetted chat on screen at first position
   friendChatItemElement.parentElement.prepend(friendChatItemElement);
 
   //check whether destination chat is selected or not
@@ -125,12 +137,10 @@ function onMessageReceiveBroadcast(broadcastData) {
     ) {
       //enter the message in the message list without scrolling
       displayOneMessage(false, "", broadcastData.message.text, "left");
-      setChatItemAsRead(friendChatItemElement);
       setChatItemAsUnread(friendChatItemElement);
     }
   } else {
     //mark as UN-read
-    setChatItemAsRead(friendChatItemElement);
     setChatItemAsUnread(friendChatItemElement);
   }
 }

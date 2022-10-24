@@ -1,5 +1,5 @@
 #friends-section {
-  text-align: center;
+  text-align: left;
   position: fixed;
   width: var(--friends-section-width-1);
   left: calc(50% - var(--friends-section-width-1) / 2);
@@ -40,7 +40,6 @@
 
 .friends-control .friends-actions-buttons {
   display: flex;
-  /* flex-direction: row-reverse; */
   align-items: center;
   gap: 1.5rem;
 }
@@ -85,7 +84,6 @@
   padding: 0 1rem;
   max-height: 80%;
   overflow: auto;
-  /* direction: rtl; */
   background-color: var(--color-primary-150);
   border-radius: 12px;
 }
@@ -93,17 +91,17 @@
 .friend-chat-item {
   padding: 0.75rem;
   margin: 0.25rem 0;
+  height: 3rem;
   cursor: pointer;
   border-radius: var(--friends-selection-border-radius);
   display: flex;
-  /* flex-direction: row-reverse; */
-  align-items: center;
+  flex-direction: column;
+  gap: 0.5rem;
   justify-content: space-between;
 }
 
 .friend-chat-item .friend-chat-main-info {
   display: flex;
-  /* flex-direction: row-reverse; */
   gap: 0.5rem;
   align-items: center;
 }

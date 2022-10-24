@@ -30,9 +30,17 @@ function setActiveChatOnlineStatus(selectedChatStatusElement) {
 }
 
 //display one chat
-function displayOneChat(roomId, friendsNames, isOnline, position, viewed) {
-  const friendChatItemContainerElement = document.createElement("div");
-  friendChatItemContainerElement.classList.add("friend-chat-main-info");
+function displayOneChat(
+  roomId,
+  friendsNames,
+  isOnline,
+  position,
+  viewed,
+  lastMessageText
+) {
+  const friendInfoElement = document.createElement("div");
+  friendInfoElement.classList.add("friend-chat-main-info");
+
   const friendChatItemElement = document.createElement("li");
   friendChatItemElement.classList.add("friend-chat-item");
   friendChatItemElement.dataset.roomId = roomId;
@@ -54,10 +62,17 @@ function displayOneChat(roomId, friendsNames, isOnline, position, viewed) {
   friendNameElement.textContent = friendsNames[0]; // to be checked !!
   friendNameElement.classList.add("friend-chat-name");
 
+  //init preview
+  const messagePreviewElement = document.createElement("div");
+  messagePreviewElement.classList.add("friend-chat-preview");
+  const messagePreviewTextElement = document.createElement("p");
+
   //append chat content
-  friendChatItemContainerElement.appendChild(chatOnlineStatus);
-  friendChatItemContainerElement.appendChild(friendNameElement);
-  friendChatItemElement.appendChild(friendChatItemContainerElement);
+  friendInfoElement.appendChild(chatOnlineStatus);
+  friendInfoElement.appendChild(friendNameElement);
+  messagePreviewElement.appendChild(messagePreviewTextElement);
+  friendChatItemElement.appendChild(friendInfoElement);
+  friendChatItemElement.appendChild(messagePreviewElement);
 
   //append or prepend the chat room inside the chat list
   const friendSectionListElement = friendsSectionElement.querySelector("ul");
@@ -66,6 +81,12 @@ function displayOneChat(roomId, friendsNames, isOnline, position, viewed) {
   } else if (position === "prepend") {
     friendSectionListElement.prepend(friendChatItemElement);
   }
+
+  //compute message preview
+  messagePreviewTextElement.textContent = getChatMessagePreview(
+    messagePreviewTextElement,
+    lastMessageText
+  );
 
   //check if the chat to display has new content to be visualized
   if (!viewed) {
@@ -89,7 +110,6 @@ function displayChatList(chatList) {
         "Sorryabout that. Failed to load some chats..."
       );
       //skip to next received chat
-      // chat.roomId = undefined;
       continue;
     }
 
@@ -99,8 +119,9 @@ function displayChatList(chatList) {
       chat.friendsNames,
       false,
       "append",
-      chat.viewed
-    ); //TODO: pass isOnline parameter
+      chat.viewed,
+      getChatGlobalLastMessageText(chat)
+    );
 
     //update new messages counter
     if (!chat.viewed) {
@@ -329,22 +350,12 @@ function updateNewMessagesCount(action) {
 function setChatItemAsUnread(chat) {
   //set unread
   chat.classList.add("friend-chat-item-unread");
-  //add unread noty
-  const unreadNoty = document.createElement("div");
-  unreadNoty.classList.add("friend-chat-noty");
-  unreadNoty.textContent = "(!)";
-  chat.appendChild(unreadNoty);
 }
 
 //mark a friend chat item as Read
 function setChatItemAsRead(chat) {
   //remove unread
   chat.classList.remove("friend-chat-item-unread");
-  //remove unread noty
-  const unreadNoty = chat.querySelector(".friend-chat-noty");
-  if (unreadNoty) {
-    chat.removeChild(unreadNoty);
-  }
 }
 
 //get a pointer to a chat with a specific roomId in the chatListGlobal array
@@ -365,4 +376,28 @@ function getChatItemByRoomId(roomId) {
       return chat;
     }
   }
+}
+
+//get last message of a chat in chat list global
+function getChatGlobalLastMessageText(chat) {
+  //no messages in this chat
+  const messagesNumber = chat.messages.length;
+  if (!messagesNumber) {
+    return "";
+  }
+  //at least one message
+  
+  const lastMessage = chat.messages[messagesNumber - 1];
+  return lastMessage.text;
+}
+
+//display message preview on friend chat list item
+function getChatMessagePreview(textContainer, fullText) {
+  //init message text preview
+  let textPreview = fullText.substring(0, 3);
+
+  //...??
+
+  //output text preview
+  return textPreview;
 }
