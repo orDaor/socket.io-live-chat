@@ -24,8 +24,10 @@ async function accetpInvitationRequest(req, res, next) {
   }
 
   //enter the user in the room he is invited in
+  const dateNow = new Date();
   result.room.friends.push(res.locals.userId);
-  result.room.lastViewDates.push(new Date()); //now
+  result.room.lastViewDates.push(dateNow); //now
+  result.room.lastActivityDate = dateNow;
   try {
     await result.room.save();
   } catch (error) {
