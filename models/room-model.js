@@ -125,7 +125,7 @@ class Room {
   }
 
   //find a room where a specific user is waiting for a friend to accept his invitation
-  static async findWithOneUerWaiting(userId) {
+  static async findWithOneUserWaiting(userId) {
     //query filter
     const query = {
       $and: [{ friends: { $size: 1 } }, { friends: { $in: [userId] } }],

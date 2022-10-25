@@ -23,6 +23,24 @@ async function accetpInvitationRequest(req, res, next) {
     return;
   }
 
+  //check if these 2 users are already active in one room
+  let rooms;
+  try {
+    rooms = await Room.findManyByUserIds([
+      result.inviter.userId,
+      res.locals.userId,
+    ]);
+  } catch (error) {
+    next(error);
+    return;
+  }
+
+  //users can not be inside of more than one room
+  if (rooms.length) {
+    next(new Error("Users are already active in one room"));
+    return;
+  }
+
   //enter the user in the room he is invited in
   const dateNow = new Date();
   result.room.friends.push(res.locals.userId);

@@ -28,7 +28,7 @@ async function onUserFetchInvitationLink(socket, emptyObj, sendAck) {
   //check if this user already generated an invitation link
   let room;
   try {
-    room = await Room.findWithOneUerWaiting(user.userId);
+    room = await Room.findWithOneUserWaiting(user.userId);
   } catch (error) {
     ackData.ok = false;
     ackData.info = "An error occured. Maybe try again later?";

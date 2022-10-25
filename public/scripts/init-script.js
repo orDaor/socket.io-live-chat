@@ -191,6 +191,7 @@ async function joinChat(event) {
   try {
     response = await fetch(requestUrl, requestConfig);
   } catch (error) {
+    hideInitErrorInfo();
     displayInitErrorInfo(
       "Can not reach the server. May check your connection?"
     );
