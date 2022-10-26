@@ -126,3 +126,8 @@ function sendOnlineStatus() {
   //send status
   socket.emit("room-is-online", {});
 }
+
+//delete selected message
+function deleteOneMessage(event) {
+  console.log("Delete message: " + selectedMessageIdGlobal);
+}

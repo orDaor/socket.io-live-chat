@@ -41,6 +41,9 @@ chatSectionElement
 chatSectionElement
   .querySelector(".chat-actions textarea")
   .addEventListener("input", sendIsTypingStatus);
+chatSectionElement
+  .querySelector("ul")
+  .addEventListener("click", hideAllMessagesActions);
 
 //socket opened (connected)
 socket.on("connect", onSocketConnect);
@@ -60,6 +63,7 @@ socket.on("room-is-online-broadcast", onRoomIsOnlineBroadcast);
 let initializationDoneGlobal = false;
 let chatListGlobal = [];
 let selectedChatItemGlobal;
+let selectedMessageIdGlobal;
 
 //timer: send "is typing" info
 let isTypingTimerId_send;

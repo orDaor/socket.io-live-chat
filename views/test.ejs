@@ -1,5 +1,6 @@
-<div>
-  <p>${info}</p>
-  <a href="/"><button class="btn">Try Again</button></a>
-  <button>Logout</button>
+<div id="modal">
+  <h1>Do you really want to delete this message?</h1>
+  <p>The message will be deleted for everyone</p>
+  <button class="btn btn-alt" onclick="deleteOneMessage(event)">Yes</button>
+  <button class="btn" onclick="hideModal(event)">No</button>
 </div>

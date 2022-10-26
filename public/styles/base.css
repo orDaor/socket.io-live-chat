@@ -28,6 +28,8 @@ html {
   --color-error-box: rgb(244, 158, 158);
   --color-error-text: rgb(122, 23, 23);
 
+  --color-danger-zone: rgb(122, 23, 23);
+
   --friends-section-width-1: 80%;
   --friends-section-width-2: 20rem;
   --friends-section-width-3: 60%;

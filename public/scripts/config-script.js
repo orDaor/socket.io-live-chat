@@ -173,9 +173,98 @@ function displayFriendsAndHideChat() {
   hideChatSection();
 }
 
-//display message action opions (delete, resend...)
+//display message actions menu
 function displayMessageActions(event) {
-  console.log("Message actions should be displayed (delete, resend...)");
+  //find message to which this action is related
+  let selectedMessageItem = event.target;
+
+  //check which element was exactly clicked
+  //an child of list item was clicked, therefor find list item recursivly
+  let iterationCount = 0;
+  while (
+    !selectedMessageItem.classList.contains("message-item") &&
+    iterationCount < 20 //max iterations allowed to avoid infinite loop
+  ) {
+    selectedMessageItem = selectedMessageItem.parentElement;
+    iterationCount++;
+  }
+  //too many iterations: list item was not found
+  if (iterationCount >= 20) {
+    throw new Error("Could not find the selectedMessageItem");
+  }
+
+  //selected message id
+  selectedMessageIdGlobal = selectedMessageItem.dataset.messageId;
+
+  //display actual message action menu
+  hideMessageActions(selectedMessageItem);
+
+  const messageMenuElement = document.createElement("div");
+  messageMenuElement.classList.add("message-item-action-menu");
+
+  const messageMenuActionElement = document.createElement("button");
+  messageMenuActionElement.textContent = "Delete";
+  messageMenuActionElement.classList.add("message-item-delete-btn");
+  messageMenuActionElement.addEventListener("click", displayModal);
+
+  messageMenuElement.append(messageMenuActionElement);
+  selectedMessageItem.querySelector("p").append(messageMenuElement);
+}
+
+//hide message actions menu
+function hideMessageActions(messageItemElement) {
+  const messageMenuElement = messageItemElement.querySelector(
+    ".message-item-action-menu"
+  );
+  if (messageMenuElement) {
+    messageMenuElement.parentElement.removeChild(messageMenuElement);
+  }
+}
+
+//hide menus by clicking anywhere in the chat a part from the message menu
+function hideAllMessagesActions(event) {
+  const clickedElement = event.target;
+
+  if (!clickedElement) {
+    return;
+  }
+
+  if (
+    clickedElement.classList.contains("message-item-action-menu") ||
+    clickedElement.classList.contains("message-item-delete-btn") ||
+    clickedElement.classList.contains("message-item-action") ||
+    clickedElement.tagName === "svg" ||
+    clickedElement.tagName === "path"
+  ) {
+    console.log("ahahah stop");
+    return;
+  }
+
+  //gather all menus and remove them
+  const messageMenuElements = document.querySelectorAll(
+    ".message-item-action-menu"
+  );
+  for (const messageMenu of messageMenuElements) {
+    messageMenu.parentElement.removeChild(messageMenu);
+  }
+}
+
+//display modal
+function displayModal(event) {
+  //hide menu in which button was clicked
+  const messageMenuElement = event.target.parentElement;
+  if (!messageMenuElement.classList.contains("message-item-action-menu")) {
+    return;
+  }
+  messageMenuElement.parentElement.removeChild(messageMenuElement);
+
+  //create and display actual modal
+  console.log("display modal");
+}
+
+//hide modal
+function hideModal(event) {
+  //
 }
 
 //create and display the main page loader
