@@ -197,7 +197,7 @@ function displayMessageActions(event) {
   selectedMessageIdGlobal = selectedMessageItem.dataset.messageId;
 
   //display actual message action menu
-  hideMessageActions(selectedMessageItem);
+  hideAllMessagesActions();
 
   const messageMenuElement = document.createElement("div");
   messageMenuElement.classList.add("message-item-action-menu");
@@ -205,7 +205,7 @@ function displayMessageActions(event) {
   const messageMenuActionElement = document.createElement("button");
   messageMenuActionElement.textContent = "Delete";
   messageMenuActionElement.classList.add("message-item-delete-btn");
-  messageMenuActionElement.addEventListener("click", displayModal);
+  messageMenuActionElement.addEventListener("click", displayDeleteMessageModal);
 
   messageMenuElement.append(messageMenuActionElement);
   selectedMessageItem.querySelector("p").append(messageMenuElement);
@@ -223,21 +223,22 @@ function hideMessageActions(messageItemElement) {
 
 //hide menus by clicking anywhere in the chat a part from the message menu
 function hideAllMessagesActions(event) {
-  const clickedElement = event.target;
+  if (event) {
+    const clickedElement = event.target;
 
-  if (!clickedElement) {
-    return;
-  }
+    if (!clickedElement) {
+      return;
+    }
 
-  if (
-    clickedElement.classList.contains("message-item-action-menu") ||
-    clickedElement.classList.contains("message-item-delete-btn") ||
-    clickedElement.classList.contains("message-item-action") ||
-    clickedElement.tagName === "svg" ||
-    clickedElement.tagName === "path"
-  ) {
-    console.log("ahahah stop");
-    return;
+    if (
+      clickedElement.classList.contains("message-item-action-menu") ||
+      clickedElement.classList.contains("message-item-delete-btn") ||
+      clickedElement.classList.contains("message-item-action") ||
+      clickedElement.tagName === "svg" ||
+      clickedElement.tagName === "path"
+    ) {
+      return;
+    }
   }
 
   //gather all menus and remove them
@@ -250,7 +251,7 @@ function hideAllMessagesActions(event) {
 }
 
 //display modal
-function displayModal(event) {
+function displayDeleteMessageModal(event) {
   //hide menu in which button was clicked
   const messageMenuElement = event.target.parentElement;
   if (!messageMenuElement.classList.contains("message-item-action-menu")) {
