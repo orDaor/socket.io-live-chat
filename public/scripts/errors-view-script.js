@@ -134,3 +134,24 @@ function hideInitErrorInfo() {
     errorInfoElement.parentElement.removeChild(errorInfoElement);
   }
 }
+
+//display modal error info
+function displayModalErrorInfo(info) {
+  const modalPromptElement = modalSectionElement.querySelector(
+    ".modal .modal-prompt"
+  );
+  const errorInfoElement = document.createElement("p");
+  errorInfoElement.textContent = info;
+  errorInfoElement.classList.add("modal-prompt-error");
+  modalPromptElement.appendChild(errorInfoElement);
+}
+
+//hide modal error info
+function hideModalErrorInfo() {
+  const errorInfoElement = modalSectionElement.querySelector(
+    ".modal .modal-prompt .modal-prompt-error"
+  );
+  if (errorInfoElement) {
+    errorInfoElement.parentElement.removeChild(errorInfoElement);
+  }
+}
