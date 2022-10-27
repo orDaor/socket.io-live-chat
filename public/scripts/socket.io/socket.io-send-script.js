@@ -35,7 +35,8 @@ function sendMessage(event) {
   const activeChatElement = chatSectionElement.querySelector(".active-friends");
 
   //build message
-  const tempMessageId = new Date().getTime().toString();
+  const tempMessageId = new Date().getTime().toString() + "-temp-id";
+  console.log(tempMessageId);
   const message = {
     text: formData.get("message").trim(),
     roomId: activeChatElement.dataset.roomId,

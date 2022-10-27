@@ -120,7 +120,12 @@ function onMessageReceiveBroadcast(broadcastData) {
       }
 
       //enter the message in the message list without scrolling
-      displayOneMessage(false, "", broadcastData.message.text, "left");
+      displayOneMessage(
+        false,
+        broadcastData.message.messageId,
+        broadcastData.message.text,
+        "left"
+      );
 
       //scroll to bottom
       if (scrollToBottomRequest) {
@@ -133,7 +138,12 @@ function onMessageReceiveBroadcast(broadcastData) {
       friendsSectionElement.style.display === "block"
     ) {
       //enter the message in the message list without scrolling
-      displayOneMessage(false, "", broadcastData.message.text, "left");
+      displayOneMessage(
+        false,
+        broadcastData.message.messageId,
+        broadcastData.message.text,
+        "left"
+      );
       setChatItemAsUnread(friendChatItemElement);
     }
   } else {

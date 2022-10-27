@@ -42,11 +42,14 @@ function message(message, loggingEnabled = true) {
 
   //temp message id
   const validatedTempMessageId = message.tempMessageId.trim();
-  const tempMessageIdOk = validatedTempMessageId > 5;
+  const tempMessageIdOk =
+    validatedTempMessageId.length > 5 &&
+    validatedTempMessageId.includes("temp-id");
 
   if (loggingEnabled) {
     console.log(`textOk: ${!!textOk}`);
     console.log(`roomIdOk: ${!!roomIdOk}`);
+    console.log(`tempMessageIdOk: ${!!tempMessageIdOk}`);
   }
 
   if (textOk && roomIdOk && tempMessageIdOk) {
