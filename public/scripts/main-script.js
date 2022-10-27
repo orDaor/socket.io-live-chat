@@ -16,6 +16,7 @@ const socket = io(socketConfig);
 //NOTE: by default this socket object (if no URL is pecified), will handle the connection with the server which served this page
 
 //access DOM elements
+const modalSectionElement = document.getElementById("modal-section");
 const initInfoSectionElement = document.getElementById("init-info-section");
 const signUpInSectionElement = document.getElementById("sign-up-in-section");
 const friendsSectionElement = document.getElementById("friends-section");

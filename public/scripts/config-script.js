@@ -260,12 +260,13 @@ function displayDeleteMessageModal(event) {
   messageMenuElement.parentElement.removeChild(messageMenuElement);
 
   //create and display actual modal
-  console.log("display modal");
+  modalSectionElement.innerHTML = getHmlContentModal("delete-message");
 }
 
 //hide modal
 function hideModal(event) {
-  //
+  const modalContainerElement = modalSectionElement.querySelector(".modal");
+  modalSectionElement.removeChild(modalContainerElement);
 }
 
 //create and display the main page loader

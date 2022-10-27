@@ -58,3 +58,27 @@ function getHtmlContentInitInfo(title, info, action, optionalAction, data) {
 
   return htmlContent;
 }
+
+function getHmlContentModal(action) {
+  let title;
+  let description;
+  let onclick;
+  if (action === "delete-message") {
+    title = "Do you really want to delete this message?";
+    description = "The message will be deleted for everyone";
+    onclick = '"deleteOneMessage(event)"';
+  } else if (action === "delete-chat") {
+    //TODO
+  } else if (action === "delete-account") {
+    //TODO
+  }
+
+  return `<div class="modal">
+  <div class="modal-prompt">
+  <h1>${title}</h1>
+  <p>${description}</p>
+  <button class="btn" onclick="hideModal(event)">No</button>
+  <button class="btn btn-alt" onclick=${onclick}>Yes</button>
+</div>
+</div>`;
+}
