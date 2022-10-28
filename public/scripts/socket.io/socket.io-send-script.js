@@ -28,7 +28,7 @@ function fetchInvitationLink() {
 function sendMessage(event) {
   event.preventDefault();
   const errorInfo = "An error occured";
-  const delay = 5000;
+  const delay = 8000;
 
   //user connected...
   const formData = new FormData(event.target);
@@ -59,16 +59,47 @@ function sendMessage(event) {
     "smooth"
   );
 
+  //show message preview on chat item in friends list
+  const friendChatItemElement = getChatItemByRoomId(message.roomId);
+  const messagePreviewTextElement = friendChatItemElement.querySelector(
+    ".friend-chat-preview p"
+  );
+  messagePreviewTextElement.textContent = message.text;
+
+  //move friend chat item to 1st position
+  friendChatItemElement.parentElement.prepend(friendChatItemElement);
+
+  //destination chat global
+  const chatGlobal = getChatGlobalByRoomId(message.roomId);
+
+  //init the message to enter the message in the chat global
+  const messageGlobal = {
+    creationDate: undefined,
+    messageId: message.tempMessageId,
+    senderIsViewer: true,
+    sendingFailed: undefined,
+    text: message.text,
+  };
+
+  //push message in chat global
+  chatGlobal.messages.push(messageGlobal);
+
   //user not connected...
   if (!socket.connected) {
-    displayOneMessageErrorInfo(displayedMessage, errorInfo);
+    messageGlobal.sendingFailed = true;
+    if (displayedMessage) {
+      displayOneMessageErrorInfo(displayedMessage, errorInfo);
+    }
     return;
   }
 
   //start ack timeout: callback executed if ack is not received within delay
   const timerId = setTimeout(function () {
-    hideOneMessageErrorInfo(displayedMessage);
-    displayOneMessageErrorInfo(displayedMessage, errorInfo);
+    messageGlobal.sendingFailed = true;
+    const displayedMessage = getMessageItemByMessageId(messageGlobal.messageId);
+    if (displayedMessage) {
+      displayOneMessageErrorInfo(displayedMessage, errorInfo);
+    }
   }, delay);
 
   //send (emit) a event with a message to the server

@@ -25,6 +25,7 @@ function displayOneMessage(
   //create a paragraph element inside the list item element
   const messageTextElement = document.createElement("p");
   const spanMessageTextElement = document.createElement("span");
+  spanMessageTextElement.classList.add("message-text");
   spanMessageTextElement.textContent = text;
   messageTextElement.appendChild(spanMessageTextElement);
   messageListItemElement.appendChild(messageTextElement);
@@ -63,6 +64,7 @@ function displayOneMessage(
 
 //display array of messages received on the socket
 function displayAllMessages(messages, scrollBahavior) {
+  const errorInfo = "An error occured";
   //clean current messages
   cleanAllMessages();
   //loop through received messages
@@ -74,8 +76,18 @@ function displayAllMessages(messages, scrollBahavior) {
     } else {
       side = "left";
     }
-
-    displayOneMessage(false, message.messageId, message.text, side, false);
+    //display message
+    const displayedMessage = displayOneMessage(
+      false,
+      message.messageId,
+      message.text,
+      side,
+      false
+    );
+    //if the message sending failed display error info under the message
+    if (message.sendingFailed) {
+      displayOneMessageErrorInfo(displayedMessage, errorInfo);
+    }
   }
 
   //scroll to the bottom
@@ -121,6 +133,15 @@ function getMessageItemByMessageId(messageId) {
   const messages = chatSectionElement.querySelectorAll(".message-item");
   for (const message of messages) {
     if (message.dataset.messageId === messageId) {
+      return message;
+    }
+  }
+}
+
+//get a specific message of a given chat in chatListGlobal
+function getChatGlobalMessageByMessageId(chat, messageId) {
+  for (const message of chat.messages) {
+    if (message.messageId === messageId) {
       return message;
     }
   }

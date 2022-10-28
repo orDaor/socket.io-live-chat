@@ -12,31 +12,32 @@ function onUserFetchInvitationLinkAck(ackData) {
 
 //process ack from server on message send ack
 function onMessageSendAck(ackData) {
-  //dislayed target message
+  //displayed target message
+  const chatGlobal = getChatGlobalByRoomId(ackData.roomId);
+  let messageGlobal = getChatGlobalMessageByMessageId(
+    chatGlobal,
+    ackData.tempMessageId
+  );
   const displayedMessage = getMessageItemByMessageId(ackData.tempMessageId);
 
   //message not sent (not saved and not forwarded to the users in the room)
   if (!ackData.ok) {
-    displayOneMessageErrorInfo(displayedMessage, ackData.info);
+    if (displayedMessage) {
+      displayOneMessageErrorInfo(displayedMessage, ackData.info);
+    }
+    //failure
+    messageGlobal.sendingFailed = true;
     return;
   }
 
-  //response ok, update message id on screen
-  setMessageId(displayedMessage, ackData.message.messageId);
-
-  //add message in chatListGlobal, in the destination chat room
-  const chat = getChatGlobalByRoomId(ackData.roomId);
-  chat.messages.push(ackData.message);
-
-  //select chat on screen
-  const friendChatItemElement = getChatItemByRoomId(ackData.roomId);
-
-  //display message preview
-  const messagePreviewTextElement = friendChatItemElement.querySelector(
-    ".friend-chat-preview p"
-  );
-  messagePreviewTextElement.textContent = ackData.message.text;
-
-  //move the targetted chat on screen at first position
-  friendChatItemElement.parentElement.prepend(friendChatItemElement);
+  //response ok, message was sent successfully
+  if (displayedMessage) {
+    setMessageId(displayedMessage, ackData.message.messageId);
+  }
+  //success, update message in the global chat array
+  messageGlobal.creationDate = ackData.message.creationDate;
+  messageGlobal.messageId = ackData.message.messageId;
+  messageGlobal.senderIsViewer = ackData.message.senderIsViewer;
+  messageGlobal.sendingFailed = ackData.message.sendingFailed;
+  messageGlobal.text = ackData.message.text;
 }

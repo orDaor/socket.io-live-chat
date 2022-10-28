@@ -163,30 +163,6 @@ function selectOneChat(event) {
       friendsSectionElement.querySelector("ul li");
   }
 
-  //if already selected, stop!
-  if (
-    selectedFriendChatItemElement.classList.contains(
-      "friend-chat-item-selected"
-    )
-  ) {
-    if (window.innerWidth < 768) {
-      hideFriendsSection();
-      displayChatSection();
-      scrollToBottomOfMessagesList("auto");
-      return;
-    }
-  }
-
-  //not already selected, then select li item
-  selectedFriendChatItemElement.classList.add("friend-chat-item-selected");
-
-  //remove selection from previous selected chat item
-  if (selectedChatItemGlobal) {
-    selectedChatItemGlobal.classList.remove("friend-chat-item-selected");
-  }
-  //memory for selected chat item
-  selectedChatItemGlobal = selectedFriendChatItemElement;
-
   //gather selected chat item data
   const selectedFriendNameElement =
     selectedFriendChatItemElement.querySelector(".friend-chat-name");
@@ -211,6 +187,29 @@ function selectOneChat(event) {
     //tell the server this user is viewing this chat
     registerOneChatView(selectedRoomId);
   }
+
+  //if already selected, stop!
+  if (
+    selectedFriendChatItemElement.classList.contains(
+      "friend-chat-item-selected"
+    )
+  ) {
+    if (window.innerWidth < 768) {
+      hideFriendsSection();
+      displayChatSection();
+      scrollToBottomOfMessagesList("auto");
+      return;
+    }
+  }
+
+  //remove selection from previous selected chat item
+  if (selectedChatItemGlobal) {
+    selectedChatItemGlobal.classList.remove("friend-chat-item-selected");
+  }
+  //not already selected, then select li item
+  selectedFriendChatItemElement.classList.add("friend-chat-item-selected");
+  //memory for selected chat item
+  selectedChatItemGlobal = selectedFriendChatItemElement;
 
   //reset "is typing" info and timer
   hideIsTypingInfo();
@@ -382,7 +381,7 @@ function getChatGlobalLastMessageText(chat) {
   if (!messagesNumber) {
     return "No messages yet";
   }
-  
+
   //at least one message
   const lastMessage = chat.messages[messagesNumber - 1];
   return lastMessage.text;

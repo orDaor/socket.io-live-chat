@@ -15,6 +15,7 @@ async function onSend(socket, message, sendAck) {
   if (!validatedMessage) {
     ackData.ok = false;
     ackData.info = "User tried to send a non valid message";
+    ackData.roomId = message.roomId;
     ackData.tempMessageId = message.tempMessageId;
     sendAck(ackData);
     return;
@@ -25,6 +26,8 @@ async function onSend(socket, message, sendAck) {
   if (!socket.rooms.has(validatedMessage.validatedRoomId)) {
     ackData.ok = false;
     ackData.info = "Message can not be sento to this room (1)";
+    ackData.roomId = validatedMessage.validatedRoomId;
+    ackData.tempMessageId = validatedMessage.validatedTempMessageId;
     sendAck(ackData);
     return;
   }
@@ -36,6 +39,8 @@ async function onSend(socket, message, sendAck) {
   } catch (error) {
     ackData.ok = false;
     ackData.info = "Message can not be sento to this room (2)";
+    ackData.roomId = validatedMessage.validatedRoomId;
+    ackData.tempMessageId = validatedMessage.validatedTempMessageId;
     sendAck(ackData);
     return;
   }
@@ -55,6 +60,8 @@ async function onSend(socket, message, sendAck) {
   } catch (error) {
     ackData.ok = false;
     ackData.info = "Message not saved";
+    ackData.roomId = validatedMessage.validatedRoomId;
+    ackData.tempMessageId = validatedMessage.validatedTempMessageId;
     sendAck(ackData);
     return;
   }
@@ -93,7 +100,7 @@ async function onSend(socket, message, sendAck) {
   //build the broadcast message
   const broadcastData = {
     message: new MessageViewData(fullMessage, null),
-    roomId: fullMessage.roomId,
+    roomId: validatedMessage.validatedRoomId,
     senderName: senderName,
     friendsNames: friendsNames,
     errorList: errorList,
@@ -101,13 +108,13 @@ async function onSend(socket, message, sendAck) {
 
   //broadcast message to the destination room from this socket
   socket
-    .to(fullMessage.roomId)
+    .to(validatedMessage.validatedRoomId)
     .emit("message-receive-broadcast", broadcastData);
 
   //send ack ok
   ackData.ok = true;
   ackData.info = "Message sent successfully";
-  ackData.roomId = fullMessage.roomId;
+  ackData.roomId = validatedMessage.validatedRoomId;
   ackData.tempMessageId = validatedMessage.validatedTempMessageId;
   ackData.message = new MessageViewData(fullMessage, socket.userId);
   sendAck(ackData);
