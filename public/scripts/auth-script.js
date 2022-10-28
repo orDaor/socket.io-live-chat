@@ -10,6 +10,11 @@ function logout(event) {
   hideFriendsControlErrorInfo();
   hideInvitationLink();
 
+  //reset this user name active chat
+  setUserName("");
+  setActiveChatRoomId("");
+  setActiveFriendName("");
+
   //use must login again to get a new token
   hideFriendsSection();
   hideChatSection();
@@ -74,6 +79,9 @@ async function login(event) {
   //login was ok, get and memorize JWT and user name
   localStorage.setItem("token", responseData.token);
   localStorage.setItem("user-name", responseData.userName);
+
+  //display user name
+  setUserName(responseData.userName);
 
   //initialize after login
   if (invitationInfoElement) {

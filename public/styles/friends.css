@@ -44,6 +44,10 @@
   gap: 1.5rem;
 }
 
+.friends-control .user-name {
+  font-size: var(--font-size-3);
+}
+
 .friends-control .invitation-link {
   margin-top: 0.75rem;
   display: flex;

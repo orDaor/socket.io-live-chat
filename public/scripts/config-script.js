@@ -284,3 +284,11 @@ function hideMainLoader() {
     loaderElement.parentElement.removeChild(loaderElement);
   }
 }
+
+//set user name
+function setUserName(name) {
+  const userNameElement = friendsSectionElement.querySelector(
+    ".friends-control .user-name"
+  );
+  userNameElement.textContent = name;
+}

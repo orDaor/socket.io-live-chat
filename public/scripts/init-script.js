@@ -2,9 +2,11 @@
 function initAfterPageLoaded() {
   //check if a JWT is already store for this website
   const token = localStorage.getItem("token");
+  const userName = localStorage.getItem("user-name");
 
   //a token was found
-  if (token) {
+  if (token && userName) {
+    setUserName(userName);
     initAfterLogin(token);
     return;
   }
@@ -165,7 +167,8 @@ async function joinChat(event) {
 
   //check if this user has a token, if not then login to get a new one
   const token = localStorage.getItem("token");
-  if (!token) {
+  const userName = localStorage.getItem("user-name");
+  if (!token || !userName) {
     hideInitInfo();
     displaySignUpInForm("Login");
     return;
