@@ -46,6 +46,7 @@ function onMessageSendAck(ackData) {
 function onMessageDeleteAck(ackData) {
   //message was not deleted
   if (!ackData.ok) {
+    hideModalErrorInfo();
     displayModalErrorInfo(ackData.info);
     return;
   }

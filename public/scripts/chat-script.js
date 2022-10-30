@@ -156,3 +156,11 @@ function getChatGlobalMessageByMessageId(chat, messageId) {
     }
   }
 }
+
+//set all messages of a global chat as inspected
+function setChatGlobalAllMessagesAsInspected(chat) {
+  for (const message of chat.messages) {
+    //add or set inspected field to true
+    message.inspected = true;
+  }
+}

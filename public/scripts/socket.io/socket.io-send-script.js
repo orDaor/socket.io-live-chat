@@ -168,12 +168,14 @@ function deleteOneMessage(event) {
 
   //user not connected...
   if (!socket.connected) {
+    hideModalErrorInfo();
     displayModalErrorInfo(errorInfo);
     return;
   }
 
   //start ack timeout: callback executed if ack is not received within delay
   const timerId = setTimeout(function () {
+    hideModalErrorInfo();
     displayModalErrorInfo(errorInfo);
   }, delay);
 
