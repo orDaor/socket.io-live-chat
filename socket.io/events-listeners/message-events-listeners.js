@@ -3,9 +3,14 @@ const messsageEventsController = require("../controllers/message-events-controll
 
 //register message events listeners
 function listenToMessageEvents(io, socket) {
-  //message from client 
+  //send message
   socket.on("message-send", function (message, sendAck) {
     messsageEventsController.onSend(socket, message, sendAck);
+  });
+
+  //delete message
+  socket.on("message-delete", function (messageId, sendAck) {
+    messsageEventsController.onDelete(socket, messageId, sendAck);
   });
 }
 

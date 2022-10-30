@@ -59,6 +59,7 @@ socket.on("connect_error", onSocketConnecError);
 socket.on("message-receive-broadcast", onMessageReceiveBroadcast);
 socket.on("room-is-typing-broadcast", onRoomIsTypingBroadcast);
 socket.on("room-is-online-broadcast", onRoomIsOnlineBroadcast);
+socket.on("message-delete-broadcast", onMessageDeleteBroadcast);
 
 //global variables
 let initializationDoneGlobal = false;

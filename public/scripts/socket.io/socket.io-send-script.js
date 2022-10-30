@@ -26,6 +26,7 @@ function fetchInvitationLink() {
 
 //send a chat message
 function sendMessage(event) {
+  //INIT
   event.preventDefault();
   const errorInfo = "An error occured";
   const delay = 8000;
@@ -161,5 +162,24 @@ function sendOnlineStatus() {
 
 //delete selected message
 function deleteOneMessage(event) {
-  console.log("Delete message: " + selectedMessageIdGlobal);
+  //Init
+  const errorInfo = "An error occured";
+  const delay = 8000;
+
+  //user not connected...
+  if (!socket.connected) {
+    displayModalErrorInfo(errorInfo);
+    return;
+  }
+
+  //start ack timeout: callback executed if ack is not received within delay
+  const timerId = setTimeout(function () {
+    displayModalErrorInfo(errorInfo);
+  }, delay);
+
+  //send deletion request
+  socket.emit("message-delete", selectedMessageIdGlobal, function (ackData) {
+    clearTimeout(timerId);
+    onMessageDeleteAck(ackData);
+  });
 }

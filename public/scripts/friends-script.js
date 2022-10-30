@@ -238,6 +238,13 @@ function selectOneChat(event) {
     displayChatSection();
   }
   scrollToBottomOfMessagesList("auto");
+
+  //UPDATE the message preview
+  const messagePreviewTextElement = selectedFriendChatItemElement.querySelector(
+    ".friend-chat-preview p"
+  );
+  messagePreviewTextElement.textContent =
+    getChatGlobalLastMessageText(chatGlobal);
 }
 
 //set one chat online status
@@ -382,7 +389,18 @@ function getChatGlobalLastMessageText(chat) {
     return "No messages yet";
   }
 
-  //at least one message
-  const lastMessage = chat.messages[messagesNumber - 1];
-  return lastMessage.text;
+  //at least one message is preent, then get the text of the last not cleaned / non empty (not deleted message)
+  let messageIndex = messagesNumber - 1;
+  let message = chat.messages[messageIndex];
+  while (!message.creationDate && !message.messageId && !message.text) {
+    //move back of one message, and check if this is empty too
+    messageIndex--;
+    if (messageIndex <= -1) {
+      return "No messages yet";
+    }
+    message = chat.messages[messageIndex];
+  }
+
+  //this is the last non empty message, then return its text
+  return message.text;
 }

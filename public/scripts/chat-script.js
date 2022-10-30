@@ -69,13 +69,22 @@ function displayAllMessages(messages, scrollBahavior) {
   cleanAllMessages();
   //loop through received messages
   for (const message of messages) {
-    let side;
+    //if this message was deleted (main values were cleaned in the frontend), don Not display it
+    const messageWasDeleted =
+      !message.creationDate && !message.messageId && !message.text;
+    if (messageWasDeleted) {
+      //move to next message
+      continue;
+    }
+
     //display on left if friend is sender, display on right if this user is the sender
+    let side;
     if (message.senderIsViewer) {
       side = "right";
     } else {
       side = "left";
     }
+
     //display message
     const displayedMessage = displayOneMessage(
       false,
@@ -84,6 +93,7 @@ function displayAllMessages(messages, scrollBahavior) {
       side,
       false
     );
+
     //if the message sending failed display error info under the message
     if (message.sendingFailed) {
       displayOneMessageErrorInfo(displayedMessage, errorInfo);

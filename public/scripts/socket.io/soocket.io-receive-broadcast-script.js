@@ -235,3 +235,37 @@ function onRoomIsOnlineBroadcast(broadcastData) {
     chatGlobal.onlineStatusTimer.active = true;
   }
 }
+
+//a message was deleted in a chat by some friend
+function onMessageDeleteBroadcast(broadcastData) {
+  //find chat where message was deleted
+  const chatGlobal = getChatGlobalByRoomId(broadcastData.roomId);
+  //find the target deleted message
+  const chatGlobalMessage = getChatGlobalMessageByMessageId(
+    chatGlobal,
+    broadcastData.messageId
+  );
+  //Reset the target message values, so that it can not be displayed on screen anymore
+  chatGlobalMessage.creationDate = undefined;
+  chatGlobalMessage.messageId = undefined;
+  chatGlobalMessage.text = undefined;
+
+  //delete message on screen, in case it is displayed
+  const messageItemElement = getMessageItemByMessageId(broadcastData.messageId);
+  if (messageItemElement) {
+    hideOneMessage(messageItemElement);
+  }
+
+  //target chat on screen
+  const friendChatItemElement = getChatItemByRoomId(broadcastData.roomId);
+
+  //UPDATE the message preview
+  const messagePreviewTextElement = friendChatItemElement.querySelector(
+    ".friend-chat-preview p"
+  );
+  messagePreviewTextElement.textContent =
+    getChatGlobalLastMessageText(chatGlobal);
+
+  //remove UN-read class if present
+  // friendChatItemElement.classList.remove("friend-chat-item-unread");
+}

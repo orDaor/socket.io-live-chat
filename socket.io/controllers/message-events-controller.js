@@ -120,7 +120,62 @@ async function onSend(socket, message, sendAck) {
   sendAck(ackData);
 }
 
+//delete a message
+async function onDelete(socket, messageId, sendAck) {
+  //init ack
+  let ackData = {};
+
+  //check if message to delete exists
+  let message;
+  try {
+    message = await Message.findById(messageId);
+  } catch (error) {
+    ackData.ok = false;
+    ackData.info = "This message does not exist";
+    ackData.messageId = messageId;
+    sendAck(ackData);
+    return;
+  }
+
+  //check if the user who want to delete this message is
+  //the actual sender of this message
+  if (socket.userId !== message.senderId) {
+    ackData.ok = false;
+    ackData.info = "User can not delete this message";
+    ackData.messageId = messageId;
+    sendAck(ackData);
+    return;
+  }
+
+  //delete the message
+  try {
+    await Message.deleteById(messageId);
+  } catch (error) {
+    ackData.ok = false;
+    ackData.info = "An error occured";
+    ackData.messageId = messageId;
+    sendAck(ackData);
+    return;
+  }
+
+  //broadcast message delete event to users in the room this message was sent,
+  //the message will disappear on those users screen
+  const broadcastData = {
+    messageId: messageId,
+    roomId: message.roomId,
+  };
+  socket.to(message.roomId).emit("message-delete-broadcast", broadcastData);
+
+  //response ok
+  ackData.ok = true;
+  ackData.info = "Message deleted successfully";
+  ackData.messageId = messageId;
+  ackData.roomId = message.roomId;
+  sendAck(ackData);
+}
+
 //exports
 module.exports = {
   onSend: onSend,
+  onDelete: onDelete,
 };
