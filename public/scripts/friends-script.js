@@ -245,9 +245,6 @@ function selectOneChat(event) {
   );
   messagePreviewTextElement.textContent =
     getChatGlobalLastMessageText(chatGlobal);
-
-  //set all chat messages as "inspected"
-  setChatGlobalAllMessagesAsInspected(chatGlobal);
 }
 
 //set one chat online status
