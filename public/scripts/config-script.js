@@ -146,6 +146,18 @@ function scrollToBottomOfMessagesList(scrollBehavior) {
   });
 }
 
+//when scrolling the chat messages list,
+function onMessagesListScroll() {
+  const messagesListElement = chatSectionElement.querySelector("ul");
+  const isMessagesListAtTop = !messagesListElement.scrollTop;
+  if (!isMessagesListAtTop) {
+    return;
+  }
+
+  //request to load more messages
+  loadMoreMessages();
+}
+
 //hide friends section
 function hideFriendsSection() {
   friendsSectionElement.style.display = "none";

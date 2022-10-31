@@ -45,6 +45,9 @@ chatSectionElement
 chatSectionElement
   .querySelector("ul")
   .addEventListener("click", hideAllMessagesActions);
+chatSectionElement
+  .querySelector("ul")
+  .addEventListener("scroll", onMessagesListScroll);
 
 //socket opened (connected)
 socket.on("connect", onSocketConnect);

@@ -12,6 +12,11 @@ function listenToMessageEvents(io, socket) {
   socket.on("message-delete", function (messageId, sendAck) {
     messsageEventsController.onDelete(socket, messageId, sendAck);
   });
+
+  //load more messages
+  socket.on("message-load", function (eventData, sendAck) {
+    messsageEventsController.onMessageLoad(socket, eventData, sendAck);
+  });
 }
 
 //exports

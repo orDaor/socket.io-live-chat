@@ -103,10 +103,10 @@ if (process.env.PORT) {
 db.connectToDatabase()
   .then(function () {
     //save test messages
-    // test.insertMany(10, "635ebc9c8639b6f343e958fa", [
-    //   "635291aec4d3e0c4b356a155",
-    //   "635291d8c4d3e0c4b356a156",
-    // ]);
+    test.insertMany(10, "635ebc9c8639b6f343e958fa", [
+      "635291aec4d3e0c4b356a155",
+      "635291d8c4d3e0c4b356a156",
+    ]);
     //starting web server
     server.listen(portNumber);
     //TODO: start async process for deleting once in a while incactive rooms

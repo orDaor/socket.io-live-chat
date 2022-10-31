@@ -174,8 +174,16 @@ async function onDelete(socket, messageId, sendAck) {
   sendAck(ackData);
 }
 
+//load more messages
+async function onMessageLoad(socket, eventData, sendAck) {
+  //init ack
+  let ackData = {};
+  console.log(eventData);
+}
+
 //exports
 module.exports = {
   onSend: onSend,
   onDelete: onDelete,
+  onMessageLoad: onMessageLoad,
 };

@@ -185,3 +185,41 @@ function deleteOneMessage(event) {
     onMessageDeleteAck(ackData);
   });
 }
+
+//load more messages for a fiven chat
+//NOTE: this is called by "onMessagesListScroll" when messages list of a chat is scrolled to the top
+function loadMoreMessages() {
+  //config
+  const delay = 8000;
+
+  //user not connected
+  if (!socket.connected) {
+    return;
+  }
+
+  //get selected chat room data
+  const roomId =
+    chatSectionElement.querySelector(".active-friends").dataset.roomId;
+  const chatGlobal = getChatGlobalByRoomId(roomId);
+
+  //send request for laoding more messages
+  const eventData = {
+    roomId: roomId,
+    //how many messages for this chat did the user already laod
+    currentMessagesNumber: chatGlobal.messages.length,
+  };
+
+  //display messages list loader on screen
+
+  //start timer and send request
+  const timerId = setTimeout(function () {
+    //hide loader...
+  }, delay);
+  console.log("ohu");
+  //send request
+  socket.emit("message-load", eventData, function (ackData) {
+    clearTimeout(timerId);
+    onMoreMessagesAck(ackData);
+    //hide messages list loader...
+  });
+}

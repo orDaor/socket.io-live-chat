@@ -80,3 +80,8 @@ function onMessageDeleteAck(ackData) {
   messagePreviewTextElement.textContent =
     getChatGlobalLastMessageText(chatGlobal);
 }
+
+//process ack from server on messages load ack
+function onMoreMessagesAck(ackData) {
+  //TODO
+}
