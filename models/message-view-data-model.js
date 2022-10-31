@@ -15,6 +15,29 @@ class MessageViewData {
       this.sendingFailed = false;
     }
   }
+
+  //sort array of MessageViewData messages from oldest to most recent
+  static sortFromOldestToMostRecent(messages) {
+    const sortLogic = function (m1, m2) {
+      //m1 is more recent
+      if (m1.creationDate > m2.creationDate) {
+        return 1;
+      }
+
+      //m2 is more recent
+      if (m2.creationDate > m1.creationDate) {
+        return -1;
+      }
+
+      //same date, keep original order
+      if (m2.creationDate === m1.creationDate) {
+        return 0;
+      }
+    };
+
+    //sort the messages
+    messages.sort(sortLogic);
+  }
 }
 
 //exports
