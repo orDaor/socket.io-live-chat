@@ -103,7 +103,7 @@ if (process.env.PORT) {
 db.connectToDatabase()
   .then(function () {
     //save test messages
-    test.insertMany(10, "635ebc9c8639b6f343e958fa", [
+    test.insertManyMessages(20, "635ebc9c8639b6f343e958fa", [
       "635291aec4d3e0c4b356a155",
       "635291d8c4d3e0c4b356a156",
     ]);

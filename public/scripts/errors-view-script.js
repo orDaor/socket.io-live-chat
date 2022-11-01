@@ -27,7 +27,7 @@ function hideMainErrorInfo() {
 //display error message
 function displayMainErrorInfo(info) {
   const isErrorMessage = true;
-  displayOneMessage(isErrorMessage, null, info, null, true, "smooth");
+  displayOneMessage(isErrorMessage, null, info, null, "append", true, "smooth");
 }
 
 //display error info for one message

@@ -83,5 +83,50 @@ function onMessageDeleteAck(ackData) {
 
 //process ack from server on messages load ack
 function onMoreMessagesAck(ackData) {
-  //TODO
+  console.log(ackData);
+  //could not fetch the messages
+  if (!ackData.ok) {
+    //hide loader
+    return;
+  }
+
+  //target messages of the chat for which we load more messages
+  const chatGlobalMessages = getChatGlobalByRoomId(ackData.roomId).messages; //from oldest to most recent
+  const chatGlobalMoreMessages = ackData.moreMessages; //from most recent to oldest
+
+  //enter the "more" messages in target chat global messages array
+  for (const message of chatGlobalMoreMessages) {
+    chatGlobalMessages.unshift(message);
+  }
+
+  //can Not display new received messages on screen, if the chat for which
+  //those messages are collected is not selected
+  const selectedRoomId =
+    chatSectionElement.querySelector(".active-friends").dataset.roomId;
+  if (selectedRoomId !== ackData.roomId) {
+    return;
+  }
+
+  //NOTE: loop from most recent to oldest
+  const messagesListElement = chatSectionElement.querySelector("ul");
+  for (const message of chatGlobalMoreMessages) {
+    //config message
+    let side;
+    if (message.senderIsViewer) {
+      side = "right";
+    } else {
+      side = "left";
+    }
+
+    //Create and display the message
+    //NOTE: we prepend messages so that oldetst ones stay at the top
+    displayOneMessage(
+      false,
+      message.messageId,
+      message.text,
+      side,
+      "prepend",
+      false //NO scrolling
+    );
+  }
 }

@@ -147,8 +147,13 @@ function scrollToBottomOfMessagesList(scrollBehavior) {
 }
 
 //when scrolling the chat messages list,
-function onMessagesListScroll() {
-  const messagesListElement = chatSectionElement.querySelector("ul");
+function onMessagesListScroll(event) {
+  //scrolled element
+  const messagesListElement = event.target;
+
+  //TODO: logic for displaying "scroll to bottom" icon
+
+  //if we scrolled to top, request to load more messages
   const isMessagesListAtTop = !messagesListElement.scrollTop;
   if (!isMessagesListAtTop) {
     return;

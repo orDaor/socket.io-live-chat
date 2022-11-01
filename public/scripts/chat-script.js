@@ -5,6 +5,7 @@ function displayOneMessage(
   messageId,
   text,
   side,
+  position,
   autoScrollToBottom,
   scrollBehavior
 ) {
@@ -50,9 +51,16 @@ function displayOneMessage(
     messageTextElement.appendChild(messageActionElement);
   }
 
-  //append the list item element inside the messages list
+  //append or prepend the list item element inside the messages list
   const messagesListElement = chatSectionElement.querySelector("ul");
-  messagesListElement.appendChild(messageListItemElement);
+  if (position === "append") {
+    messagesListElement.appendChild(messageListItemElement);
+  } else if (position === "prepend") {
+    messagesListElement.prepend(messageListItemElement);
+  } else {
+    //default append
+    messagesListElement.appendChild(messageListItemElement);
+  }
 
   //scroll the message list at the bottom
   if (autoScrollToBottom) {
@@ -91,6 +99,7 @@ function displayAllMessages(messages, scrollBahavior) {
       message.messageId,
       message.text,
       side,
+      "append",
       false
     );
 
@@ -106,7 +115,19 @@ function displayAllMessages(messages, scrollBahavior) {
 
 //clean all messages
 function cleanAllMessages() {
-  chatSectionElement.querySelector("ul").textContent = "";
+  //remove the list element and re-create it
+  const messagesListElement = chatSectionElement.querySelector("ul");
+  messagesListElement.textContent = "";
+  // chatSectionElement.removeChild(messagesListElement);
+
+  // //re-create list as empty
+  // const newMessagesListElement = document.createElement("ul");
+
+  // //target form element
+  // const formElement = chatSectionElement.querySelector(".chat-sctions");
+
+  // //insert the new empty UL element befor the form
+  // chatSectionElement.insertBefore(newMessagesListElement, formElement);
 }
 
 //delete a message from screen
@@ -155,4 +176,39 @@ function getChatGlobalMessageByMessageId(chat, messageId) {
       return message;
     }
   }
+}
+
+//get last message of a chat in chat list global
+function getChatGlobalLastMessageText(chat) {
+  //no messages in this chat
+  const messagesNumber = chat.messages.length;
+  if (!messagesNumber) {
+    return "No messages yet";
+  }
+
+  //at least one message is preent, then get the text of the last not cleaned / non empty (not deleted message)
+  let messageIndex = messagesNumber - 1;
+  let message = chat.messages[messageIndex];
+  while (!message.creationDate && !message.messageId && !message.text) {
+    //move back of one message, and check if this is empty too
+    messageIndex--;
+    if (messageIndex <= -1) {
+      return "No messages yet";
+    }
+    message = chat.messages[messageIndex];
+  }
+
+  //this is the last non empty message, then return its text
+  return message.text;
+}
+
+//get number  of cleaned (deleted) messages in a chat in chatListGlobal
+function getChatGlobalDeletedMessagesNumber(chat) {
+  let counter = 0;
+  for (const message of chat.messages) {
+    if (!message.creationDate && !message.messageId && !message.text) {
+      counter++;
+    }
+  }
+  return counter;
 }

@@ -56,6 +56,7 @@ function sendMessage(event) {
     message.tempMessageId,
     message.text,
     "right",
+    "append",
     true,
     "smooth"
   );
@@ -202,11 +203,16 @@ function loadMoreMessages() {
     chatSectionElement.querySelector(".active-friends").dataset.roomId;
   const chatGlobal = getChatGlobalByRoomId(roomId);
 
+  //how many messages for this chat did the user already laod (deleted ones not included)
+  const currentMessagesNumber =
+    chatGlobal.messages.length - getChatGlobalDeletedMessagesNumber(chatGlobal);
+
+  //NOTE: the backend decides how many more messages to give the user
+
   //send request for laoding more messages
   const eventData = {
     roomId: roomId,
-    //how many messages for this chat did the user already laod
-    currentMessagesNumber: chatGlobal.messages.length,
+    currentMessagesNumber: currentMessagesNumber,
   };
 
   //display messages list loader on screen
@@ -215,7 +221,7 @@ function loadMoreMessages() {
   const timerId = setTimeout(function () {
     //hide loader...
   }, delay);
-  console.log("ohu");
+
   //send request
   socket.emit("message-load", eventData, function (ackData) {
     clearTimeout(timerId);

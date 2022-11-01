@@ -4,9 +4,6 @@ const ObjectId = require("mongodb").ObjectId;
 //imports custom
 const db = require("../data/database");
 
-//config
-const messagesNumberToLoad = 7;
-
 //this class defines a message, sent by a specific sender to a specific room
 class Message {
   constructor(text, roomId, senderId, creationDate, messageId) {
@@ -54,12 +51,18 @@ class Message {
   }
 
   //find messages sent to a specific room
-  static async findManyByRoomId(roomId) {
+  static async findManyByRoomId(roomId, messagesNumberToSkip) {
     //query filer
     const query = { roomId: roomId };
 
     //sort logic: from most recent to oldest by creation date
     const sortLogic = { creationDate: -1 };
+
+    //optional arg
+    let filteredMessagesNumberToSkip = messagesNumberToSkip;
+    if (!filteredMessagesNumberToSkip) {
+      filteredMessagesNumberToSkip = 0;
+    }
 
     //run query
     const documents = await db
@@ -67,7 +70,8 @@ class Message {
       .collection("messages")
       .find(query)
       .sort(sortLogic)
-      .limit(messagesNumberToLoad)
+      .skip(filteredMessagesNumberToSkip)
+      .limit(10)
       .toArray();
 
     //map array of message documents into array of Message class objects

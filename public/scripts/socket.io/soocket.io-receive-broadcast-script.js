@@ -124,7 +124,8 @@ function onMessageReceiveBroadcast(broadcastData) {
         false,
         broadcastData.message.messageId,
         broadcastData.message.text,
-        "left"
+        "left",
+        "append"
       );
 
       //scroll to bottom
@@ -142,7 +143,8 @@ function onMessageReceiveBroadcast(broadcastData) {
         false,
         broadcastData.message.messageId,
         broadcastData.message.text,
-        "left"
+        "left",
+        "append"
       );
       setChatItemAsUnread(friendChatItemElement);
     }

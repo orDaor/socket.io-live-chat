@@ -80,6 +80,9 @@ function displayOneChat(
     friendSectionListElement.appendChild(friendChatItemElement);
   } else if (position === "prepend") {
     friendSectionListElement.prepend(friendChatItemElement);
+  } else {
+    //default append
+    friendSectionListElement.appendChild(friendChatItemElement);
   }
 
   //compute message preview
@@ -237,6 +240,8 @@ function selectOneChat(event) {
     displayFriendsSection();
     displayChatSection();
   }
+
+  //scroll to bottom messages lists
   scrollToBottomOfMessagesList("auto");
 
   //UPDATE the message preview
@@ -379,28 +384,4 @@ function getChatItemByRoomId(roomId) {
       return chat;
     }
   }
-}
-
-//get last message of a chat in chat list global
-function getChatGlobalLastMessageText(chat) {
-  //no messages in this chat
-  const messagesNumber = chat.messages.length;
-  if (!messagesNumber) {
-    return "No messages yet";
-  }
-
-  //at least one message is preent, then get the text of the last not cleaned / non empty (not deleted message)
-  let messageIndex = messagesNumber - 1;
-  let message = chat.messages[messageIndex];
-  while (!message.creationDate && !message.messageId && !message.text) {
-    //move back of one message, and check if this is empty too
-    messageIndex--;
-    if (messageIndex <= -1) {
-      return "No messages yet";
-    }
-    message = chat.messages[messageIndex];
-  }
-
-  //this is the last non empty message, then return its text
-  return message.text;
 }

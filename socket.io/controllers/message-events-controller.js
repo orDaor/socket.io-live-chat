@@ -176,9 +176,46 @@ async function onDelete(socket, messageId, sendAck) {
 
 //load more messages
 async function onMessageLoad(socket, eventData, sendAck) {
+  //request data
+  const roomId = eventData.roomId;
+  const currentMessagesNumber = eventData.currentMessagesNumber;
+
   //init ack
   let ackData = {};
-  console.log(eventData);
+
+  //find messages sent into this room context
+  let messages;
+  try {
+    messages = await Message.findManyByRoomId(roomId, currentMessagesNumber);
+  } catch (error) {
+    ackData.ok = false;
+    ackData.info = "Could not fetch more messages";
+    sendAck(ackData);
+    return;
+  }
+
+  //map each messages in MessageViewData class objects
+  const viewerId = socket.userId;
+  const mapOneMessage = function (message) {
+    return new MessageViewData(message, viewerId);
+  };
+  //from most recent to oldest
+  const mappedMessages = messages.map(mapOneMessage);
+
+  //no more messages found
+  if (!mappedMessages.length) {
+    ackData.ok = false;
+    ackData.roomId = roomId;
+    ackData.info = "There aro no more messages to be fetched";
+    sendAck(ackData);
+    return;
+  }
+
+  //respones ok
+  ackData.ok = true;
+  ackData.roomId = roomId;
+  ackData.moreMessages = mappedMessages;
+  sendAck(ackData);
 }
 
 //exports
