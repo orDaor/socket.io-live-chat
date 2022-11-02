@@ -13,6 +13,7 @@
   box-sizing: border-box;
   height: 65%;
   overflow: auto;
+  /* position: relative; */
 }
 
 .message-item {
@@ -154,6 +155,35 @@
   top: 1rem;
   left: 2rem;
   margin: 0;
+}
+
+.scroll-to-bottom-btn {
+  position: absolute;
+  left: 2rem;
+  bottom: 12rem;
+  z-index: 1;
+  cursor: pointer;
+  border: 1px solid var(--color-grey-600);
+  height: 48px;
+  width: 48px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 100%;
+  background-color: var(--color-primary-150);
+}
+
+.scroll-to-bottom-btn-animate {
+  animation: 1s linear 1s infinite alternate slidein;
+}
+
+@keyframes slidein {
+  from {
+    bottom: 12rem;
+  }
+  to {
+    bottom: 13rem;
+  }
 }
 
 @media (min-width: 768px) {

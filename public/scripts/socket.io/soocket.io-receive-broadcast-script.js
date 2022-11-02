@@ -86,7 +86,7 @@ function onMessageReceiveBroadcast(broadcastData) {
     isTypingTimerId_receive = null;
     isTypingTimerActive_receive = false;
 
-    //handle th received message
+    //handle the received message
     if (
       window.innerWidth >= 768 ||
       (window.innerWidth < 768 &&

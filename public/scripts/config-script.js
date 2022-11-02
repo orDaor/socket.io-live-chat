@@ -119,8 +119,8 @@ function displayFriendsAndChatSectionOnWidhtChange(event) {
       chatGlobal.viewed = true;
       //tell the server the user is viewing new content for this chat
       registerOneChatView(selectedChatItemGlobal.dataset.roomId);
+      scrollToBottomOfMessagesList("auto");
     }
-    scrollToBottomOfMessagesList("auto");
   }
 }
 
@@ -151,7 +151,8 @@ function onMessagesListScroll(event) {
   //scrolled element
   const messagesListElement = event.target;
 
-  //TODO: logic for displaying "scroll to bottom" icon
+  //logic for displaying/hide "scroll to bottom" icon
+  handleScrollToBottomIconVisibility(messagesListElement);
 
   //if we scrolled to top, request to load more messages
   const isMessagesListAtTop = !messagesListElement.scrollTop;
@@ -169,6 +170,50 @@ function onMessagesListScroll(event) {
 
   //request to load more messages
   loadMoreMessages();
+}
+
+//display/hide scroll to bottom icon
+function handleScrollToBottomIconVisibility(messagesListElement) {
+  //scroll coordinates
+  const currentScrollHeight =
+    messagesListElement.scrollTop + messagesListElement.clientHeight;
+  const maxScrollHeight = messagesListElement.scrollHeight;
+
+  //detect when N pixels are left to bottom scroll position
+  const showIconCondition = maxScrollHeight - currentScrollHeight > 200; //px
+  if (!showIconCondition) {
+    hideScrollToBottomIcon(messagesListElement);
+    return;
+  }
+
+  //if scroll to button button exists already, do not create a new on
+  if (messagesListElement.querySelector(".scroll-to-bottom-btn")) {
+    return;
+  }
+
+  //create scroll to bottom button button
+  const iconContainerElement = document.createElement("div");
+  iconContainerElement.innerHTML = htmlContentScrollToBottomIcon;
+  iconContainerElement.classList.add("scroll-to-bottom-btn");
+
+  //button click event
+  iconContainerElement.addEventListener("click", function (event) {
+    messagesListElement.scrollTop = messagesListElement.scrollHeight;
+    messagesListElement.removeChild(iconContainerElement);
+  });
+
+  //insert the button inside the list element
+  messagesListElement.appendChild(iconContainerElement);
+}
+
+//hide scroll to bottom icon
+function hideScrollToBottomIcon(messagesListElement) {
+  const iconContainer = messagesListElement.querySelector(
+    ".scroll-to-bottom-btn"
+  );
+  if (iconContainer) {
+    messagesListElement.removeChild(iconContainer);
+  }
 }
 
 //hide friends section

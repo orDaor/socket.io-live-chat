@@ -15,16 +15,17 @@ function logout(event) {
   setActiveChatRoomId("");
   setActiveFriendName("");
 
-  //use must login again to get a new token
-  hideFriendsSection();
-  hideChatSection();
-  displaySignUpInForm("Login");
-
   //disconnect socket
   socket.disconnect();
 
   //restart
+  chatListGlobal = [];
   initializationDoneGlobal = false;
+
+  //user must login again to get a new token an re-open the socket
+  hideFriendsSection();
+  hideChatSection();
+  displaySignUpInForm("Login");
 }
 
 //ajax request for requesting login
