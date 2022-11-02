@@ -118,16 +118,6 @@ function cleanAllMessages() {
   //remove the list element and re-create it
   const messagesListElement = chatSectionElement.querySelector("ul");
   messagesListElement.textContent = "";
-  // chatSectionElement.removeChild(messagesListElement);
-
-  // //re-create list as empty
-  // const newMessagesListElement = document.createElement("ul");
-
-  // //target form element
-  // const formElement = chatSectionElement.querySelector(".chat-sctions");
-
-  // //insert the new empty UL element befor the form
-  // chatSectionElement.insertBefore(newMessagesListElement, formElement);
 }
 
 //delete a message from screen

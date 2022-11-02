@@ -82,3 +82,27 @@ function getHmlContentModal(action) {
 </div>
 </div>`;
 }
+
+function getCSSPropertyValue_px(element, propertyName) {
+  const elementStyle = window.getComputedStyle(element);
+  const propertyValue = elementStyle.getPropertyValue(propertyName);
+  if (!propertyValue.includes("px")) {
+    throw new Error("The requested property has not a value in pixels");
+  }
+  return +propertyValue.replace("px", "");
+}
+
+function getElementMargin(element, margin) {
+  //margin
+  let computedMargin;
+  if (margin === "margin-top" || margin === "margin-bottom") {
+    computedMargin = getCSSPropertyValue_px(element, margin);
+  } else if (margin === "margin-full") {
+    computedMargin =
+      getCSSPropertyValue_px(element, "margin-top") +
+      getCSSPropertyValue_px(element, "margin-bottom");
+  } else {
+    throw new Error("No correct margin requested");
+  }
+  return computedMargin;
+}

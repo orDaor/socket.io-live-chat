@@ -11,6 +11,9 @@ async function insertManyMessages(iterationsNumber, roomId, sendersIds) {
     return;
   }
 
+  //waiting time before two DB queries
+  const delay_ms = 1;
+
   //current user message
   let currentUser = 1;
 
@@ -25,6 +28,8 @@ async function insertManyMessages(iterationsNumber, roomId, sendersIds) {
         //??
       }
 
+      await new Promise(r => setTimeout(r, delay_ms)); 
+
       //save message 2
       const message2 = new Message(`text ${i}`, roomId, sendersIds[0]);
       try {
@@ -32,6 +37,8 @@ async function insertManyMessages(iterationsNumber, roomId, sendersIds) {
       } catch (error) {
         //??
       }
+
+      await new Promise(r => setTimeout(r, delay_ms)); 
 
       //switch to user 2
       currentUser = 2;
@@ -44,6 +51,8 @@ async function insertManyMessages(iterationsNumber, roomId, sendersIds) {
         //??
       }
 
+      await new Promise(r => setTimeout(r, delay_ms)); 
+
       //save message 2
       const message2 = new Message(`text ${i}`, roomId, sendersIds[1]);
       try {
@@ -51,6 +60,8 @@ async function insertManyMessages(iterationsNumber, roomId, sendersIds) {
       } catch (error) {
         //??
       }
+
+      await new Promise(r => setTimeout(r, delay_ms)); 
 
       //switch to user 1
       currentUser = 1;

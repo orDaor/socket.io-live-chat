@@ -109,6 +109,7 @@ function onMoreMessagesAck(ackData) {
 
   //NOTE: loop from most recent to oldest
   const messagesListElement = chatSectionElement.querySelector("ul");
+  let iterationNumber = 1;
   for (const message of chatGlobalMoreMessages) {
     //config message
     let side;
@@ -120,7 +121,7 @@ function onMoreMessagesAck(ackData) {
 
     //Create and display the message
     //NOTE: we prepend messages so that oldetst ones stay at the top
-    displayOneMessage(
+    const displayedMessage = displayOneMessage(
       false,
       message.messageId,
       message.text,
@@ -128,5 +129,19 @@ function onMoreMessagesAck(ackData) {
       "prepend",
       false //NO scrolling
     );
+
+    //when visualizing the firs message only: compensate scroll position to keep fixed messages position on screen
+    if (iterationNumber === 1) {
+      //scroll list down by delta
+      const scrollDelta =
+        displayedMessage.clientHeight +
+        getElementMargin(displayedMessage, "margin-bottom");
+      messagesListElement.scrollTop =
+        messagesListElement.scrollTop + scrollDelta;
+      //do not enter here anymore
+      iterationNumber = undefined;
+    }
   }
+
+  //hide loader...
 }
