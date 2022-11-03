@@ -19,9 +19,12 @@ function logout(event) {
   socket.disconnect();
 
   //restart
-  chatListGlobal = [];
   initializationDoneGlobal = false;
+  chatListGlobal = [];
+  selectedChatItemGlobal = undefined;
+  selectedMessageIdGlobal = undefined;
   lastGeneratedInvitationLinkGlobal = "";
+  disableDisplayOfScrollToBottomButton = false;
 
   //user must login again to get a new token an re-open the socket
   hideFriendsSection();
