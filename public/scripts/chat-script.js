@@ -1,3 +1,35 @@
+//set active room id
+function setActiveChatRoomId(roomId) {
+  chatSectionElement.querySelector(".active-friends").dataset.roomId = roomId;
+}
+
+//set active friend name
+function setActiveFriendName(activeFriendName) {
+  const activeFriendNameElement = chatSectionElement.querySelector(
+    ".active-friends .friend-chat-name"
+  );
+  activeFriendNameElement.textContent = activeFriendName;
+}
+
+//set active chat online status
+function setActiveChatOnlineStatus(selectedChatStatusElement) {
+  const activeChatStatus = chatSectionElement.querySelector(
+    ".active-friends .friend-chat-status"
+  );
+  if (
+    selectedChatStatusElement.classList.contains("friend-chat-status-online")
+  ) {
+    activeChatStatus.classList.add("friend-chat-status-online");
+    activeChatStatus.classList.remove("friend-chat-status-offline");
+  } else if (
+    selectedChatStatusElement.classList.contains("friend-chat-status-offline")
+  ) {
+    activeChatStatus.classList.add("friend-chat-status-offline");
+    activeChatStatus.classList.remove("friend-chat-status-online");
+  }
+}
+
+
 //add a message in the chat
 //NOTE: side = "left" or "right"
 function displayOneMessage(
