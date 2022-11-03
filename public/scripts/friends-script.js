@@ -261,10 +261,12 @@ function displayInvitationLink(linkText) {
   } else {
     invitationLinkInputElement.value = "https://linkforyourfriend";
   }
+  lastGeneratedInvitationLinkGlobal = invitationLinkInputElement.value;
 
   //share link button
   shareLinkButtonElement.innerHTML = htmlContentShareLinkButtonIcon;
   shareLinkButtonElement.classList.add("invitation-link-share-btn");
+  shareLinkButtonElement.addEventListener("click", sgareInvitationLink);
 
   //button for closing the link
   hideInvitationLinkButtonElement.textContent = "x";
@@ -289,6 +291,21 @@ function hideInvitationLink() {
   );
   if (invitationLinkElement) {
     invitationLinkElement.parentElement.removeChild(invitationLinkElement);
+  }
+}
+
+//this function executes when clicking share button
+async function sgareInvitationLink(event) {
+  //data to be shared
+  const shareData = {
+    url: lastGeneratedInvitationLinkGlobal,
+  };
+
+  //invoke native sharing mechanism of the device
+  try {
+    await navigator.share(shareData);
+  } catch (error) {
+    //??
   }
 }
 

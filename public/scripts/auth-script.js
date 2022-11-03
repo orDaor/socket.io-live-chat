@@ -21,6 +21,7 @@ function logout(event) {
   //restart
   chatListGlobal = [];
   initializationDoneGlobal = false;
+  lastGeneratedInvitationLinkGlobal = "";
 
   //user must login again to get a new token an re-open the socket
   hideFriendsSection();

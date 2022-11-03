@@ -69,6 +69,7 @@ let initializationDoneGlobal = false;
 let chatListGlobal = [];
 let selectedChatItemGlobal;
 let selectedMessageIdGlobal;
+let lastGeneratedInvitationLinkGlobal = "";
 
 //timer: send "is typing" info
 let isTypingTimerId_send;
