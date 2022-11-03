@@ -88,7 +88,7 @@ let iAmOnlineTimerActive = false;
 let friendIsOnlineTimerDelay = 3000;
 
 //block displaying of scroll to bottom arrow in messages list
-let blockDisplayOfScrollToBottomButton = false;
+let disableDisplayOfScrollToBottomButton = false;
 
 //initialization
 initAfterPageLoaded();

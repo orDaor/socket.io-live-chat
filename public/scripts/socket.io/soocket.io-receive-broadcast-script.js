@@ -135,7 +135,7 @@ function onMessageReceiveBroadcast(broadcastData) {
       //scroll to bottom
       if (scrollToBottomRequest) {
         scrollToBottomRequest = false;
-        blockDisplayOfScrollToBottomButton = true;
+        disableDisplayOfScrollToBottomButton = true;
         scrollToBottomOfMessagesList("smooth");
       }
     } else if (

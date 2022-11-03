@@ -50,6 +50,9 @@ function sendMessage(event) {
     return;
   }
 
+  //disable displaying of scroll to bottom button
+  disableDisplayOfScrollToBottomButton = true;
+
   //display message right when sending it
   const displayedMessage = displayOneMessage(
     false,
@@ -58,7 +61,7 @@ function sendMessage(event) {
     "right",
     "append",
     true,
-    "smooth"
+    "auto" //"smoot"
   );
 
   //show message preview on chat item in friends list

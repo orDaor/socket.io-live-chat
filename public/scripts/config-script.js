@@ -183,7 +183,7 @@ function handleScrollToBottomIconVisibility(messagesListElement) {
 
   //make sure to re-enable icon display when scroll is at bottom
   if (scrollDistanceToBottom < 5) {
-    blockDisplayOfScrollToBottomButton = false;
+    disableDisplayOfScrollToBottomButton = false;
   }
 
   //detect when N pixels are left to bottom scroll position
@@ -193,8 +193,8 @@ function handleScrollToBottomIconVisibility(messagesListElement) {
     return;
   }
 
-  //re-enable display button
-  if (blockDisplayOfScrollToBottomButton) {
+  //check if icons should not be displaued
+  if (disableDisplayOfScrollToBottomButton) {
     return;
   }
 
