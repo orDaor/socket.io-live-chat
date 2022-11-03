@@ -87,5 +87,8 @@ let iAmOnlineTimerActive = false;
 //timer: "friend is online timer delay"
 let friendIsOnlineTimerDelay = 3000;
 
+//block displaying of scroll to bottom arrow in messages list
+let blockDisplayOfScrollToBottomButton = false;
+
 //initialization
 initAfterPageLoaded();

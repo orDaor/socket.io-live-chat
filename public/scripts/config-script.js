@@ -174,32 +174,66 @@ function onMessagesListScroll(event) {
 
 //display/hide scroll to bottom icon
 function handleScrollToBottomIconVisibility(messagesListElement) {
-  //scroll coordinates
-  const currentScrollHeight =
-    messagesListElement.scrollTop + messagesListElement.clientHeight;
-  const maxScrollHeight = messagesListElement.scrollHeight;
+  //scroll distance to bottom
+  const scrollDistanceToBottom = Math.abs(
+    messagesListElement.scrollTop +
+      messagesListElement.clientHeight -
+      messagesListElement.scrollHeight
+  );
+
+  //make sure to re-enable icon display when scroll is at bottom
+  if (scrollDistanceToBottom < 5) {
+    blockDisplayOfScrollToBottomButton = false;
+  }
 
   //detect when N pixels are left to bottom scroll position
-  const showIconCondition = maxScrollHeight - currentScrollHeight > 200; //px
+  const showIconCondition = scrollDistanceToBottom > 50; //px
   if (!showIconCondition) {
     hideScrollToBottomIcon(messagesListElement);
     return;
   }
 
-  //if scroll to button button exists already, do not create a new on
-  if (messagesListElement.querySelector(".scroll-to-bottom-btn")) {
+  //re-enable display button
+  if (blockDisplayOfScrollToBottomButton) {
     return;
   }
 
+  //i a button is already present and is animated, we keep the animation
+  let isAnimated;
+  const iconContainerElement = messagesListElement.querySelector(
+    ".scroll-to-bottom-btn"
+  );
+  if (iconContainerElement) {
+    isAnimated = iconContainerElement.classList.contains(
+      "scroll-to-bottom-btn-animate"
+    );
+  } else {
+    isAnimated = false;
+  }
+
+  //delete icon if it is already visible
+  hideScrollToBottomIcon(messagesListElement);
+
+  //display button
+  displayScrollToBottomIcon(messagesListElement, isAnimated);
+}
+
+//display scroll to bottom icon
+function displayScrollToBottomIcon(messagesListElement, isAnimated) {
   //create scroll to bottom button button
   const iconContainerElement = document.createElement("div");
   iconContainerElement.innerHTML = htmlContentScrollToBottomIcon;
   iconContainerElement.classList.add("scroll-to-bottom-btn");
 
+  //should be animted?
+  if (isAnimated) {
+    iconContainerElement.classList.add("scroll-to-bottom-btn-animate");
+  }
+
   //button click event
   iconContainerElement.addEventListener("click", function (event) {
-    messagesListElement.scrollTop = messagesListElement.scrollHeight;
-    messagesListElement.removeChild(iconContainerElement);
+    scrollToBottomOfMessagesList("smooth");
+    // messagesListElement.removeChild(iconContainerElement);
   });
 
   //insert the button inside the list element

@@ -117,6 +117,10 @@ function onMessageReceiveBroadcast(broadcastData) {
       //scroll to bottom request
       if (isMessagesListAtBottom) {
         scrollToBottomRequest = true;
+      } else {
+        //display animated scroll to bottom icon
+        hideScrollToBottomIcon(messagesListElement);
+        displayScrollToBottomIcon(messagesListElement, true);
       }
 
       //enter the message in the message list without scrolling
@@ -131,6 +135,7 @@ function onMessageReceiveBroadcast(broadcastData) {
       //scroll to bottom
       if (scrollToBottomRequest) {
         scrollToBottomRequest = false;
+        blockDisplayOfScrollToBottomButton = true;
         scrollToBottomOfMessagesList("smooth");
       }
     } else if (
