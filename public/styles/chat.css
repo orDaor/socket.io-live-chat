@@ -123,16 +123,16 @@
   box-sizing: border-box;
   display: flex;
   align-items: center;
-  gap: 1rem;
   padding: 2rem 2rem;
   height: 20%;
   position: relative;
+  justify-content: space-between;
 }
 
 .chat-actions textarea {
   padding: 1rem 2rem;
   box-sizing: border-box;
-  width: 80%;
+  width: 85%;
   resize: none;
   font: inherit;
   outline: none;
@@ -140,14 +140,19 @@
   border: 1px solid var(--color-grey-100);
   overflow: auto;
   color: var(--color-grey-600);
+  position: relative;
 }
 
 .chat-actions button {
-  box-sizing: border-box;
-  width: 20%;
-  font: inherit;
   cursor: pointer;
-  height: 3.25rem;
+  width: 48px;
+  height: 48px;
+  border: none;
+  padding: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: transparent;
 }
 
 .chat-actions .is-typing-info {
@@ -184,6 +189,12 @@
   }
   to {
     bottom: 13rem;
+  }
+}
+
+@media (min-width: 480px) {
+  .chat-actions textarea {
+    width: 93%;
   }
 }
 

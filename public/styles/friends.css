@@ -22,7 +22,7 @@
   margin: 0;
   border: none;
   background-color: transparent;
-  text-decoration: underline;
+  /* text-decoration: underline; */
   cursor: pointer;
   color: inherit;
 }
@@ -41,7 +41,23 @@
 .friends-control .friends-actions-buttons {
   display: flex;
   align-items: center;
-  gap: 1.5rem;
+  gap: 1.75rem;
+}
+
+.friends-control .friends-actions-buttons button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.friends-control .friends-actions-buttons .add-friend-btn {
+  height: 48px;
+  width: 48px;
+}
+
+.friends-control .friends-actions-buttons .log-out-btn {
+  height: 24px;
+  width: 24px;
 }
 
 .friends-control .user-name {
@@ -68,9 +84,26 @@
   outline: none;
 }
 
-.friends-control .invitation-link .invitation-link-actions {
+.friends-control .invitation-link-actions {
   display: flex;
-  gap: 1.5rem;
+  align-items: center;
+  gap: 1.75rem;
+}
+
+.friends-control .invitation-link-actions button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.friends-control .invitation-link-actions .invitation-link-share-btn {
+  height: 48px;
+  width: 48px;
+}
+
+.friends-control .invitation-link-actions .invitation-link-close-btn {
+  height: 24px;
+  width: 24px;
 }
 
 .friends-control-error {
@@ -159,7 +192,7 @@
 }
 
 .friend-chat-item-error p {
-  margin:  0;
+  margin: 0;
 }
 
 .friend-chat-item-error .friend-chat-item-error-btn {
@@ -184,7 +217,6 @@
   background-color: transparent;
   text-decoration: underline;
   cursor: pointer;
-  border: 5px solid transparent;
   color: var(--color-grey-600);
 }
 
@@ -205,8 +237,13 @@
 }
 
 .active-friends .back-to-chat-list {
-  align-self: flex-start;
   color: var(--color-grey-500);
+}
+
+.active-friends .back-to-chat-list button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .active-friends p {

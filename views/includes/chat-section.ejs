@@ -1,18 +1,18 @@
 <section id="chat-section">
-    <div class="active-friends">
-      <div class="active-friends-content">
-        <div class="one-active-friend">
-          <p class="friend-chat-status friend-chat-status-online"></p>
-          <p class="friend-chat-name">Active Friend Name</p>
-        </div>
-      </div>
-      <div class="back-to-chat-list">
-        <button>Back</button>
+  <div class="active-friends">
+    <div class="active-friends-content">
+      <div class="one-active-friend">
+        <p class="friend-chat-status friend-chat-status-online"></p>
+        <p class="friend-chat-name">Active Friend Name</p>
       </div>
     </div>
-    <ul></ul>
-    <form class="chat-actions">
-      <textarea name="message" rows="1" required></textarea>
-      <button class="btn">Send</button>
-    </form>
-  </section>
+    <div class="back-to-chat-list">
+      <%- include("icons/arrow-back-button") %>
+    </div>
+  </div>
+  <ul></ul>
+  <form class="chat-actions">
+    <textarea name="message" rows="1" required></textarea>
+    <%- include("icons/send-message-button") %>
+  </form>
+</section>

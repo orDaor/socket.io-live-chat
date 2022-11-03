@@ -263,10 +263,12 @@ function displayInvitationLink(linkText) {
   }
 
   //share link button
-  shareLinkButtonElement.textContent = "Share";
+  shareLinkButtonElement.innerHTML = htmlContentShareLinkButtonIcon;
+  shareLinkButtonElement.classList.add("invitation-link-share-btn");
 
   //button for closing the link
   hideInvitationLinkButtonElement.textContent = "x";
+  hideInvitationLinkButtonElement.classList.add("invitation-link-close-btn");
   hideInvitationLinkButtonElement.addEventListener("click", hideInvitationLink);
 
   //append content

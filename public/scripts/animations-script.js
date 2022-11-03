@@ -111,3 +111,5 @@ function hideScrollToBottomIcon(messagesListElement) {
     messagesListElement.removeChild(iconContainer);
   }
 }
+
+//
