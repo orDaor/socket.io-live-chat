@@ -192,10 +192,10 @@
 
 @keyframes slidein {
   from {
-    bottom: 12rem;
+    bottom: 8rem;
   }
   to {
-    bottom: 13rem;
+    bottom: 9rem;
   }
 }
 
