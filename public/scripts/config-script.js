@@ -267,12 +267,9 @@ function setUserName(name) {
   userNameElement.textContent = name;
 }
 
-//Disable or enable all user actions:
-//NOTE: disabling all the buttons will prevent
-//user from clicking on button and sending any http/socket request
-function disableUserActions(disable) {
-  const allButtons = document.querySelectorAll("button");
-  for (const button of allButtons) {
+//Disable or enable buttons in the array parameter
+function disableButtons(buttonsList, disable) {
+  for (const button of buttonsList) {
     button.disabled = disable;
   }
 }

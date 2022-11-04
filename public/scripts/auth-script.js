@@ -25,6 +25,7 @@ function logout(event) {
   selectedMessageIdGlobal = undefined;
   lastGeneratedInvitationLinkGlobal = "";
   disableDisplayOfScrollToBottomButton = false;
+  disableLoadingOfMoreMessages = false;
 
   //user must login again to get a new token an re-open the socket
   hideFriendsSection();

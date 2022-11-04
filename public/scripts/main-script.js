@@ -91,5 +91,9 @@ let friendIsOnlineTimerDelay = 3000;
 //block displaying of scroll to bottom arrow in messages list
 let disableDisplayOfScrollToBottomButton = false;
 
+//when this is set, it is not possible to request the server to load more 
+//messages for the selected chat
+let disableLoadingOfMoreMessages = false;
+
 //initialization
 initAfterPageLoaded();

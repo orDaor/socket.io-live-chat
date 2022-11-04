@@ -159,9 +159,15 @@ function displayModalLoader() {
   modalPromptElement.appendChild(loaderElement);
 }
 
-//display join chat loader
+//display init info loader
 function displayInitInfoLoader() {
   const loaderElement = createOneLoader("init-info-loader");
   const initInfoElement = initInfoSectionElement.querySelector(".init-info");
   initInfoElement.appendChild(loaderElement);
+}
+
+//display messages loader
+function displayMessagesLoader() {
+  const loaderElement = createOneLoader("messages-loader");
+  chatSectionElement.querySelector("ul").appendChild(loaderElement);
 }
