@@ -53,6 +53,7 @@
 .friends-control .friends-actions-buttons .add-friend-btn {
   height: 48px;
   width: 48px;
+  position: relative;
 }
 
 .friends-control .friends-actions-buttons .log-out-btn {
@@ -65,7 +66,7 @@
 }
 
 .friends-control .invitation-link {
-  margin-top: 0.75rem;
+  margin-top: 0;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -249,6 +250,12 @@
 .active-friends p {
   margin: 0;
   padding: 0;
+}
+
+#add-friend-loader {
+  width: 48px;
+  height: 48px;
+  position: absolute;
 }
 
 @media (min-width: 480px) {

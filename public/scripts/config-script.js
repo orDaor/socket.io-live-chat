@@ -259,26 +259,20 @@ function hideModal(event) {
   modalSectionElement.removeChild(modalContainerElement);
 }
 
-//create and display the main page loader
-function displayMainLoader() {
-  const loaderElement = document.createElement("div");
-  loaderElement.classList.add("loader");
-  loaderElement.id = "main-loader";
-  document.querySelector("main").append(loaderElement);
-}
-
-//remove the main page loader
-function hideMainLoader() {
-  const loaderElement = document.getElementById("main-loader");
-  if (loaderElement) {
-    loaderElement.parentElement.removeChild(loaderElement);
-  }
-}
-
 //set user name
 function setUserName(name) {
   const userNameElement = friendsSectionElement.querySelector(
     ".friends-control .user-name"
   );
   userNameElement.textContent = name;
+}
+
+//Disable or enable all user actions:
+//NOTE: disabling all the buttons will prevent
+//user from clicking on button and sending any http/socket request
+function disableUserActions(disable) {
+  const allButtons = document.querySelectorAll("button");
+  for (const button of allButtons) {
+    button.disabled = disable;
+  }
 }

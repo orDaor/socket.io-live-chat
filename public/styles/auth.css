@@ -55,6 +55,12 @@
   font-size: var(--font-size-0);
 }
 
+#sign-up-in-form-loader {
+  margin: 1rem auto;
+  width: 1rem;
+  height: 1rem;
+}
+
 @media (min-width: 480px) {
   #sign-up-in-section form {
     width: 80%;

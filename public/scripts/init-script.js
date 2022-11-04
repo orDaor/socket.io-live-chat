@@ -41,14 +41,14 @@ async function initAfterLogin(token) {
       //not authenticated or not authorized (token validation at server side failed)
       if (error.code === 401 || error.code === 403) {
         //loading stopped
-        hideMainLoader();
+        hideOneLoader("main-loader");
         displaySignUpInForm("Login"); //need to get a new valid token
       } else {
         //bad response
         errorTitle = "Ooooops...";
         errorMessage = error.message;
         //show error info
-        hideMainLoader();
+        hideOneLoader("main-loader");
         disaplayInitInfo(errorTitle, errorMessage, "Try Again");
       }
     } else {
@@ -57,7 +57,7 @@ async function initAfterLogin(token) {
       errorMessage =
         "It was not possible to load your chats, because we could not reach the server. Maybe check your connection?";
       //show error info
-      hideMainLoader();
+      hideOneLoader("main-loader");
       disaplayInitInfo(errorTitle, errorMessage, "Try Again");
     }
     return;
@@ -80,7 +80,7 @@ async function initAfterLogin(token) {
   }
 
   //some chats were found...
-  hideMainLoader();
+  hideOneLoader("main-loader");
   displayFriendsSection();
 
   //upgrade connection to websocket protocol

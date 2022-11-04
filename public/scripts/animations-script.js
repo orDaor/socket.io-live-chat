@@ -112,4 +112,56 @@ function hideScrollToBottomIcon(messagesListElement) {
   }
 }
 
-//
+//create a general purpose loader
+function createOneLoader(id) {
+  const loaderElement = document.createElement("div");
+  loaderElement.classList.add("loader");
+  loaderElement.id = id;
+  return loaderElement;
+}
+
+//create and display the main page loader
+function displayMainLoader() {
+  const loaderElement = createOneLoader("main-loader");
+  document.querySelector("main").append(loaderElement);
+}
+
+//remove a specific loader in the page
+function hideOneLoader(id) {
+  const loaderElement = document.getElementById(id);
+  if (loaderElement) {
+    loaderElement.parentElement.removeChild(loaderElement);
+  }
+}
+
+//display sign up/in form loader
+function displaySignUpInFormLoader() {
+  const loaderElement = createOneLoader("sign-up-in-form-loader");
+  const formElement = signUpInSectionElement.querySelector("form");
+  if (formElement) {
+    formElement.appendChild(loaderElement);
+  }
+}
+
+//display add new friend/chat loader
+function displayAddFriendLoader() {
+  const loaderElement = createOneLoader("add-friend-loader");
+  const addFriendButtonElement = friendsSectionElement.querySelector(
+    ".friends-control .add-friend-btn"
+  );
+  addFriendButtonElement.appendChild(loaderElement);
+}
+
+//display delete message loader
+function displayModalLoader() {
+  const loaderElement = createOneLoader("modal-loader");
+  const modalPromptElement = modalSectionElement.querySelector(".modal-prompt");
+  modalPromptElement.appendChild(loaderElement);
+}
+
+//display join chat loader
+function displayInitInfoLoader() {
+  const loaderElement = createOneLoader("init-info-loader");
+  const initInfoElement = initInfoSectionElement.querySelector(".init-info");
+  initInfoElement.appendChild(loaderElement);
+}
