@@ -82,7 +82,7 @@ function onMessageDeleteAck(ackData) {
 }
 
 //process ack from server on messages load ack
-function onMoreMessagesAck(ackData) {
+function onMessageLoadAck(ackData) {
   console.log(ackData);
   //could not fetch the messages
   if (!ackData.ok) {

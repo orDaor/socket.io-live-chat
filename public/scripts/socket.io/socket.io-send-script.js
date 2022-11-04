@@ -3,18 +3,18 @@ function fetchInvitationLink() {
   //init
   hideInvitationLink();
   hideFriendsControlErrorInfo();
-  const errorInfo = "An error occured";
+  const connectionErrorInfo = "Can not reach the server. May check your connection?";
   const delay = 5000;
 
   //socket not connected
   if (!socket.connected) {
-    displayFriendsControlErrorInfo(errorInfo);
+    displayFriendsControlErrorInfo(connectionErrorInfo);
     return;
   }
 
   //start ack timeout: callback executed if ack is not received within delay
   const timerId = setTimeout(function () {
-    displayFriendsControlErrorInfo(errorInfo);
+    displayFriendsControlErrorInfo("An error occured");
   }, delay);
 
   //send event
@@ -28,7 +28,7 @@ function fetchInvitationLink() {
 function sendMessage(event) {
   //INIT
   event.preventDefault();
-  const errorInfo = "An error occured";
+  const connectionErrorInfo = "Can not reach the server. May check your connection?";
   const delay = 8000;
 
   //user connected...
@@ -37,7 +37,6 @@ function sendMessage(event) {
 
   //build message
   const tempMessageId = new Date().getTime().toString() + "-temp-id";
-  console.log(tempMessageId);
   const message = {
     text: formData.get("message").trim(),
     roomId: activeChatElement.dataset.roomId,
@@ -93,7 +92,7 @@ function sendMessage(event) {
   if (!socket.connected) {
     messageGlobal.sendingFailed = true;
     if (displayedMessage) {
-      displayOneMessageErrorInfo(displayedMessage, errorInfo);
+      displayOneMessageErrorInfo(displayedMessage, connectionErrorInfo);
     }
     return;
   }
@@ -103,7 +102,7 @@ function sendMessage(event) {
     messageGlobal.sendingFailed = true;
     const displayedMessage = getMessageItemByMessageId(messageGlobal.messageId);
     if (displayedMessage) {
-      displayOneMessageErrorInfo(displayedMessage, errorInfo);
+      displayOneMessageErrorInfo(displayedMessage, "An error occured");
     }
   }, delay);
 
@@ -167,20 +166,20 @@ function sendOnlineStatus() {
 //delete selected message
 function deleteOneMessage(event) {
   //Init
-  const errorInfo = "An error occured";
+  const connectionErrorInfo = "Can not reach the server. May check your connection?";
   const delay = 8000;
 
   //user not connected...
   if (!socket.connected) {
     hideModalErrorInfo();
-    displayModalErrorInfo(errorInfo);
+    displayModalErrorInfo(connectionErrorInfo);
     return;
   }
 
   //start ack timeout: callback executed if ack is not received within delay
   const timerId = setTimeout(function () {
     hideModalErrorInfo();
-    displayModalErrorInfo(errorInfo);
+    displayModalErrorInfo("An error occured");
   }, delay);
 
   //send deletion request
@@ -228,7 +227,7 @@ function loadMoreMessages() {
   //send request
   socket.emit("message-load", eventData, function (ackData) {
     clearTimeout(timerId);
-    onMoreMessagesAck(ackData);
+    onMessageLoadAck(ackData);
     //hide messages list loader...
   });
 }

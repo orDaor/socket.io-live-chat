@@ -56,7 +56,7 @@ socket.on("connect", onSocketConnect);
 socket.on("disconnect", onSocketDisconnect);
 
 //socket connection attempt failed
-socket.on("connect_error", onSocketConnecError);
+socket.on("connect_error", onSocketConnectError);
 
 //socket boradcast event listeners
 socket.on("message-receive-broadcast", onMessageReceiveBroadcast);

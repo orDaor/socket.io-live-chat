@@ -14,7 +14,7 @@ async function onSend(socket, message, sendAck) {
   const validatedMessage = validation.message(message, false);
   if (!validatedMessage) {
     ackData.ok = false;
-    ackData.info = "User tried to send a non valid message";
+    ackData.info = "The message is not valid for sending";
     ackData.roomId = message.roomId;
     ackData.tempMessageId = message.tempMessageId;
     sendAck(ackData);
@@ -25,7 +25,7 @@ async function onSend(socket, message, sendAck) {
   //is assigned to such a room. If not send back an error
   if (!socket.rooms.has(validatedMessage.validatedRoomId)) {
     ackData.ok = false;
-    ackData.info = "Message can not be sento to this room (1)";
+    ackData.info = "The message can not be sento to the recipient (1)";
     ackData.roomId = validatedMessage.validatedRoomId;
     ackData.tempMessageId = validatedMessage.validatedTempMessageId;
     sendAck(ackData);
@@ -38,7 +38,7 @@ async function onSend(socket, message, sendAck) {
     room = await Room.findById(validatedMessage.validatedRoomId);
   } catch (error) {
     ackData.ok = false;
-    ackData.info = "Message can not be sento to this room (2)";
+    ackData.info = "The message can not be sento to the recipient (2)";
     ackData.roomId = validatedMessage.validatedRoomId;
     ackData.tempMessageId = validatedMessage.validatedTempMessageId;
     sendAck(ackData);
@@ -59,7 +59,7 @@ async function onSend(socket, message, sendAck) {
     messageId = await fullMessage.save();
   } catch (error) {
     ackData.ok = false;
-    ackData.info = "Message not saved";
+    ackData.info = "The message can not be sent at the moment";
     ackData.roomId = validatedMessage.validatedRoomId;
     ackData.tempMessageId = validatedMessage.validatedTempMessageId;
     sendAck(ackData);
@@ -141,7 +141,7 @@ async function onDelete(socket, messageId, sendAck) {
   //the actual sender of this message
   if (socket.userId !== message.senderId) {
     ackData.ok = false;
-    ackData.info = "User can not delete this message";
+    ackData.info = "You do not have the permission to delete this message";
     ackData.messageId = messageId;
     sendAck(ackData);
     return;
@@ -152,7 +152,7 @@ async function onDelete(socket, messageId, sendAck) {
     await Message.deleteById(messageId);
   } catch (error) {
     ackData.ok = false;
-    ackData.info = "An error occured";
+    ackData.info = "It is not possible to delete this message at the moment";
     ackData.messageId = messageId;
     sendAck(ackData);
     return;
@@ -189,7 +189,7 @@ async function onMessageLoad(socket, eventData, sendAck) {
     messages = await Message.findManyByRoomId(roomId, currentMessagesNumber);
   } catch (error) {
     ackData.ok = false;
-    ackData.info = "Could not fetch more messages";
+    ackData.info = "It is not possible fetch more messages at the moment";
     sendAck(ackData);
     return;
   }

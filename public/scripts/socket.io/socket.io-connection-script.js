@@ -31,7 +31,7 @@ function onSocketDisconnect(reason) {
 //      - socket.IO will try reconnection AUTOMATICALLY
 //  2) websocket server refused connection (middleware sent back an error)
 //      - socket.IO will NOT try reconnection automatically, but we need to MANUALLY call socket.connect()
-function onSocketConnecError(error) {
+function onSocketConnectError(error) {
   //failed because of technical reason
   if (!error.data) {
     console.log(`Connection attempt failed because: ${error.message}`);

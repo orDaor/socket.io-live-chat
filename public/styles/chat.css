@@ -68,6 +68,7 @@
   background-color: white;
   color: var(--color-error-text);
   font-size: var(--font-size-1);
+  text-align: right;
 }
 
 .message-item p.line-break-control {

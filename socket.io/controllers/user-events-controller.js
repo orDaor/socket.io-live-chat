@@ -1,6 +1,3 @@
-//imports 3rd prty
-const uuid = require("uuid").v4;
-
 //imports custom
 const User = require("../../models/user-model");
 const Room = require("../../models/room-model");
@@ -31,7 +28,7 @@ async function onUserFetchInvitationLink(socket, emptyObj, sendAck) {
     room = await Room.findWithOneUserWaiting(user.userId);
   } catch (error) {
     ackData.ok = false;
-    ackData.info = "An error occured. Maybe try again later?";
+    ackData.info = "It is not possible to generate a link at the moment (1)";
     sendAck(ackData);
     console.log(error);
     return;
@@ -55,7 +52,7 @@ async function onUserFetchInvitationLink(socket, emptyObj, sendAck) {
     room.roomId = roomId.toString();
   } catch (error) {
     ackData.ok = false;
-    ackData.info = "An error occured. Maybe try again later?";
+    ackData.info = "It is not possible to generate a link at the moment (1)";
     sendAck(ackData);
     console.log(error);
     return;
