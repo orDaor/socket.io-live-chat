@@ -3,7 +3,8 @@ function fetchInvitationLink() {
   //init
   hideInvitationLink();
   hideFriendsControlErrorInfo();
-  const connectionErrorInfo = "Can not reach the server. May check your connection?";
+  const connectionErrorInfo =
+    "Can not reach the server. May check your connection?";
   const delay = 5000;
 
   //socket not connected
@@ -28,7 +29,8 @@ function fetchInvitationLink() {
 function sendMessage(event) {
   //INIT
   event.preventDefault();
-  const connectionErrorInfo = "Can not reach the server. May check your connection?";
+  const connectionErrorInfo =
+    "Can not reach the server. May check your connection?";
   const delay = 8000;
 
   //user connected...
@@ -62,6 +64,9 @@ function sendMessage(event) {
     true,
     "auto" //"smoot"
   );
+
+  //clean form input
+  event.target.querySelector("textarea[name='message']").value = "";
 
   //show message preview on chat item in friends list
   const friendChatItemElement = getChatItemByRoomId(message.roomId);
@@ -111,9 +116,6 @@ function sendMessage(event) {
     clearTimeout(timerId);
     onMessageSendAck(ackData);
   }); //we can pass any data that can be encoded as JSON
-
-  //clean form input
-  event.target.querySelector("textarea[name='message']").value = "";
 }
 
 //tells the server this user viewd a specific chat room
@@ -166,8 +168,34 @@ function sendOnlineStatus() {
 //delete selected message
 function deleteOneMessage(event) {
   //Init
-  const connectionErrorInfo = "Can not reach the server. May check your connection?";
+  const connectionErrorInfo =
+    "Can not reach the server. May check your connection?";
   const delay = 8000;
+
+  //target message in chatListGlobal
+  const selectedRoomId =
+    chatSectionElement.querySelector(".active-friends").dataset.roomId;
+
+  const chatGlobal = getChatGlobalByRoomId(selectedRoomId);
+
+  const chatGlobaleMessage = getChatGlobalMessageByMessageId(
+    chatGlobal,
+    selectedMessageItemGlobal.dataset.messageId
+  );
+
+  //if user wants to delete a message which failed sending, then
+  //just delete it from chatListGlobal and from screen and stop here
+  if (chatGlobaleMessage.sendingFailed) {
+    //clean (delete) from chatListGlobal
+    chatGlobaleMessage.creationDate = undefined;
+    chatGlobaleMessage.messageId = undefined;
+    chatGlobaleMessage.text = undefined;
+
+    //delete from screen
+    hideOneMessage(selectedMessageItemGlobal);
+    hideModal();
+    return;
+  }
 
   //user not connected...
   if (!socket.connected) {
@@ -183,10 +211,14 @@ function deleteOneMessage(event) {
   }, delay);
 
   //send deletion request
-  socket.emit("message-delete", selectedMessageIdGlobal, function (ackData) {
-    clearTimeout(timerId);
-    onMessageDeleteAck(ackData);
-  });
+  socket.emit(
+    "message-delete",
+    selectedMessageItemGlobal.dataset.messageId,
+    function (ackData) {
+      clearTimeout(timerId);
+      onMessageDeleteAck(ackData);
+    }
+  );
 }
 
 //load more messages for a fiven chat
@@ -205,11 +237,12 @@ function loadMoreMessages() {
     chatSectionElement.querySelector(".active-friends").dataset.roomId;
   const chatGlobal = getChatGlobalByRoomId(roomId);
 
-  //how many messages for this chat did the user already laod (deleted ones not included)
-  const currentMessagesNumber =
-    chatGlobal.messages.length - getChatGlobalDeletedMessagesNumber(chatGlobal);
-
+  //how many messages for this chat did the user already laod
+  //NOTE: deleted messages, and messages who faild sending, are not included
+  //because they are not saved in th DB
   //NOTE: the backend decides how many more messages to give the user
+  const currentMessagesNumber =
+    chatGlobal.messages.length - getActualChatGlobalMessagesNumber(chatGlobal);
 
   //send request for laoding more messages
   const eventData = {

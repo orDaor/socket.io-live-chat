@@ -22,7 +22,7 @@ function logout(event) {
   initializationDoneGlobal = false;
   chatListGlobal = [];
   selectedChatItemGlobal = undefined;
-  selectedMessageIdGlobal = undefined;
+  selectedMessageItemGlobal = undefined;
   lastGeneratedInvitationLinkGlobal = "";
   disableDisplayOfScrollToBottomButton = false;
   disableLoadingOfMoreMessages = false;

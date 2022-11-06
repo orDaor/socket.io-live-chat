@@ -58,7 +58,7 @@ function onMessageDeleteAck(ackData) {
     chatGlobal,
     ackData.messageId
   );
-  //Reset the target message values, so that it can not be displayed on screen anymore
+  //Clean/reset the target message values, so that it can not be displayed on screen anymore
   chatGlobalMessage.creationDate = undefined;
   chatGlobalMessage.messageId = undefined;
   chatGlobalMessage.text = undefined;

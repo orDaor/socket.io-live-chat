@@ -68,7 +68,7 @@ socket.on("message-delete-broadcast", onMessageDeleteBroadcast);
 let initializationDoneGlobal = false;
 let chatListGlobal = [];
 let selectedChatItemGlobal;
-let selectedMessageIdGlobal;
+let selectedMessageItemGlobal;
 let lastGeneratedInvitationLinkGlobal = "";
 
 //timer: send "is typing" info

@@ -184,7 +184,7 @@ function displayMessageActions(event) {
   }
 
   //selected message id
-  selectedMessageIdGlobal = selectedMessageItem.dataset.messageId;
+  selectedMessageItemGlobal = selectedMessageItem;
 
   //display actual message action menu
   hideAllMessagesActions();

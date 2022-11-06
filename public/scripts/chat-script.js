@@ -29,7 +29,6 @@ function setActiveChatOnlineStatus(selectedChatStatusElement) {
   }
 }
 
-
 //add a message in the chat
 //NOTE: side = "left" or "right"
 function displayOneMessage(
@@ -225,10 +224,13 @@ function getChatGlobalLastMessageText(chat) {
 }
 
 //get number  of cleaned (deleted) messages in a chat in chatListGlobal
-function getChatGlobalDeletedMessagesNumber(chat) {
+function getActualChatGlobalMessagesNumber(chat) {
   let counter = 0;
   for (const message of chat.messages) {
-    if (!message.creationDate && !message.messageId && !message.text) {
+    const deleted =
+      !message.creationDate && !message.messageId && !message.text;
+    const sendingFailed = message.sendingFailed;
+    if (deleted || sendingFailed) {
       counter++;
     }
   }
