@@ -41,6 +41,8 @@ html {
 
   --friends-selection-border-radius: 12px;
 
+  --friends-chat-section-inner-border-radius: 12px;
+
   --friend-status-online: rgb(29, 245, 29);
   --friend-status-offline: var(--color-grey-200);
 

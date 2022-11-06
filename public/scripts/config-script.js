@@ -81,7 +81,7 @@ function displayFriendsAndChatSectionOnWidhtChange(event) {
     }
   } else {
     if (
-      friendsSectionElement.style.display === "block" &&
+      friendsSectionElement.style.display === "flex" &&
       chatSectionElement.style.display === "none"
     ) {
       displayFriendsSection();
@@ -93,7 +93,7 @@ function displayFriendsAndChatSectionOnWidhtChange(event) {
       hideFriendsSection();
       displayChatSection();
     } else if (
-      friendsSectionElement.style.display === "block" &&
+      friendsSectionElement.style.display === "flex" &&
       chatSectionElement.style.display === "flex"
     ) {
       if (selectedChatItemGlobal) {
@@ -144,7 +144,7 @@ function hideFriendsSection() {
 //display friends section
 function displayFriendsSection() {
   //show this section
-  friendsSectionElement.style.display = "block";
+  friendsSectionElement.style.display = "flex";
 }
 
 //display chat section

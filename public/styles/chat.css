@@ -156,7 +156,7 @@
 
 .chat-actions .is-typing-info {
   position: absolute;
-  top: 1rem;
+  top: 0.2rem;
   left: 2rem;
   margin: 0;
 }
@@ -207,9 +207,12 @@
 
 @media (min-width: 768px) {
   #chat-section {
-    /* display: flex; */
     left: var(--friends-section-width-2);
     top: var(--friends-chat-section-from-top-2);
+  }
+
+  .chat-actions .is-typing-info {
+    top: 1rem;
   }
 }
 
