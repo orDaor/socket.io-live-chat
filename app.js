@@ -64,14 +64,11 @@ app.use(baseRoutes);
 //user routes
 app.use("/user", userRoutes);
 
-//routes protection middleware
-app.use(routesProtectionMiddleware);
-
 //rooms routes
-app.use("/room", roomRoutes);
+app.use("/room", routesProtectionMiddleware, roomRoutes);
 
 //messages routes
-app.use("/message", messageRoutes);
+app.use("/message", routesProtectionMiddleware, messageRoutes);
 
 //not found middleware
 app.use(notFoundMidlleware);
