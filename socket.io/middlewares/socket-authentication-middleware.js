@@ -66,7 +66,11 @@ async function socketAuthCheckMiddleware(socket, next) {
   //find rooms in which this user is active
   let rooms;
   try {
-    rooms = await Room.findManyByUserId(socket.userId);
+    const includeDocsWithUserAlone = true;
+    rooms = await Room.findManyByUserId(
+      socket.userId,
+      includeDocsWithUserAlone
+    );
   } catch (error) {
     //refuse socket connection
     error = new Error("Server error");

@@ -46,9 +46,10 @@
   background-color: var(--color-primary-100);
 }
 
-.auth-error-info {
+#sign-up-in-section .auth-error-info {
   box-sizing: border-box;
   background-color: var(--color-error-box);
+  margin: 0.5rem auto;
   padding: 1rem;
   border-radius: 6px;
   width: 80%;

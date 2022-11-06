@@ -1,5 +1,13 @@
 //process ack from server on user get invitation link ack
 function onUserFetchInvitationLinkAck(ackData) {
+  //hide loaders and re-enable buttons
+  const buttons = friendsSectionElement
+    .querySelector(".friends-control")
+    .querySelectorAll("button");
+
+  disableButtons(buttons, false);
+  hideOneLoader("add-friend-loader");
+
   //link was not generated
   if (!ackData.ok) {
     displayFriendsControlErrorInfo(ackData.info);
@@ -44,9 +52,16 @@ function onMessageSendAck(ackData) {
 
 //process ack from server on message delete ack
 function onMessageDeleteAck(ackData) {
+  //target buttons to re-enable in the modal
+  const buttons = modalSectionElement
+    .querySelector(".modal-prompt")
+    .querySelectorAll("button");
+
+  hideOneLoader("modal-loader");
+  disableButtons(buttons, false);
+
   //message was not deleted
   if (!ackData.ok) {
-    hideModalErrorInfo();
     displayModalErrorInfo(ackData.info);
     return;
   }
@@ -83,6 +98,10 @@ function onMessageDeleteAck(ackData) {
 
 //process ack from server on messages load ack
 function onMessageLoadAck(ackData) {
+  //Hide loader and re-enable loading of more messages
+  hideOneLoader("messages-loader");
+  disableLoadingOfMoreMessages = false;
+  
   console.log(ackData);
   //could not fetch the messages
   if (!ackData.ok) {

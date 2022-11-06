@@ -103,13 +103,12 @@ if (process.env.PORT) {
 db.connectToDatabase()
   .then(function () {
     //save test messages
-    test.insertManyMessages(20, "635ebc9c8639b6f343e958fa", [
-      "635291aec4d3e0c4b356a155",
-      "635291d8c4d3e0c4b356a156",
+    test.insertManyMessages(20, "6367c80c90448647ff008095", [
+      "6367c416214dc9ace27cfd4a",
+      "6367c47ed3ba0e264cea004d",
     ]);
     //starting web server
     server.listen(portNumber);
-    //TODO: start async process for deleting once in a while incactive rooms
   })
   .catch(function (error) {
     console.log(error);

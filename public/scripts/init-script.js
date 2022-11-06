@@ -163,6 +163,8 @@ function handleInvitationRequest(invitationInfo) {
 
 //accept chat invitation by another user
 async function joinChat(event) {
+  //init
+  hideInitErrorInfo();
   let response;
 
   //check if this user has a token, if not then login to get a new one
@@ -190,16 +192,30 @@ async function joinChat(event) {
     body: JSON.stringify(requestBody),
   };
 
+  //display loader and disable buttons in this area
+  const buttons = initInfoSectionElement
+    .querySelector(".init-info")
+    .querySelectorAll("button");
+
+  displayInitInfoLoader();
+  disableButtons(buttons, true);
+
   //send ajax request
   try {
     response = await fetch(requestUrl, requestConfig);
   } catch (error) {
-    hideInitErrorInfo();
     displayInitErrorInfo(
       "Can not reach the server. May check your connection?"
     );
+    //hide loader and re-enable buttons
+    hideOneLoader("init-info-loader");
+    disableButtons(buttons, false);
     return;
   }
+
+  //response receive, hide loader and re-enable buttons
+  hideOneLoader("init-info-loader");
+  disableButtons(buttons, false);
 
   //parse response
   const responseData = await response.json();
@@ -211,7 +227,6 @@ async function joinChat(event) {
       displaySignUpInForm("Login"); //need to get a new valid token
       return;
     }
-    hideInitErrorInfo();
     displayInitErrorInfo(responseData.message);
     return;
   }

@@ -56,6 +56,12 @@ async function login(event) {
     body: JSON.stringify(userLoginData),
   };
 
+  //show loader and disable buttons
+  hideAuthErrorInfo();
+  const buttons = event.target.querySelectorAll("button");
+  displaySignUpInFormLoader();
+  disableButtons(buttons, true);
+
   //send ajax request for login
   let response;
   try {
@@ -64,8 +70,15 @@ async function login(event) {
     displayAuthErrorInfo(
       "Can not reach the server. May check your connection?"
     );
+    //hide loader and re-enable buttons
+    hideOneLoader("sign-up-in-form-loader");
+    disableButtons(buttons, false);
     return;
   }
+
+  //a response was received, hide loader and re-enable buttons
+  hideOneLoader("sign-up-in-form-loader");
+  disableButtons(buttons, false);
 
   //parse response
   const responseData = await response.json();
@@ -121,6 +134,12 @@ async function signup(event) {
     body: JSON.stringify(userSignupData),
   };
 
+  //show loader and disable buttons in this area
+  hideAuthErrorInfo();
+  const buttons = event.target.querySelectorAll("button");
+  displaySignUpInFormLoader();
+  disableButtons(buttons, true);
+
   //send ajax request
   let response;
   try {
@@ -129,8 +148,15 @@ async function signup(event) {
     displayAuthErrorInfo(
       "Can not reach the server. Maybe check your connection?"
     );
+    //hide loader and re-enable buttons
+    hideOneLoader("sign-up-in-form-loader");
+    disableButtons(buttons, false);
     return;
   }
+
+  //a response was received, hide loader and re-enable buttons
+  hideOneLoader("sign-up-in-form-loader");
+  disableButtons(buttons, false);
 
   //parse response
   const responseData = await response.json();

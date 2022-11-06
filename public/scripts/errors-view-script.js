@@ -4,7 +4,7 @@ function displayAuthErrorInfo(info) {
   const errorInfoElement = document.createElement("p");
   errorInfoElement.classList.add("auth-error-info");
   errorInfoElement.textContent = info;
-  signUpInSectionElement.querySelector("form").prepend(errorInfoElement);
+  signUpInSectionElement.querySelector("form").append(errorInfoElement);
 }
 
 //hide auth error info on authentication form

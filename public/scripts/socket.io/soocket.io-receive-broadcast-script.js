@@ -252,6 +252,12 @@ function onMessageDeleteBroadcast(broadcastData) {
     chatGlobal,
     broadcastData.messageId
   );
+
+  //message not loaded yet, it can not be deleted
+  if (!chatGlobalMessage) {
+    return;
+  }
+
   //Reset the target message values, so that it can not be displayed on screen anymore
   chatGlobalMessage.creationDate = undefined;
   chatGlobalMessage.messageId = undefined;
@@ -272,7 +278,4 @@ function onMessageDeleteBroadcast(broadcastData) {
   );
   messagePreviewTextElement.textContent =
     getChatGlobalLastMessageText(chatGlobal);
-
-  //remove UN-read class if present
-  // friendChatItemElement.classList.remove("friend-chat-item-unread");
 }

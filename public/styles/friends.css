@@ -56,9 +56,17 @@
   position: relative;
 }
 
+.friends-control .friends-actions-buttons .add-friend-btn:disabled {
+  cursor: auto;
+}
+
 .friends-control .friends-actions-buttons .log-out-btn {
   height: 24px;
   width: 24px;
+}
+
+.friends-control .friends-actions-buttons .log-out-btn:disabled {
+  cursor: auto;
 }
 
 .friends-control .user-name {
@@ -109,7 +117,7 @@
 
 .friends-control-error {
   color: var(--color-error-text);
-  font-size: var(--font-size-1);
+  font-size: var(--font-size-0);
   text-align: left;
 }
 
@@ -253,8 +261,8 @@
 }
 
 #add-friend-loader {
-  width: 48px;
-  height: 48px;
+  width: 16px;
+  height: 16px;
   position: absolute;
 }
 

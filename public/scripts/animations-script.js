@@ -120,18 +120,18 @@ function createOneLoader(id) {
   return loaderElement;
 }
 
-//create and display the main page loader
-function displayMainLoader() {
-  const loaderElement = createOneLoader("main-loader");
-  document.querySelector("main").append(loaderElement);
-}
-
 //remove a specific loader in the page
 function hideOneLoader(id) {
   const loaderElement = document.getElementById(id);
   if (loaderElement) {
     loaderElement.parentElement.removeChild(loaderElement);
   }
+}
+
+//create and display the main page loader
+function displayMainLoader() {
+  const loaderElement = createOneLoader("main-loader");
+  document.querySelector("main").append(loaderElement);
 }
 
 //display sign up/in form loader

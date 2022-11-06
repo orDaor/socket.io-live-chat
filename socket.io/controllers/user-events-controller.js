@@ -6,6 +6,10 @@ const Room = require("../../models/room-model");
 async function onUserFetchInvitationLink(socket, emptyObj, sendAck) {
   //init ack data
   let ackData = {};
+  
+  //let user wait just a little time to make him realize 
+  //a new link is actually being generated
+  await new Promise(r => setTimeout(r, 800)); 
 
   //user asking for the link
   const userId = socket.userId;

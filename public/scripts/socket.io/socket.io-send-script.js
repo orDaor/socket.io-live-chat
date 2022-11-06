@@ -13,9 +13,19 @@ function fetchInvitationLink() {
     return;
   }
 
+  //display loader and disable buttons in this area
+  const buttons = friendsSectionElement
+    .querySelector(".friends-control")
+    .querySelectorAll("button");
+
+  displayAddFriendLoader();
+  disableButtons(buttons, true);
+
   //start ack timeout: callback executed if ack is not received within delay
   const timerId = setTimeout(function () {
     displayFriendsControlErrorInfo("An error occured");
+    disableButtons(buttons, false);
+    hideOneLoader("add-friend-loader");
   }, delay);
 
   //send event
@@ -160,7 +170,6 @@ function sendOnlineStatus() {
     //stop sending cyclycally
     return;
   }
-
   //send status
   socket.emit("room-is-online", {});
 }
@@ -168,9 +177,11 @@ function sendOnlineStatus() {
 //delete selected message
 function deleteOneMessage(event) {
   //Init
+  hideModalErrorInfo();
   const connectionErrorInfo =
     "Can not reach the server. May check your connection?";
   const delay = 8000;
+
 
   //target message in chatListGlobal
   const selectedRoomId =
@@ -199,15 +210,24 @@ function deleteOneMessage(event) {
 
   //user not connected...
   if (!socket.connected) {
-    hideModalErrorInfo();
     displayModalErrorInfo(connectionErrorInfo);
     return;
   }
 
+  //display loader and disable buttons in this area
+  const buttons = modalSectionElement
+    .querySelector(".modal-prompt")
+    .querySelectorAll("button");
+
+  displayModalLoader();
+  disableButtons(buttons, true);
+
   //start ack timeout: callback executed if ack is not received within delay
   const timerId = setTimeout(function () {
-    hideModalErrorInfo();
     displayModalErrorInfo("An error occured");
+    //hide loader and re-enable buttons
+    hideOneLoader("modal-loader");
+    disableButtons(buttons, false);
   }, delay);
 
   //send deletion request
@@ -227,10 +247,11 @@ function loadMoreMessages() {
   //config
   const delay = 8000;
 
-  //user not connected
-  if (!socket.connected) {
+  //user not connected or laoding of more messages forbidden at the moment
+  if (!socket.connected || disableLoadingOfMoreMessages) {
     return;
   }
+  console.log("request more messages");
 
   //get selected chat room data
   const roomId =
@@ -250,17 +271,20 @@ function loadMoreMessages() {
     currentMessagesNumber: currentMessagesNumber,
   };
 
-  //display messages list loader on screen
+  //display loader and disable loading of more messages
+  displayMessagesLoader();
+  disableLoadingOfMoreMessages = true;
 
   //start timer and send request
   const timerId = setTimeout(function () {
-    //hide loader...
+    //hide loader and re-enable loading of more messages
+    hideOneLoader("messages-loader");
+    disableLoadingOfMoreMessages = false;
   }, delay);
 
   //send request
   socket.emit("message-load", eventData, function (ackData) {
     clearTimeout(timerId);
     onMessageLoadAck(ackData);
-    //hide messages list loader...
   });
 }
