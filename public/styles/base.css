@@ -42,7 +42,7 @@ html {
 
   --friends-chat-section-inner-border-radius: 12px;
 
-  --friend-status-online: rgb(29, 245, 29);
+  --friend-status-online: rgb(0, 196, 0);
   --friend-status-offline: var(--color-grey-200);
 
   --friend-status-dimension: 10px;
@@ -112,7 +112,7 @@ body {
   background-color: var(--friend-status-offline);
 }
 
-#main-header p.user-chat-status-onfline {
+#main-header p.user-chat-status-online {
   background-color: var(--friend-status-online);
 }
 

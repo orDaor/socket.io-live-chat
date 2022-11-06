@@ -12,6 +12,11 @@ function onSocketConnect() {
     //NOTE: iAmOnlineTimerActive --> prevents from starting multiple paralell "setInterval"
     //      processes when re-connecting
   }
+
+  //update this user online status
+  setTimeout(function () {
+    setUserOnlineStatus(true);
+  }, 500);
 }
 
 //socket was closed
@@ -20,6 +25,11 @@ function onSocketDisconnect(reason) {
   console.log(`Disconnected because: ${reason} (socket.id = ${socket.id})`);
   //NOTE: if socket is disconnected manually with socket.disconnect(), euther from client or server,
   //client will not try re-connecting automatically
+
+  //update this user online status
+  setTimeout(function () {
+    setUserOnlineStatus(false);
+  }, 500);
 }
 
 //socket connection attempt failed

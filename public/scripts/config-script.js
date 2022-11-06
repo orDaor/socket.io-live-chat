@@ -259,6 +259,13 @@ function hideModal(event) {
   modalSectionElement.removeChild(modalContainerElement);
 }
 
+//Disable or enable buttons in the array parameter
+function disableButtons(buttonsList, disable) {
+  for (const button of buttonsList) {
+    button.disabled = disable;
+  }
+}
+
 //set user name
 function setUserName(name) {
   const userNameElement = friendsSectionElement.querySelector(
@@ -267,9 +274,22 @@ function setUserName(name) {
   userNameElement.textContent = name;
 }
 
-//Disable or enable buttons in the array parameter
-function disableButtons(buttonsList, disable) {
-  for (const button of buttonsList) {
-    button.disabled = disable;
+//set this user online status
+function setUserOnlineStatus(online) {
+  const userOnlineStatusColorElement = document.querySelector(
+    "#main-header .user-chat-status"
+  );
+
+  const userOnlineStatusDescriptionElement =
+    userOnlineStatusColorElement.nextElementSibling;
+
+  if (online) {
+    userOnlineStatusColorElement.classList.remove("user-chat-status-offline");
+    userOnlineStatusColorElement.classList.add("user-chat-status-online");
+    userOnlineStatusDescriptionElement.textContent = "Online";
+  } else {
+    userOnlineStatusColorElement.classList.remove("user-chat-status-online");
+    userOnlineStatusColorElement.classList.add("user-chat-status-offline");
+    userOnlineStatusDescriptionElement.textContent = "Offline";
   }
 }
