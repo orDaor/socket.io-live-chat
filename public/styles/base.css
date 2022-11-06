@@ -34,8 +34,7 @@ html {
   --friends-section-width-2: 20rem;
   --friends-section-width-3: 60%;
 
-  --friends-chat-section-from-top-1: 12rem;
-  --friends-chat-section-from-top-2: 11.5rem;
+  --friends-chat-section-from-top: 5rem;
 
   --friends-chat-section-from-left-right: 15%;
 
@@ -59,24 +58,62 @@ body {
 }
 
 #main-header {
-  padding: 2rem;
+  box-sizing: border-box;
   margin: 0;
   text-align: center;
   box-sizing: border-box;
   background-color: var(--color-primary-400);
 }
 
-#main-header h1 {
+.main-header-content {
+  margin: 0;
+  padding: 0 1rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 4rem;
+}
+
+.main-header-content-error-page {
+  padding: 2rem;
+}
+
+.main-header-content-error-page h1 {
+  font-size: var(--font-size-4);
   margin-top: 0;
-  margin-bottom: 1.3rem;
-  font-size: var(--font-size-3);
-  font-weight: bold;
 }
 
 #main-header p {
-  margin-top: 1rem;
-  margin-bottom: 0;
+  margin: 0;
   font-size: var(--font-size-1);
+}
+
+#main-header .website-logo {
+  font-weight: bold;
+  font-size: var(--font-size-1-5);
+}
+
+#main-header .chat-status {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+#main-header p.user-chat-status {
+  margin: 0;
+  padding: 0;
+  width: var(--friend-status-dimension);
+  height: var(--friend-status-dimension);
+  border-radius: 100%;
+  border: none;
+}
+
+#main-header p.user-chat-status-offline {
+  background-color: var(--friend-status-offline);
+}
+
+#main-header p.user-chat-status-onfline {
+  background-color: var(--friend-status-online);
 }
 
 #main-header a {
@@ -129,8 +166,8 @@ ul {
 }
 
 @media (min-width: 480px) {
-  #main-header h1 {
-    font-size: var(--font-size-4);
+  #main-header .website-logo {
+    font-size: var(--font-size-3);
   }
 
   #main-loader {
@@ -142,22 +179,16 @@ ul {
 }
 
 @media (min-width: 768px) {
-  #main-header h1 {
-    font-size: var(--font-size-5);
-  }
-
   #main-header p {
     font-size: var(--font-size-2);
   }
 }
 
 @media (min-width: 1024px) {
-  #main-header h1 {
-    font-size: var(--font-size-6);
-  }
-
-  #main-header p {
-    font-size: var(--font-size-3);
+  .main-header-content {
+    margin-left: var(--friends-chat-section-from-left-right);
+    margin-right: var(--friends-chat-section-from-left-right);
+    padding: 0;
   }
 }
 
