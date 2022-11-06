@@ -101,7 +101,7 @@ function onMessageLoadAck(ackData) {
   //Hide loader and re-enable loading of more messages
   hideOneLoader("messages-loader");
   disableLoadingOfMoreMessages = false;
-  
+
   console.log(ackData);
   //could not fetch the messages
   if (!ackData.ok) {
@@ -149,8 +149,9 @@ function onMessageLoadAck(ackData) {
       false //NO scrolling
     );
 
-    //when visualizing the firs message only: compensate scroll position to keep fixed messages position on screen
-    if (iterationNumber === 1) {
+    //if messages list scroll position is at top, then compensate scroll position
+    //to keep messages on screen at the same original place
+    if (!messagesListElement.scrollTop) {
       //scroll list down by delta
       const scrollDelta =
         displayedMessage.clientHeight +
