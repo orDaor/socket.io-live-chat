@@ -27,6 +27,9 @@ function logout(event) {
   disableDisplayOfScrollToBottomButton = false;
   disableLoadingOfMoreMessages = false;
 
+  //resest text area status
+  resetTextAreaElement();
+
   //user must login again to get a new token an re-open the socket
   hideFriendsSection();
   hideChatSection();

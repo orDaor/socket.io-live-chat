@@ -1,7 +1,7 @@
 //minumum user input lengths (excluded extra spaces)
 const minPasswordLength = 5;
-const minUserNameLength = 5;
-const maxUserNameLength = 20;
+const minUserNameLength = 4;
+const maxUserNameLength = 15;
 
 //sign up input validation
 function userData(userInput, loggingEnabled = false) {

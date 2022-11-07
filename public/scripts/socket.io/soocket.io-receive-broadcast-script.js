@@ -28,6 +28,7 @@ function onMessageReceiveBroadcast(broadcastData) {
         timerId: null,
         active: false,
       },
+      currentInput: "",
     };
 
     //enter new chat in the chat list
@@ -141,7 +142,7 @@ function onMessageReceiveBroadcast(broadcastData) {
     } else if (
       window.innerWidth < 768 &&
       chatSectionElement.style.display === "none" &&
-      friendsSectionElement.style.display === "block"
+      friendsSectionElement.style.display === "flex"
     ) {
       //enter the message in the message list without scrolling
       displayOneMessage(

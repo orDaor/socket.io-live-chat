@@ -43,7 +43,7 @@
 .friends-control .friends-actions-buttons {
   display: flex;
   align-items: center;
-  gap: 1.75rem;
+  gap: 1.5rem;
 }
 
 .friends-control .friends-actions-buttons button {
@@ -72,7 +72,8 @@
 }
 
 .friends-control .user-name {
-  font-size: var(--font-size-3);
+  font-size: var(--font-size-1);
+  font-weight: bold;
 }
 
 .friends-control .invitation-link {
@@ -98,7 +99,7 @@
 .friends-control .invitation-link-actions {
   display: flex;
   align-items: center;
-  gap: 1.75rem;
+  gap: 1.5rem;
 }
 
 .friends-control .invitation-link-actions button {
@@ -263,6 +264,13 @@
 .active-friends p {
   margin: 0;
   padding: 0;
+}
+
+.active-friends .is-typing-info {
+  position: absolute;
+  top: 4rem;
+  left: 2rem;
+  margin: 0;
 }
 
 #add-friend-loader {

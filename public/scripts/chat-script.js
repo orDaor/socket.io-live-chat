@@ -163,17 +163,18 @@ function setMessageId(message, messageId) {
 
 //display "is typing" info tight above the text area
 function displayIsTypingInfo() {
-  const chatForm = chatSectionElement.querySelector(".chat-actions");
+  const activeFriendsElement =
+    chatSectionElement.querySelector(".active-friends");
   const isTypingElement = document.createElement("p");
   isTypingElement.classList.add("is-typing-info");
   isTypingElement.textContent = "typing...";
-  chatForm.append(isTypingElement);
+  activeFriendsElement.append(isTypingElement);
 }
 
 //hide "is typing" info tight above the text area
 function hideIsTypingInfo() {
   const isTypingElement = chatSectionElement.querySelector(
-    ".chat-actions .is-typing-info"
+    ".active-friends .is-typing-info"
   );
   if (isTypingElement) {
     isTypingElement.parentElement.removeChild(isTypingElement);
@@ -235,4 +236,34 @@ function getActualChatGlobalMessagesNumber(chat) {
     }
   }
   return counter;
+}
+
+//reset text area element
+function resetTextAreaElement() {
+  const textAreaElement = chatSectionElement.querySelector(
+    ".chat-actions textarea"
+  );
+  textAreaElement.scrollTop = 0;
+  textAreaElement.rows = 1;
+  textAreaElement.value = "";
+  textAreaElement.style.height = "";
+  return textAreaElement;
+}
+
+//adapt text area height
+function fitTextAreaHeightToText(textArea) {
+  //update height
+  textArea.style.height = "";
+  textArea.style.height = Math.min(textArea.scrollHeight, 40) + "px";
+}
+
+//meomrize current input for the selected chat
+function cacheCurrentInput(textArea) {
+  //current chat
+  const roomId =
+    chatSectionElement.querySelector(".active-friends").dataset.roomId;
+
+  //target chat global
+  const chatGlobal = getChatGlobalByRoomId(roomId);
+  chatGlobal.currentInput = textArea.value;
 }

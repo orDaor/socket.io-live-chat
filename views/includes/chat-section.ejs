@@ -12,7 +12,11 @@
   </div>
   <ul></ul>
   <form class="chat-actions">
-    <textarea name="message" rows="1" required></textarea>
-    <%- include("icons/send-message-button") %>
+    <div class="chat-actions-layout">
+      <div class="text-area-container">
+        <textarea name="message" rows="1" required></textarea>
+      </div>
+      <%- include("icons/send-message-button") %>
+    </div>
   </form>
 </section>

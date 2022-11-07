@@ -11,7 +11,7 @@
 #chat-section ul {
   padding: 1.5rem 2rem;
   box-sizing: border-box;
-  height: 65%;
+  height: 67%;
   overflow: auto;
 }
 
@@ -120,26 +120,39 @@
 
 .chat-actions {
   box-sizing: border-box;
-  display: flex;
-  align-items: center;
-  padding: 2rem 2rem;
-  height: 20%;
+  padding: 2rem 2rem 1.5rem 2rem;
+  height: 18%;
   position: relative;
+  display: flex;
+  align-items: flex-end;
+}
+
+.chat-actions-layout {
+  display: flex;
   justify-content: space-between;
+  align-items: center;
+  width: 100%;
+}
+
+.text-area-container {
+  background-color: white;
+  padding: 0.8rem 1rem;
+  border: 1px solid var(--color-grey-100);
+  border-radius: 20px;
+  box-sizing: border-box;
+  width: 85%;
 }
 
 .chat-actions textarea {
-  padding: 1rem 2rem;
-  box-sizing: border-box;
-  width: 85%;
   resize: none;
   font: inherit;
   outline: none;
-  border-radius: 70px;
-  border: 1px solid var(--color-grey-100);
-  overflow: auto;
+  border: none;
   color: var(--color-grey-600);
-  position: relative;
+  padding: 0;
+  width: 100%;
+  height: 1.125rem;
+  background-color: white;
 }
 
 .chat-actions button {
@@ -152,13 +165,6 @@
   justify-content: center;
   align-items: center;
   background-color: transparent;
-}
-
-.chat-actions .is-typing-info {
-  position: absolute;
-  top: 0.2rem;
-  left: 2rem;
-  margin: 0;
 }
 
 .scroll-to-bottom-btn {
@@ -200,7 +206,7 @@
 }
 
 @media (min-width: 480px) {
-  .chat-actions textarea {
+  .text-area-container {
     width: 93%;
   }
 }
@@ -209,10 +215,6 @@
   #chat-section {
     left: var(--friends-section-width-2);
     top: var(--friends-chat-section-from-top);
-  }
-
-  .chat-actions .is-typing-info {
-    top: 1rem;
   }
 }
 

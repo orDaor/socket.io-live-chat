@@ -71,6 +71,7 @@ async function initAfterLogin(token) {
         timerId: null,
         active: false,
       },
+      currentInput: "",
     };
   });
 

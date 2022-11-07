@@ -149,7 +149,13 @@ function displayFriendsSection() {
 
 //display chat section
 function displayChatSection() {
+  //show section
   chatSectionElement.style.display = "flex";
+
+  //init scroll height  memory of text area
+  textAreaElementScrollHeightOld = chatSectionElement.querySelector(
+    ".chat-actions textarea"
+  ).scrollHeight;
 }
 
 //hide chat section

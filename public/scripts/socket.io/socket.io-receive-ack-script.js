@@ -102,7 +102,6 @@ function onMessageLoadAck(ackData) {
   hideOneLoader("messages-loader");
   disableLoadingOfMoreMessages = false;
 
-  console.log(ackData);
   //could not fetch the messages
   if (!ackData.ok) {
     //hide loader

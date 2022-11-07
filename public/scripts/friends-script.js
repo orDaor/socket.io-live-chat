@@ -219,6 +219,9 @@ function selectOneChat(event) {
   );
   messagePreviewTextElement.textContent =
     getChatGlobalLastMessageText(chatGlobal);
+
+  //display chached input for this chat in the text area
+  chatSectionElement.querySelector(".chat-actions textarea").value = chatGlobal.currentInput;
 }
 
 //set one chat online status

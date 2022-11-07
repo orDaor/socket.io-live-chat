@@ -76,7 +76,7 @@ function sendMessage(event) {
   );
 
   //clean form input
-  event.target.querySelector("textarea[name='message']").value = "";
+  resetTextAreaElement();
 
   //show message preview on chat item in friends list
   const friendChatItemElement = getChatItemByRoomId(message.roomId);
@@ -90,6 +90,9 @@ function sendMessage(event) {
 
   //destination chat global
   const chatGlobal = getChatGlobalByRoomId(message.roomId);
+
+  //clean chached user input for this chat
+  chatGlobal.currentInput = "";
 
   //init the message to enter the message in the chat global
   const messageGlobal = {
@@ -140,6 +143,12 @@ function registerOneChatView(roomId) {
 
 //tell the other users in the room when a message is typing
 function sendIsTypingStatus(event) {
+  //handle text area height
+  fitTextAreaHeightToText(event.target);
+
+  //cache current input for the selected chat
+  cacheCurrentInput(event.target);
+
   //socket not connected
   if (!socket.connected) {
     return;
