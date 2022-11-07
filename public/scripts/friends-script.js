@@ -221,7 +221,8 @@ function selectOneChat(event) {
     getChatGlobalLastMessageText(chatGlobal);
 
   //display chached input for this chat in the text area
-  chatSectionElement.querySelector(".chat-actions textarea").value = chatGlobal.currentInput;
+  chatSectionElement.querySelector(".chat-actions textarea").value =
+    chatGlobal.currentInput;
 }
 
 //set one chat online status
@@ -321,6 +322,9 @@ function updateNewMessagesCount(action) {
 
   //increment or decrement
   if (action === "increment") {
+    //make sure counter is visible
+    newMessagesCountElement.style.display = "flex";
+
     // (+ 1)
     newMessagesCountElement.textContent = (
       +newMessagesCountElement.textContent + 1
@@ -334,6 +338,11 @@ function updateNewMessagesCount(action) {
     newMessagesCountElement.textContent = (
       +newMessagesCountElement.textContent - 1
     ).toString();
+
+    //if after decrement, counter is 0, then hide the displayed counter
+    if (!+newMessagesCountElement.textContent) {
+      newMessagesCountElement.style.display = "none";
+    }
   }
 
   //update notification in the window title

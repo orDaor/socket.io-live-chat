@@ -38,6 +38,7 @@
 .friends-control .friends-actions p {
   padding: 0;
   margin: 0;
+  position: relative;
 }
 
 .friends-control .friends-actions-buttons {
@@ -74,6 +75,22 @@
 .friends-control .user-name {
   font-size: var(--font-size-1);
   font-weight: bold;
+}
+
+.friends-control .new-messages-count {
+  font-size: var(--font-size-0);
+  border-radius: 100%;
+  width: 1.5rem;
+  height: 1.5rem;
+  background-color: var(--color-danger-zone);
+  color: white;
+  position: absolute;
+  right: -20px;
+  top: -25px;
+  display: none;
+  justify-content: center;
+  align-items: center;
+  padding: 0.1rem;
 }
 
 .friends-control .invitation-link {
