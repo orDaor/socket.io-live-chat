@@ -24,6 +24,7 @@ function logout(event) {
   selectedChatItemGlobal = undefined;
   selectedMessageItemGlobal = undefined;
   lastGeneratedInvitationLinkGlobal = "";
+  lastInvitationIdAcceptedGlobal = "";
   disableDisplayOfScrollToBottomButton = false;
   disableLoadingOfMoreMessages = false;
 
