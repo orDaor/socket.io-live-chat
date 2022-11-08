@@ -6,10 +6,10 @@ const Room = require("../../models/room-model");
 async function onUserFetchInvitationLink(socket, emptyObj, sendAck) {
   //init ack data
   let ackData = {};
-  
-  //let user wait just a little time to make him realize 
+
+  //let user wait just a little time to make him realize
   //a new link is actually being generated
-  await new Promise(r => setTimeout(r, 800)); 
+  await new Promise((r) => setTimeout(r, 800));
 
   //user asking for the link
   const userId = socket.userId;
@@ -70,7 +70,33 @@ async function onUserFetchInvitationLink(socket, emptyObj, sendAck) {
   sendAck(ackData);
 }
 
+//user just accepted an invitation to a given room
+async function onUserAcceptedInvitation(socket, roomId) {
+  //this user wants to notify the other friends in roomId that he just joined this room. Then
+  //check if user actually joined this room
+  console.log(roomId);
+  if (!socket.rooms.has(roomId)) {
+    return;
+  }
+
+  //fetch user data
+  let user;
+  try {
+    user = await User.findById(socket.userId);
+  } catch {
+    return;
+  }
+
+  //broadcast to other users in this room that this user just joined the room
+  const broadcastData = {
+    userName: user.name,
+    roomId: roomId,
+  };
+  socket.to(roomId).emit("user-accecpted-invitation-broadcast", broadcastData);
+}
+
 //exports
 module.exports = {
   onUserFetchInvitationLink: onUserFetchInvitationLink,
+  onUserAcceptedInvitation: onUserAcceptedInvitation,
 };

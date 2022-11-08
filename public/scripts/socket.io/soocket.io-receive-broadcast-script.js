@@ -280,3 +280,47 @@ function onMessageDeleteBroadcast(broadcastData) {
   messagePreviewTextElement.textContent =
     getChatGlobalLastMessageText(chatGlobal);
 }
+
+//a friend accepted invitation
+function onUserAcceptedInvitationBroadcast(broadcastData) {
+  //friend data
+  const friendName = broadcastData.userName;
+  const roomId = broadcastData.roomId;
+
+  //if for some reason we already registered a chat global for this
+  //friend, then stop here
+  if (getChatGlobalByRoomId(roomId)) {
+    return;
+  }
+
+  //new chat to be entered
+  const newChat = {
+    errorList: [],
+    friendsNames: [friendName],
+    messages: [],
+    roomId: roomId,
+    viewed: false, //new chat that needs to be viewed
+    onlineStatusTimer: {
+      timerId: null,
+      active: false,
+    },
+    currentInput: "",
+  };
+
+  //enter new chat in the chat list
+  chatListGlobal.push(newChat);
+
+  //display new chat
+  displayOneChat(
+    roomId,
+    newChat.friendsNames,
+    true,
+    "prepend",
+    newChat.viewed, //false
+    getChatGlobalLastMessageText(newChat)
+  );
+
+  //update notification counter
+  updateNewMessagesCount("increment");
+  return;
+}

@@ -63,6 +63,7 @@ socket.on("message-receive-broadcast", onMessageReceiveBroadcast);
 socket.on("room-is-typing-broadcast", onRoomIsTypingBroadcast);
 socket.on("room-is-online-broadcast", onRoomIsOnlineBroadcast);
 socket.on("message-delete-broadcast", onMessageDeleteBroadcast);
+socket.on("user-accecpted-invitation-broadcast", onUserAcceptedInvitationBroadcast);
 
 //global variables
 let initializationDoneGlobal = false;
@@ -70,6 +71,7 @@ let chatListGlobal = [];
 let selectedChatItemGlobal;
 let selectedMessageItemGlobal;
 let lastGeneratedInvitationLinkGlobal = "";
+let lastInvitationIdAcceptedGlobal;
 
 //timer: send "is typing" info
 let isTypingTimerId_send;

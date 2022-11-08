@@ -191,7 +191,6 @@ function deleteOneMessage(event) {
     "Can not reach the server. May check your connection?";
   const delay = 8000;
 
-
   //target message in chatListGlobal
   const selectedRoomId =
     chatSectionElement.querySelector(".active-friends").dataset.roomId;
@@ -296,4 +295,16 @@ function loadMoreMessages() {
     clearTimeout(timerId);
     onMessageLoadAck(ackData);
   });
+}
+
+//notify to friend that this user just accepted an invitation
+function notifyInvitationAcceptance(roomId) {
+  //not connected
+  if (!socket.connected) {
+    return;
+  }
+
+  //send notification
+  socket.emit("user-accecpted-invitation", roomId);
+  
 }

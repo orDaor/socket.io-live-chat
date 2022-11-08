@@ -13,6 +13,14 @@ function onSocketConnect() {
     //      processes when re-connecting
   }
 
+  //notify to friend that this user just accepted an invitation
+  if (lastInvitationIdAcceptedGlobal) {
+    setTimeout(function () {
+      notifyInvitationAcceptance(lastInvitationIdAcceptedGlobal);
+      lastInvitationIdAcceptedGlobal = undefined;
+    }, 1000);
+  }
+
   //update this user online status
   setTimeout(function () {
     setUserOnlineStatus(true);

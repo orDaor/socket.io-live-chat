@@ -234,6 +234,7 @@ async function joinChat(event) {
 
   //response was ok
   history.replaceState(null, "", "/"); //update the currend url path with "/" (home page)
+  lastInvitationIdAcceptedGlobal = invitationInfoElement.dataset.invitationId;
   invitationInfoElement = null; //finished to handle invitation request
   hideInitInfo();
   initAfterLogin(token); //request chats of this user
