@@ -49,9 +49,59 @@ function sendOnlineStatus(socket) {
   });
 }
 
+//user requested to cancel a chat room, where he is inside together with another friend.
+//This is the way the user asks for "deleting a friend"
+async function cancelChat(socket, roomId, sendAck) {
+  //init
+  let ackData = {};
+
+  //fetch from DB room to be deleted
+  let room;
+  try {
+    room = await Room.findById(roomId);
+  } catch {
+    ackData.ok = false;
+    ackData.roomId = roomId;
+    ackData.info = "It is not possible to cancel this chat at the moment";
+    sendAck(ackData);
+    return;
+  }
+
+  //check if user has permission to cancel this room: the user
+  //MUST be active inside the chat room he wants to delete, plus
+  //user should no be alone in this chat room
+  const userHasPermission =
+    room.containsUser(socket.userId) || room.friends.length >= 2;
+  if (!userHasPermission) {
+    ackData.ok = false;
+    ackData.roomId = roomId;
+    ackData.info = "You do not have the permission to cancel this chat";
+    sendAck(ackData);
+    return;
+  }
+
+  //delete chat room
+  try {
+    await Room.deleteById(roomId);
+  } catch (error) {
+    ackData.ok = false;
+    ackData.roomId = roomId;
+    ackData.info = "It is not possible to cancel this chat at the moment";
+    sendAck(ackData);
+    return;
+  }
+
+  //chat room was deleted successfully
+  ackData.ok = true;
+  ackData.roomId = roomId;
+  ackData.info = "Chat canceled successfully";
+  sendAck(ackData);
+}
+
 //exports
 module.exports = {
   registerOneChatView: registerOneChatView,
   sendIsTypingStatus: sendIsTypingStatus,
   sendOnlineStatus: sendOnlineStatus,
+  cancelChat: cancelChat,
 };

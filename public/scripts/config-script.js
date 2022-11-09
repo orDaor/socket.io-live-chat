@@ -299,3 +299,56 @@ function setUserOnlineStatus(online) {
     userOnlineStatusDescriptionElement.textContent = "Offline";
   }
 }
+
+//display chat actions menu
+function displayChatActions() {
+  //hide menu if already present
+  hideChatActions();
+
+  //create menu
+  const chatMenuElement = document.createElement("div");
+  chatMenuElement.classList.add("chat-action-menu");
+
+  //create delete button and push it inside the menu
+  const chatMenuActionElement = document.createElement("button");
+  chatMenuActionElement.textContent = "Delete";
+  chatMenuActionElement.classList.add("chat-delete-btn");
+  chatMenuActionElement.addEventListener("click", displayDeleteChatModal);
+
+  chatMenuElement.append(chatMenuActionElement);
+
+  //append menu
+  const activeFriendsContentElement = chatSectionElement.querySelector(
+    ".active-friends .active-friends-content"
+  );
+  activeFriendsContentElement.append(chatMenuElement);
+}
+
+//hide chat actions
+function hideChatActions(event) {
+  if (event) {
+    const clickedElement = event.target;
+    if (
+      clickedElement.classList.contains("chat-action-menu") ||
+      clickedElement.classList.contains("chat-delete-btn") ||
+      clickedElement.classList.contains("chat-action") ||
+      clickedElement.tagName === "svg" ||
+      clickedElement.tagName === "path"
+    ) {
+      return;
+    }
+  }
+
+  const chatActionMenu = chatSectionElement.querySelector(
+    ".active-friends .chat-action-menu"
+  );
+  if (chatActionMenu) {
+    chatActionMenu.parentElement.removeChild(chatActionMenu);
+  }
+}
+
+//display modal for deleting a chat
+function displayDeleteChatModal() {
+  hideChatActions();
+  modalSectionElement.innerHTML = getHmlContentModal("delete-chat");
+}

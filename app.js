@@ -100,9 +100,9 @@ if (process.env.PORT) {
 db.connectToDatabase()
   .then(function () {
     //save test messages
-    test.insertManyMessages(20, "6367c80c90448647ff008095", [
-      "6367c416214dc9ace27cfd4a",
-      "6367c47ed3ba0e264cea004d",
+    test.insertManyMessages(20, "636aaf5e048d7522f43d902f", [
+      "636a825d22d5e6ed36883c77",
+      "636a826c22d5e6ed36883c78",
     ]);
     //starting web server
     server.listen(portNumber);

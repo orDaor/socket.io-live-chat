@@ -306,5 +306,35 @@ function notifyInvitationAcceptance(roomId) {
 
   //send notification
   socket.emit("user-accecpted-invitation", roomId);
-  
+}
+
+//delete a friend with whom user is active inside of a chat room
+function cancelChat(event) {
+  //init
+  const delay = 8000;
+  const roomId =
+    chatSectionElement.querySelector(".active-friends").dataset.roomId;
+  const connectionErrorInfo =
+    "Can not reach the server. May check your connection?";
+
+  //not connected
+  if (!socket.connected) {
+    //TODO:
+    //show modal error info
+    return;
+  }
+
+  //TODO:
+  //display loader
+
+  const timerId = setTimeout(function () {
+    //TODO:
+    //show error info
+    //hide loader
+  }, delay);
+
+  socket.emit("room-cancel", roomId, function (ackData) {
+    clearTimeout(timerId);
+    onRoomCancelAck(ackData);
+  });
 }

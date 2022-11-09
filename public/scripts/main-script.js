@@ -37,6 +37,12 @@ addFriendButtonElement.addEventListener("click", fetchInvitationLink);
 logOutButtonElement.addEventListener("click", logout);
 backToChatListButton.addEventListener("click", displayFriendsAndHideChat);
 chatSectionElement
+  .querySelector(".active-friends")
+  .addEventListener("click", hideChatActions);
+chatSectionElement
+  .querySelector(".active-friends .chat-action")
+  .addEventListener("click", displayChatActions);
+chatSectionElement
   .querySelector("form")
   .addEventListener("submit", sendMessage);
 chatSectionElement
@@ -63,7 +69,10 @@ socket.on("message-receive-broadcast", onMessageReceiveBroadcast);
 socket.on("room-is-typing-broadcast", onRoomIsTypingBroadcast);
 socket.on("room-is-online-broadcast", onRoomIsOnlineBroadcast);
 socket.on("message-delete-broadcast", onMessageDeleteBroadcast);
-socket.on("user-accecpted-invitation-broadcast", onUserAcceptedInvitationBroadcast);
+socket.on(
+  "user-accecpted-invitation-broadcast",
+  onUserAcceptedInvitationBroadcast
+);
 
 //global variables
 let initializationDoneGlobal = false;

@@ -164,3 +164,8 @@ function onMessageLoadAck(ackData) {
 
   //hide loader...
 }
+
+//process ack from server on room cancel ack
+function onRoomCancelAck(ackData) {
+  console.log(ackData);
+}

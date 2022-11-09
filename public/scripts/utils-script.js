@@ -82,9 +82,10 @@ function getHmlContentModal(action) {
     description = "The message will be deleted for everyone";
     onclick = '"deleteOneMessage(event)"';
   } else if (action === "delete-chat") {
-    //TODO
-  } else if (action === "delete-account") {
-    //TODO
+    title = "Do you really want to delete this chat?";
+    description =
+      "You will not be able to chat with your friend anymore, unless you invite each other again with an invitation link";
+    onclick = '"cancelChat(event)"';
   }
 
   return `<div class="modal">

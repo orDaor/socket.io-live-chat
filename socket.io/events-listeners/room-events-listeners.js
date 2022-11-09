@@ -17,6 +17,11 @@ function listenToRoomEvents(io, socket) {
   socket.on("room-is-online", function (emptyObj) {
     roomEventsController.sendOnlineStatus(socket);
   });
+
+  //cancel a chat room
+  socket.on("room-cancel", function (roomId) {
+    roomEventsController.cancelChat(socket, roomId, sendAck);
+  });
 }
 
 //exports

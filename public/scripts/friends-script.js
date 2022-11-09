@@ -223,6 +223,9 @@ function selectOneChat(event) {
   //display chached input for this chat in the text area
   chatSectionElement.querySelector(".chat-actions textarea").value =
     chatGlobal.currentInput;
+
+  //hide chat actions menu
+  hideChatActions();
 }
 
 //set one chat online status
