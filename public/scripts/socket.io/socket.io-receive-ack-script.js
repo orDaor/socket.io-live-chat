@@ -106,7 +106,6 @@ function onMessageLoadAck(ackData) {
 
   //could not fetch the messages
   if (!ackData.ok) {
-    //hide loader
     return;
   }
 
@@ -129,7 +128,6 @@ function onMessageLoadAck(ackData) {
 
   //NOTE: loop from most recent to oldest
   const messagesListElement = chatSectionElement.querySelector("ul");
-  let iterationNumber = 1;
   for (const message of chatGlobalMoreMessages) {
     //config message
     let side;
@@ -163,8 +161,6 @@ function onMessageLoadAck(ackData) {
       iterationNumber = undefined;
     }
   }
-
-  //hide loader...
 }
 
 //process ack from server on room cancel ack

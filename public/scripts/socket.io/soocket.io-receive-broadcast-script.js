@@ -38,7 +38,7 @@ function onMessageReceiveBroadcast(broadcastData) {
     displayOneChat(
       broadcastData.roomId,
       newChat.friendsNames,
-      false,
+      true,
       "prepend",
       newChat.viewed, //false
       getChatGlobalLastMessageText(newChat)
