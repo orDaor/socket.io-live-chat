@@ -103,7 +103,6 @@ function displayOneMessage(
 
 //display array of messages received on the socket
 function displayAllMessages(messages, scrollBahavior) {
-  const errorInfo = "An error occured";
   //clean current messages
   cleanAllMessages();
   //loop through received messages
@@ -136,7 +135,7 @@ function displayAllMessages(messages, scrollBahavior) {
 
     //if the message sending failed display error info under the message
     if (message.sendingFailed) {
-      displayOneMessageErrorInfo(displayedMessage, errorInfo);
+      displayOneMessageErrorInfo(displayedMessage, message.sendingFailedReason);
     }
   }
 

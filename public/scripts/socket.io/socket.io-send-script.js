@@ -100,6 +100,7 @@ function sendMessage(event) {
     messageId: message.tempMessageId,
     senderIsViewer: true,
     sendingFailed: undefined,
+    sendingFailedReason: "",
     text: message.text,
   };
 
@@ -109,6 +110,7 @@ function sendMessage(event) {
   //user not connected...
   if (!socket.connected) {
     messageGlobal.sendingFailed = true;
+    messageGlobal.sendingFailedReason = connectionErrorInfo;
     if (displayedMessage) {
       displayOneMessageErrorInfo(displayedMessage, connectionErrorInfo);
     }
@@ -118,6 +120,7 @@ function sendMessage(event) {
   //start ack timeout: callback executed if ack is not received within delay
   const timerId = setTimeout(function () {
     messageGlobal.sendingFailed = true;
+    messageGlobal.sendingFailedReason = "An error occured";
     const displayedMessage = getMessageItemByMessageId(messageGlobal.messageId);
     if (displayedMessage) {
       displayOneMessageErrorInfo(displayedMessage, "An error occured");

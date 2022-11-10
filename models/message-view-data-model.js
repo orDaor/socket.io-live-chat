@@ -3,16 +3,18 @@ class MessageViewData {
   //a Message class object can be passed to the constructor, and
   //the user id of the user requesting this message to be displayed.
   //If no message is passed, then single message data should be passed
-  constructor(message, viewerId, sendingFailed) {
+  constructor(message, viewerId, sendingFailed, sendingFailedReason) {
     //general message data
     this.text = message.text;
     this.creationDate = message.creationDate;
     this.senderIsViewer = message.senderId === viewerId;
     this.messageId = message.messageId;
     if (sendingFailed) {
-      this.sendingFailed = sendingFailed;
+      this.sendingFailed = true;
+      this.sendingFailedReason = sendingFailedReason;
     } else {
       this.sendingFailed = false;
+      this.sendingFailedReason = "";
     }
   }
 

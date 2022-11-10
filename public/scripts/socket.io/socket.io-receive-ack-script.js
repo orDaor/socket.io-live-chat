@@ -35,6 +35,7 @@ function onMessageSendAck(ackData) {
     }
     //failure
     messageGlobal.sendingFailed = true;
+    messageGlobal.sendingFailedReason = ackData.info;
     return;
   }
 
@@ -47,6 +48,7 @@ function onMessageSendAck(ackData) {
   messageGlobal.messageId = ackData.message.messageId;
   messageGlobal.senderIsViewer = ackData.message.senderIsViewer;
   messageGlobal.sendingFailed = ackData.message.sendingFailed;
+  messageGlobal.sendingFailedReason = ackData.message.sendingFailedReason;
   messageGlobal.text = ackData.message.text;
 }
 
@@ -201,7 +203,7 @@ function onRoomCancelAck(ackData) {
   hideModal();
   if (window.innerWidth < 768) {
     //in mobile display friends list, other wise is stucked
-    displayFriendsSection(); 
+    displayFriendsSection();
   }
   hideChatSection();
 }
