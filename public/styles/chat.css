@@ -67,7 +67,7 @@
 .message-item p.message-item-error {
   background-color: white;
   color: var(--color-error-text);
-  font-size: var(--font-size-1);
+  font-size: var(--font-size-0);
   text-align: right;
 }
 

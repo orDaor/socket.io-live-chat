@@ -206,7 +206,7 @@ async function joinChat(event) {
     response = await fetch(requestUrl, requestConfig);
   } catch (error) {
     displayInitErrorInfo(
-      "Can not reach the server. May check your connection?"
+      "Can not reach the server. Maybe check your connection?"
     );
     //hide loader and re-enable buttons
     hideOneLoader("init-info-loader");

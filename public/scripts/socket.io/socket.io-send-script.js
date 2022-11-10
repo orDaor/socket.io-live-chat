@@ -4,7 +4,7 @@ function fetchInvitationLink() {
   hideInvitationLink();
   hideFriendsControlErrorInfo();
   const connectionErrorInfo =
-    "Can not reach the server. May check your connection?";
+    "Can not reach the server. Maybe check your connection?";
   const delay = 5000;
 
   //socket not connected
@@ -40,7 +40,7 @@ function sendMessage(event) {
   //INIT
   event.preventDefault();
   const connectionErrorInfo =
-    "Can not reach the server. May check your connection?";
+    "Can not reach the server. Maybe check your connection?";
   const delay = 8000;
 
   //user connected...
@@ -191,7 +191,7 @@ function deleteOneMessage(event) {
   //Init
   hideModalErrorInfo();
   const connectionErrorInfo =
-    "Can not reach the server. May check your connection?";
+    "Can not reach the server. Maybe check your connection?";
   const delay = 8000;
 
   //target message in chatListGlobal
@@ -320,7 +320,7 @@ function cancelChat(event) {
   const roomId =
     chatSectionElement.querySelector(".active-friends").dataset.roomId;
   const connectionErrorInfo =
-    "Can not reach the server. May check your connection?";
+    "Can not reach the server. Maybe check your connection?";
 
   //not connected
   if (!socket.connected) {

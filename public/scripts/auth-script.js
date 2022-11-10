@@ -72,7 +72,7 @@ async function login(event) {
     response = await fetch(requestUrl, requestConfig);
   } catch (error) {
     displayAuthErrorInfo(
-      "Can not reach the server. May check your connection?"
+      "Can not reach the server. Maybe check your connection?"
     );
     //hide loader and re-enable buttons
     hideOneLoader("sign-up-in-form-loader");
