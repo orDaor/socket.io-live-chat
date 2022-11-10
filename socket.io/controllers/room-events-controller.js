@@ -1,5 +1,6 @@
 //imports custom
 const Room = require("../../models/room-model");
+const Message = require("../../models/message-model");
 
 //register the info that the user viewd a specific chat
 async function registerOneChatView(socket, roomId) {
@@ -59,10 +60,16 @@ async function cancelChat(socket, roomId, sendAck) {
   let room;
   try {
     room = await Room.findById(roomId);
-  } catch {
-    ackData.ok = false;
-    ackData.roomId = roomId;
-    ackData.info = "It is not possible to cancel this chat at the moment";
+  } catch (error) {
+    if (error.code === 404) {
+      ackData.ok = true;
+      ackData.roomId = roomId;
+      ackData.info = "This room has already been canceled";
+    } else {
+      ackData.ok = false;
+      ackData.roomId = roomId;
+      ackData.info = "It is not possible to cancel this chat at the moment";
+    }
     sendAck(ackData);
     return;
   }
@@ -91,7 +98,16 @@ async function cancelChat(socket, roomId, sendAck) {
     return;
   }
 
-  //chat room was deleted successfully
+  //the user socket should now leave the deleted room
+  socket.leave(roomId);
+
+  //chat room was deleted successfully, then delete messages sent
+  //in the scope of the deleted chat
+  Message.deleteManyByRoomId(roomId).catch(function (error) {
+    console.log(error);
+  });
+
+  //response ok
   ackData.ok = true;
   ackData.roomId = roomId;
   ackData.info = "Chat canceled successfully";

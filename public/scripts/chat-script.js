@@ -224,13 +224,18 @@ function getChatGlobalLastMessageText(chat) {
   return message.text;
 }
 
-//get number  of cleaned (deleted) messages in a chat in chatListGlobal
-function getActualChatGlobalMessagesNumber(chat) {
+//get number  of cleaned (deleted) or failed messages in a chat in chatListGlobal
+function getChatGlobalDeletedOrFailedMessagesNumber(chat) {
   let counter = 0;
   for (const message of chat.messages) {
+    //this messages was deleted from the DB
     const deleted =
       !message.creationDate && !message.messageId && !message.text;
+
+    //this message faild sending
     const sendingFailed = message.sendingFailed;
+
+    //count
     if (deleted || sendingFailed) {
       counter++;
     }

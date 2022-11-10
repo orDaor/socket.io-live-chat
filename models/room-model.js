@@ -60,7 +60,9 @@ class Room {
 
     //no room found
     if (!document) {
-      throw new Error("No room found");
+      const error = new Error("No room found");
+      error.code = 404;
+      throw error;
     }
 
     //return room class obj

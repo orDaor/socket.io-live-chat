@@ -90,6 +90,13 @@ class Message {
     }
   }
 
+  //delete all messages sent in the context of a specific room
+  static async deleteManyByRoomId(roomId) {
+    const query = { roomId: roomId };
+    const result = await db.getDb().collection("messages").deleteMany(query);
+    return result;
+  }
+
   //save a new message
   async save() {
     if (!this.messageId) {

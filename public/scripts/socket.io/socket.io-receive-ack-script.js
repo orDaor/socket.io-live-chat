@@ -167,5 +167,41 @@ function onMessageLoadAck(ackData) {
 
 //process ack from server on room cancel ack
 function onRoomCancelAck(ackData) {
-  console.log(ackData);
+  //target buttons to re-enable in the modal
+  const buttons = modalSectionElement
+    .querySelector(".modal-prompt")
+    .querySelectorAll("button");
+
+  hideOneLoader("modal-loader");
+  disableButtons(buttons, false);
+
+  //response not ok
+  if (!ackData.ok) {
+    displayModalErrorInfo(ackData.info);
+    return;
+  }
+
+  //response ok, mark target chat in the frontend as canceled
+  const chatGlobal = getChatGlobalByRoomId(ackData.roomId);
+  chatGlobal.friendsNames = undefined;
+  chatGlobal.messages = undefined;
+  chatGlobal.roomId = undefined;
+
+  //clean messages from screen, and reset selected chat status
+  cleanAllMessages();
+  setActiveChatRoomId("");
+  setActiveFriendName("");
+  selectedChatItemGlobal = undefined;
+
+  //remove this chat from friends section
+  const friendChatItemElement = getChatItemByRoomId(ackData.roomId);
+  hideOneChat(friendChatItemElement);
+
+  //hide modal and chat section so that user can select a new chat
+  hideModal();
+  if (window.innerWidth < 768) {
+    //in mobile display friends list, other wise is stucked
+    displayFriendsSection(); 
+  }
+  hideChatSection();
 }

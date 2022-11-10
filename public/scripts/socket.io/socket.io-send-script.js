@@ -271,7 +271,8 @@ function loadMoreMessages() {
   //because they are not saved in th DB
   //NOTE: the backend decides how many more messages to give the user
   const currentMessagesNumber =
-    chatGlobal.messages.length - getActualChatGlobalMessagesNumber(chatGlobal);
+    chatGlobal.messages.length -
+    getChatGlobalDeletedOrFailedMessagesNumber(chatGlobal);
 
   //send request for laoding more messages
   const eventData = {
@@ -311,6 +312,7 @@ function notifyInvitationAcceptance(roomId) {
 //delete a friend with whom user is active inside of a chat room
 function cancelChat(event) {
   //init
+  hideModalErrorInfo();
   const delay = 8000;
   const roomId =
     chatSectionElement.querySelector(".active-friends").dataset.roomId;
@@ -319,18 +321,23 @@ function cancelChat(event) {
 
   //not connected
   if (!socket.connected) {
-    //TODO:
-    //show modal error info
+    displayModalErrorInfo(connectionErrorInfo);
     return;
   }
 
-  //TODO:
-  //display loader
+  //display loader and disable buttons in this area
+  const buttons = modalSectionElement
+    .querySelector(".modal-prompt")
+    .querySelectorAll("button");
+
+  displayModalLoader();
+  disableButtons(buttons, true);
 
   const timerId = setTimeout(function () {
-    //TODO:
-    //show error info
-    //hide loader
+    displayModalErrorInfo(connectionErrorInfo);
+    //hide loader and re-enable buttons
+    hideOneLoader("modal-loader");
+    disableButtons(buttons, false);
   }, delay);
 
   socket.emit("room-cancel", roomId, function (ackData) {

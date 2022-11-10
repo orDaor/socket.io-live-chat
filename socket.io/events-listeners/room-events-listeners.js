@@ -19,7 +19,7 @@ function listenToRoomEvents(io, socket) {
   });
 
   //cancel a chat room
-  socket.on("room-cancel", function (roomId) {
+  socket.on("room-cancel", function (roomId, sendAck) {
     roomEventsController.cancelChat(socket, roomId, sendAck);
   });
 }
