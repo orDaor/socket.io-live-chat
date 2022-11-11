@@ -79,6 +79,7 @@
 
 .friends-control .new-messages-count {
   font-size: var(--font-size-0);
+  font-weight: bold;
   border-radius: 100%;
   width: 1.5rem;
   height: 1.5rem;
