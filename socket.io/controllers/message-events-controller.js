@@ -175,18 +175,32 @@ async function onDelete(socket, messageId, sendAck) {
 }
 
 //load more messages
-async function onMessageLoad(socket, eventData, sendAck) {
+async function onMessageLoad(socket, eldestMessageData, sendAck) {
   //request data
-  const roomId = eventData.roomId;
-  const currentMessagesNumber = eventData.currentMessagesNumber;
+  const roomId = eldestMessageData.roomId; //chat room for which user is requesting more messages
+  const eldestMessageId = eldestMessageData.messageId;
+  let eldestMessageCreationDate;
+  if (eldestMessageData.creationDate) {
+    eldestMessageCreationDate = new Date(eldestMessageData.creationDate);
+  } else {
+    eldestMessageCreationDate = "";
+  }
 
   //init ack
   let ackData = {};
 
-  //find messages sent into this room context
+  //find "more" messages sent into this room context
   let messages;
   try {
-    messages = await Message.findManyByRoomId(roomId, currentMessagesNumber);
+    if (!eldestMessageId && !eldestMessageCreationDate) {
+      messages = await Message.findManyByRoomId(roomId);
+    } else {
+      messages = await Message.findMore(
+        roomId,
+        eldestMessageId,
+        eldestMessageCreationDate
+      );
+    }
   } catch (error) {
     ackData.ok = false;
     ackData.info = "It is not possible fetch more messages at the moment";

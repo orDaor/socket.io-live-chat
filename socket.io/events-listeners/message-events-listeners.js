@@ -14,8 +14,8 @@ function listenToMessageEvents(io, socket) {
   });
 
   //load more messages
-  socket.on("message-load", function (eventData, sendAck) {
-    messsageEventsController.onMessageLoad(socket, eventData, sendAck);
+  socket.on("message-load", function (eldestMessageData, sendAck) {
+    messsageEventsController.onMessageLoad(socket, eldestMessageData, sendAck);
   });
 }
 

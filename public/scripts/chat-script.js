@@ -200,6 +200,7 @@ function getChatGlobalMessageByMessageId(chat, messageId) {
 }
 
 //get last message of a chat in chat list global
+//NOTE: last = last in the messages array
 function getChatGlobalLastMessageText(chat) {
   //no messages in this chat
   const messagesNumber = chat.messages.length;
@@ -223,9 +224,15 @@ function getChatGlobalLastMessageText(chat) {
   return message.text;
 }
 
-//get number  of cleaned (deleted) or failed messages in a chat in chatListGlobal
-function getChatGlobalDeletedOrFailedMessagesNumber(chat) {
-  let counter = 0;
+//get chat global first message date
+//NOTE: first = first in the messages array
+function getChatGlobalEldestMessage(chat) {
+  //no messages in this chat
+  const messagesNumber = chat.messages.length;
+  if (!messagesNumber) {
+    return undefined;
+  }
+
   for (const message of chat.messages) {
     //this messages was deleted from the DB
     const deleted =
@@ -234,12 +241,13 @@ function getChatGlobalDeletedOrFailedMessagesNumber(chat) {
     //this message faild sending
     const sendingFailed = message.sendingFailed;
 
-    //count
-    if (deleted || sendingFailed) {
-      counter++;
+    //skip deleted or failed messages
+    if (!deleted && !sendingFailed) {
+      return message;
     }
   }
-  return counter;
+  //no "good" message was found
+  return undefined;
 }
 
 //reset text area element

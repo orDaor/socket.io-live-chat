@@ -100,22 +100,31 @@ function onMessageDeleteAck(ackData) {
 
 //process ack from server on messages load ack
 function onMessageLoadAck(ackData) {
-  //Hide loader and re-enable loading of more messages
-  hideOneLoader("messages-loader");
-  disableLoadingOfMoreMessages = false;
+  console.log(ackData);
 
   //could not fetch the messages
   if (!ackData.ok) {
+    //Hide loader and re-enable loading of more messages
+    hideOneLoader("messages-loader");
+    disableLoadingOfMoreMessages = false;
     return;
   }
 
   //target messages of the chat for which we load more messages
-  const chatGlobalMessages = getChatGlobalByRoomId(ackData.roomId).messages; //from oldest to most recent
+  const chatGlobal = getChatGlobalByRoomId(ackData.roomId);
+  const chatGlobalMessages = chatGlobal.messages; //from oldest to most recent
   const chatGlobalMoreMessages = ackData.moreMessages; //from most recent to oldest
 
   //enter the "more" messages in target chat global messages array
   for (const message of chatGlobalMoreMessages) {
-    chatGlobalMessages.unshift(message);
+    //check if this message was already loaded
+    const isAlreadyLoaded = getChatGlobalMessageByMessageId(
+      chatGlobal,
+      message.messageId
+    );
+    if (!isAlreadyLoaded) {
+      chatGlobalMessages.unshift(message);
+    }
   }
 
   //can Not display new received messages on screen, if the chat for which
@@ -161,6 +170,9 @@ function onMessageLoadAck(ackData) {
       iterationNumber = undefined;
     }
   }
+  //Hide loader and re-enable loading of more messages
+  hideOneLoader("messages-loader");
+  disableLoadingOfMoreMessages = false;
 }
 
 //process ack from server on room cancel ack

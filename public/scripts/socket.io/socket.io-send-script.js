@@ -262,26 +262,24 @@ function loadMoreMessages() {
   if (!socket.connected || disableLoadingOfMoreMessages) {
     return;
   }
-  console.log("request more messages");
 
   //get selected chat room data
   const roomId =
     chatSectionElement.querySelector(".active-friends").dataset.roomId;
   const chatGlobal = getChatGlobalByRoomId(roomId);
 
-  //how many messages for this chat did the user already laod
-  //NOTE: deleted messages, and messages who faild sending, are not included
-  //because they are not saved in th DB
-  //NOTE: the backend decides how many more messages to give the user
-  const currentMessagesNumber =
-    chatGlobal.messages.length -
-    getChatGlobalDeletedOrFailedMessagesNumber(chatGlobal);
-
-  //send request for laoding more messages
-  const eventData = {
-    roomId: roomId,
-    currentMessagesNumber: currentMessagesNumber,
-  };
+  //tell the server which is the last "good" message user loaded
+  //for this chat
+  const eldestMessage = getChatGlobalEldestMessage(chatGlobal);
+  let eldestMessageData = {};
+  if (!eldestMessage) {
+    eldestMessageData.messageId = "";
+    eldestMessageData.creationDate = "";
+  } else {
+    eldestMessageData.messageId = eldestMessage.messageId;
+    eldestMessageData.creationDate = eldestMessage.creationDate;
+  }
+  eldestMessageData.roomId = roomId;
 
   //display loader and disable loading of more messages
   displayMessagesLoader();
@@ -295,7 +293,7 @@ function loadMoreMessages() {
   }, delay);
 
   //send request
-  socket.emit("message-load", eventData, function (ackData) {
+  socket.emit("message-load", eldestMessageData, function (ackData) {
     clearTimeout(timerId);
     onMessageLoadAck(ackData);
   });

@@ -81,6 +81,45 @@ class Message {
     return documents.map(mapOneDocument);
   }
 
+  //find more messages for a given chat room, excluded one width given id
+  static async findMore(roomId, eldestMessageId, eldestMessageCreationDate) {
+    //query filter
+    const query = {
+      $and: [
+        //condition 1
+        {
+          _id: { $ne: new ObjectId(eldestMessageId) },
+        },
+        //conditions 2
+        {
+          creationDate: { $lte: eldestMessageCreationDate },
+        },
+        //conditions 2
+        {
+          roomId: roomId,
+        },
+      ],
+    };
+
+    //sort logic: from most recent to oldest by creation date
+    const sortLogic = { creationDate: -1 };
+
+    //run query
+    const documents = await db
+      .getDb()
+      .collection("messages")
+      .find(query)
+      .sort(sortLogic)
+      .limit(10)
+      .toArray();
+
+    //map array of message documents into array of Message class objects
+    const mapOneDocument = function (document) {
+      return Message.fromMongoDBDocumentToMessage(document);
+    };
+    return documents.map(mapOneDocument);
+  }
+
   //delete a message by its id
   static async deleteById(messageId) {
     const query = { _id: new ObjectId(messageId) };
