@@ -248,6 +248,10 @@ function onRoomIsOnlineBroadcast(broadcastData) {
 function onMessageDeleteBroadcast(broadcastData) {
   //find chat where message was deleted
   const chatGlobal = getChatGlobalByRoomId(broadcastData.roomId);
+  if (!chatGlobal) {
+    return;
+  }
+
   //find the target deleted message
   const chatGlobalMessage = getChatGlobalMessageByMessageId(
     chatGlobal,

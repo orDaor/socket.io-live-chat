@@ -263,6 +263,8 @@ function loadMoreMessages() {
     return;
   }
 
+  console.log("Load more messages");
+
   //get selected chat room data
   const roomId =
     chatSectionElement.querySelector(".active-friends").dataset.roomId;
@@ -288,6 +290,10 @@ function loadMoreMessages() {
 
   //start timer and send request
   const timerId = setTimeout(function () {
+    if (!getChatGlobalByRoomId(roomId)) {
+      //no timeout actions
+      return;
+    }
     //hide loader and re-enable loading of more messages
     hideOneLoader("messages-loader");
     disableLoadingOfMoreMessages = false;

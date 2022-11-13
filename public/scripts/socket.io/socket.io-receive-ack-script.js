@@ -20,12 +20,22 @@ function onUserFetchInvitationLinkAck(ackData) {
 
 //process ack from server on message send ack
 function onMessageSendAck(ackData) {
-  //displayed target message
+  //target chat
   const chatGlobal = getChatGlobalByRoomId(ackData.roomId);
+  if (!chatGlobal) {
+    return;
+  }
+
+  //target message
   let messageGlobal = getChatGlobalMessageByMessageId(
     chatGlobal,
     ackData.tempMessageId
   );
+  if (!messageGlobal) {
+    return;
+  }
+
+  //displayed target message
   const displayedMessage = getMessageItemByMessageId(ackData.tempMessageId);
 
   //message not sent (not saved and not forwarded to the users in the room)
@@ -70,11 +80,19 @@ function onMessageDeleteAck(ackData) {
 
   //find chat where message was deleted
   const chatGlobal = getChatGlobalByRoomId(ackData.roomId);
+  if (!chatGlobal) {
+    return;
+  }
+
   //find the target deleted message
   const chatGlobalMessage = getChatGlobalMessageByMessageId(
     chatGlobal,
     ackData.messageId
   );
+  if (!chatGlobalMessage) {
+    return;
+  }
+
   //Clean/reset the target message values, so that it can not be displayed on screen anymore
   chatGlobalMessage.creationDate = undefined;
   chatGlobalMessage.messageId = undefined;
@@ -100,7 +118,15 @@ function onMessageDeleteAck(ackData) {
 
 //process ack from server on messages load ack
 function onMessageLoadAck(ackData) {
+  //logging
   console.log(ackData);
+
+  //target chat for which we load more messages
+  const chatGlobal = getChatGlobalByRoomId(ackData.roomId);
+  if (!chatGlobal) {
+    //no response actions
+    return;
+  }
 
   //could not fetch the messages
   if (!ackData.ok) {
@@ -112,7 +138,6 @@ function onMessageLoadAck(ackData) {
   }
 
   //target messages of the chat for which we load more messages
-  const chatGlobal = getChatGlobalByRoomId(ackData.roomId);
   const chatGlobalMessages = chatGlobal.messages; //from oldest to most recent
   const chatGlobalMoreMessages = ackData.moreMessages; //from most recent to oldest
 
@@ -192,6 +217,9 @@ function onRoomCancelAck(ackData) {
 
   //response ok, mark target chat in the frontend as canceled
   const chatGlobal = getChatGlobalByRoomId(ackData.roomId);
+  if (!chatGlobal) {
+    return;
+  }
   chatGlobal.friendsNames = undefined;
   chatGlobal.messages = undefined;
   chatGlobal.roomId = undefined;
