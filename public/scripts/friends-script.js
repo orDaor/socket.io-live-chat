@@ -380,6 +380,8 @@ function updateNewMessagesCount(action) {
     if (!+newMessagesCountElement.textContent) {
       newMessagesCountElement.style.display = "none";
     }
+  } else if ("reset") {
+    newMessagesCountElement.textContent = "0";
   }
 
   //update notification in the window title

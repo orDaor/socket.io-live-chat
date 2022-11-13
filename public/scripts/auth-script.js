@@ -4,6 +4,11 @@ function logout(event) {
   localStorage.removeItem("token");
   localStorage.removeItem("user-name");
 
+  //disconnect socket
+  socket.disconnect();
+  hideUserOnlineStatus();
+  updateNewMessagesCount("reset");
+
   //clean all chat content
   cleanChatList();
   cleanAllMessages();
@@ -14,10 +19,6 @@ function logout(event) {
   setUserName("");
   setActiveChatRoomId("");
   setActiveFriendName("");
-
-  //disconnect socket
-  socket.disconnect();
-  hideUserOnlineStatus();
 
   //restart
   initializationDoneGlobal = false;
