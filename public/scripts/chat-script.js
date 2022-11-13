@@ -103,8 +103,6 @@ function displayOneMessage(
 
 //display array of messages received on the socket
 function displayAllMessages(messages, scrollBahavior) {
-  //clean current messages
-  cleanAllMessages();
   //loop through received messages
   for (const message of messages) {
     //if this message was deleted (main values were cleaned in the frontend), don Not display it
@@ -137,10 +135,10 @@ function displayAllMessages(messages, scrollBahavior) {
     if (message.sendingFailed) {
       displayOneMessageErrorInfo(displayedMessage, message.sendingFailedReason);
     }
-  }
 
-  //scroll to the bottom
-  scrollToBottomOfMessagesList(scrollBahavior);
+    //be sure to scroll to the bottom after message + possible error message were displayed
+    scrollToBottomOfMessagesList(scrollBahavior);
+  }
 }
 
 //clean all messages
@@ -262,11 +260,19 @@ function resetTextAreaElement() {
   return textAreaElement;
 }
 
+//init text area value
+function initTextAreaValue(value) {
+  const textAreaElement = resetTextAreaElement();
+  textAreaElement.value = value;
+  fitTextAreaHeightToText(textAreaElement);
+}
+
 //adapt text area height
 function fitTextAreaHeightToText(textArea) {
   //update height
   textArea.style.height = "";
-  textArea.style.height = Math.min(textArea.scrollHeight, 40) + "px";
+  textArea.style.height = Math.min(textArea.scrollHeight, 60) + "px";
+  textArea.scrollTop = textArea.scrollHeight;
 }
 
 //meomrize current input for the selected chat
@@ -278,4 +284,30 @@ function cacheCurrentInput(textArea) {
   //target chat global
   const chatGlobal = getChatGlobalByRoomId(roomId);
   chatGlobal.currentInput = textArea.value;
+}
+
+//user can not select any chat other that the given one with roomId
+function keepUserOnSelectedChat(selectedRoomId) {
+  //style other chats are disabled
+  const chatItems = friendsSectionElement.querySelectorAll(".friend-chat-item");
+  for (const chat of chatItems) {
+    if (chat.dataset.roomId !== selectedRoomId) {
+      chat.classList.add("friend-chat-item-disabled");
+    }
+  }
+
+  //disable "back to friends list" button on mobile
+  disableButtons([backToChatListButton], true);
+}
+
+//let use select other chats
+function letUserSelectOtherChats() {
+  //style other chats are disabled
+  const chatItems = friendsSectionElement.querySelectorAll(".friend-chat-item");
+  for (const chat of chatItems) {
+    chat.classList.remove("friend-chat-item-disabled");
+  }
+
+  //enable "back to friends list" button on mobile
+  disableButtons([backToChatListButton], false);
 }

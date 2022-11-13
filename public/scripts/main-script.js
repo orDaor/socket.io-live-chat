@@ -28,7 +28,7 @@ const logOutButtonElement = document.querySelector(
 );
 const chatSectionElement = document.getElementById("chat-section");
 const backToChatListButton = document.querySelector(
-  ".active-friends .back-to-chat-list"
+  ".active-friends .back-to-chat-list button"
 );
 
 //standard event listeners
@@ -105,9 +105,6 @@ let disableDisplayOfScrollToBottomButton = false;
 //when this is set, it is not possible to request the server to load more
 //messages for the selected chat
 let disableLoadingOfMoreMessages = false;
-
-//disable other chats selection
-let disableAnyChatSelection = false;
 
 //initialization
 initAfterPageLoaded();

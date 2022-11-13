@@ -260,8 +260,11 @@ function loadMoreMessages() {
 
   //user not connected or laoding of more messages forbidden at the moment
   if (!socket.connected || disableLoadingOfMoreMessages) {
+    console.log("blocked load more");
     return;
   }
+
+  console.log("OK load more");
 
   //get selected chat room data
   const roomId =
@@ -281,15 +284,17 @@ function loadMoreMessages() {
   }
   eldestMessageData.roomId = roomId;
 
-  //display loader and disable loading of more messages
+  //display loader and disable loading of more messages and other chats selection
   displayMessagesLoader();
   disableLoadingOfMoreMessages = true;
+  keepUserOnSelectedChat(roomId);
 
   //start timer and send request
   const timerId = setTimeout(function () {
     //hide loader and re-enable loading of more messages
     hideOneLoader("messages-loader");
     disableLoadingOfMoreMessages = false;
+    letUserSelectOtherChats();
   }, delay);
 
   //send request

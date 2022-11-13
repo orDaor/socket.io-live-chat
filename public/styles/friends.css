@@ -252,6 +252,10 @@
   color: var(--color-grey-600);
 }
 
+.active-friends button:disabled {
+  cursor: auto;
+}
+
 .active-friends .active-friends-content {
   background-color: var(--color-primary-200);
   margin: 0;
@@ -387,6 +391,11 @@
 @media (hover: hover) {
   .friend-chat-item:hover {
     background-color: var(--color-primary-200);
+  }
+
+  .friend-chat-item-disabled:hover {
+    background-color: transparent;
+    cursor: auto;
   }
 }
 

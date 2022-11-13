@@ -104,9 +104,10 @@ function onMessageLoadAck(ackData) {
 
   //could not fetch the messages
   if (!ackData.ok) {
-    //Hide loader and re-enable loading of more messages
+    //Hide loader and re-enable loading of more messages and other chats selection
     hideOneLoader("messages-loader");
     disableLoadingOfMoreMessages = false;
+    letUserSelectOtherChats();
     return;
   }
 
@@ -116,6 +117,7 @@ function onMessageLoadAck(ackData) {
   const chatGlobalMoreMessages = ackData.moreMessages; //from most recent to oldest
 
   //enter the "more" messages in target chat global messages array
+  const chatGlobalMoreMessages_filtered = [];
   for (const message of chatGlobalMoreMessages) {
     //check if this message was already loaded
     const isAlreadyLoaded = getChatGlobalMessageByMessageId(
@@ -124,20 +126,14 @@ function onMessageLoadAck(ackData) {
     );
     if (!isAlreadyLoaded) {
       chatGlobalMessages.unshift(message);
+      //tracked actual new entered messages for this chat
+      chatGlobalMoreMessages_filtered.push(message);
     }
-  }
-
-  //can Not display new received messages on screen, if the chat for which
-  //those messages are collected is not selected
-  const selectedRoomId =
-    chatSectionElement.querySelector(".active-friends").dataset.roomId;
-  if (selectedRoomId !== ackData.roomId) {
-    return;
   }
 
   //NOTE: loop from most recent to oldest
   const messagesListElement = chatSectionElement.querySelector("ul");
-  for (const message of chatGlobalMoreMessages) {
+  for (const message of chatGlobalMoreMessages_filtered) {
     //config message
     let side;
     if (message.senderIsViewer) {
@@ -170,9 +166,12 @@ function onMessageLoadAck(ackData) {
       iterationNumber = undefined;
     }
   }
-  //Hide loader and re-enable loading of more messages
+
+  //Hide loader and re-enable loading of more messages and other chats selection, after
+  //all new loaded messages finished to be displayed/loaded on screen
   hideOneLoader("messages-loader");
   disableLoadingOfMoreMessages = false;
+  letUserSelectOtherChats();
 }
 
 //process ack from server on room cancel ack

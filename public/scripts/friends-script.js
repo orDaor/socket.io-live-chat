@@ -135,6 +135,15 @@ function selectOneChat(event) {
       friendsSectionElement.querySelector("ul li");
   }
 
+  //if user selected a disabled chat item is disable just stop here
+  if (
+    selectedFriendChatItemElement.classList.contains(
+      "friend-chat-item-disabled"
+    )
+  ) {
+    return;
+  }
+
   //gather selected chat item data
   const selectedFriendNameElement =
     selectedFriendChatItemElement.querySelector(".friend-chat-name");
@@ -183,6 +192,17 @@ function selectOneChat(event) {
   //memory for selected chat item
   selectedChatItemGlobal = selectedFriendChatItemElement;
 
+  //UNTIL messages for this just selected chat finished to be displayed ons creen,
+  //show messages loader, disable loading of more messages, other chats selection
+  displayMessagesLoader();
+  disableLoadingOfMoreMessages = true;
+  keepUserOnSelectedChat(selectedRoomId);
+  //disable send message button
+  const sendMessageButtonElement = chatSectionElement.querySelector(
+    ".chat-actions button"
+  );
+  disableButtons([sendMessageButtonElement], true);
+
   //reset "is typing" info and timer
   hideIsTypingInfo();
   clearTimeout(isTypingTimerId_receive);
@@ -197,8 +217,22 @@ function selectOneChat(event) {
   setActiveFriendName(selectedFriendNameElement.textContent);
   setActiveChatOnlineStatus(selectedChatStatusElement);
 
-  //display all messages for this chat
-  displayAllMessages(chatGlobal.messages, "auto");
+  //hide chat actions menu
+  hideChatActions();
+
+  //display chached input for this chat in the text area
+  const textAreaElement = resetTextAreaElement();
+  textAreaElement.value = chatGlobal.currentInput;
+
+  //UPDATE the message preview
+  const messagePreviewTextElement = selectedFriendChatItemElement.querySelector(
+    ".friend-chat-preview p"
+  );
+  messagePreviewTextElement.textContent =
+    getChatGlobalLastMessageText(chatGlobal);
+
+  //clean current messages in the messages list
+  cleanAllMessages();
 
   //in mobile view, show only chat section
   if (window.innerWidth < 768) {
@@ -210,22 +244,19 @@ function selectOneChat(event) {
     displayChatSection();
   }
 
-  //scroll to bottom messages lists
-  scrollToBottomOfMessagesList("auto");
+  //adjust text area height
+  fitTextAreaHeightToText(textAreaElement);
 
-  //UPDATE the message preview
-  const messagePreviewTextElement = selectedFriendChatItemElement.querySelector(
-    ".friend-chat-preview p"
-  );
-  messagePreviewTextElement.textContent =
-    getChatGlobalLastMessageText(chatGlobal);
+  //display all messages for this chat
+  displayAllMessages(chatGlobal.messages, "auto");
 
-  //display chached input for this chat in the text area
-  chatSectionElement.querySelector(".chat-actions textarea").value =
-    chatGlobal.currentInput;
-
-  //hide chat actions menu
-  hideChatActions();
+  //after all messages of this selected chat finished to be loaded (displayed) ons creen,
+  //just re-enable user actions
+  hideOneLoader("messages-loader");
+  disableLoadingOfMoreMessages = false;
+  letUserSelectOtherChats();
+  //re-enable send message button
+  disableButtons([sendMessageButtonElement], false);
 }
 
 //set one chat online status
