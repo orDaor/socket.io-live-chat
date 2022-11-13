@@ -106,5 +106,8 @@ let disableDisplayOfScrollToBottomButton = false;
 //messages for the selected chat
 let disableLoadingOfMoreMessages = false;
 
+//disable other chats selection
+let disableAnyChatSelection = false;
+
 //initialization
 initAfterPageLoaded();

@@ -28,7 +28,7 @@ async function insertManyMessages(iterationsNumber, roomId, sendersIds) {
         //??
       }
 
-      await new Promise(r => setTimeout(r, delay_ms)); 
+      await new Promise((r) => setTimeout(r, delay_ms));
 
       //save message 2
       const message2 = new Message(`text ${i}`, roomId, sendersIds[0]);
@@ -38,7 +38,7 @@ async function insertManyMessages(iterationsNumber, roomId, sendersIds) {
         //??
       }
 
-      await new Promise(r => setTimeout(r, delay_ms)); 
+      await new Promise((r) => setTimeout(r, delay_ms));
 
       //switch to user 2
       currentUser = 2;
@@ -51,7 +51,7 @@ async function insertManyMessages(iterationsNumber, roomId, sendersIds) {
         //??
       }
 
-      await new Promise(r => setTimeout(r, delay_ms)); 
+      await new Promise((r) => setTimeout(r, delay_ms));
 
       //save message 2
       const message2 = new Message(`text ${i}`, roomId, sendersIds[1]);
@@ -61,7 +61,7 @@ async function insertManyMessages(iterationsNumber, roomId, sendersIds) {
         //??
       }
 
-      await new Promise(r => setTimeout(r, delay_ms)); 
+      await new Promise((r) => setTimeout(r, delay_ms));
 
       //switch to user 1
       currentUser = 1;
@@ -72,7 +72,20 @@ async function insertManyMessages(iterationsNumber, roomId, sendersIds) {
   console.log("Test messages saved");
 }
 
+//insert actual messages for different chatrooms
+async function callInsertManyMessages() {
+  //save test messages (1)
+  insertManyMessages(20, "636e7cc8cf9c06ff15598a3e", [
+    "636a825d22d5e6ed36883c77",
+    "636a826c22d5e6ed36883c78",
+  ]);
+
+  //save test messages (2)
+  //...
+}
+
 //exmports test fucntions
 module.exports = {
+  callInsertManyMessages: callInsertManyMessages,
   insertManyMessages: insertManyMessages,
 };
