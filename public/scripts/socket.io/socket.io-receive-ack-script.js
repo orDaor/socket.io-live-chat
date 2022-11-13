@@ -206,11 +206,13 @@ function onRoomCancelAck(ackData) {
   const friendChatItemElement = getChatItemByRoomId(ackData.roomId);
   hideOneChat(friendChatItemElement);
 
-  //hide modal and chat section so that user can select a new chat
+  //hide modal and let user be able to select a new chat
   hideModal();
   if (window.innerWidth < 768) {
     //in mobile display friends list, other wise is stucked
     displayFriendsSection();
   }
   hideChatSection();
+  letUserSelectOtherChats();
+  disableLoadingOfMoreMessages = false;
 }
