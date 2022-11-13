@@ -17,6 +17,7 @@ function logout(event) {
 
   //disconnect socket
   socket.disconnect();
+  hideUserOnlineStatus();
 
   //restart
   initializationDoneGlobal = false;

@@ -22,46 +22,48 @@ async function insertManyMessages(iterationsNumber, roomId, sendersIds) {
     if (currentUser === 1) {
       //save message 1
       const message1 = new Message(`text ${i}`, roomId, sendersIds[0]);
+      const message2 = new Message(`text ${i}`, roomId, sendersIds[0]);
       try {
         await db.getDb().collection("messages").insertOne(message1);
       } catch (error) {
         //??
       }
 
-      await new Promise((r) => setTimeout(r, delay_ms));
+      // await new Promise((r) => setTimeout(r, delay_ms));
 
       //save message 2
-      const message2 = new Message(`text ${i}`, roomId, sendersIds[0]);
+      // const message2 = new Message(`text ${i}`, roomId, sendersIds[0]);
       try {
         await db.getDb().collection("messages").insertOne(message2);
       } catch (error) {
         //??
       }
 
-      await new Promise((r) => setTimeout(r, delay_ms));
+      // await new Promise((r) => setTimeout(r, delay_ms));
 
       //switch to user 2
       currentUser = 2;
     } else if (currentUser === 2) {
       //save message 1
       const message1 = new Message(`text ${i}`, roomId, sendersIds[1]);
+      const message2 = new Message(`text ${i}`, roomId, sendersIds[1]);
       try {
         await db.getDb().collection("messages").insertOne(message1);
       } catch (error) {
         //??
       }
 
-      await new Promise((r) => setTimeout(r, delay_ms));
+      // await new Promise((r) => setTimeout(r, delay_ms));
 
       //save message 2
-      const message2 = new Message(`text ${i}`, roomId, sendersIds[1]);
+      // const message2 = new Message(`text ${i}`, roomId, sendersIds[1]);
       try {
         await db.getDb().collection("messages").insertOne(message2);
       } catch (error) {
         //??
       }
 
-      await new Promise((r) => setTimeout(r, delay_ms));
+      // await new Promise((r) => setTimeout(r, delay_ms));
 
       //switch to user 1
       currentUser = 1;

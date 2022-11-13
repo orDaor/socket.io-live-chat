@@ -23,6 +23,7 @@ function onSocketConnect() {
 
   //update this user online status
   setTimeout(function () {
+    displayUserOnlineStatus();
     setUserOnlineStatus(true);
   }, 500);
 }
@@ -73,4 +74,8 @@ function onSocketConnectError(error) {
       socket.connect(); //try to reconnect after 3s
     }, 3000);
   }
+
+  //socket still closed, then user shows offline
+  displayUserOnlineStatus();
+  setUserOnlineStatus(false);
 }

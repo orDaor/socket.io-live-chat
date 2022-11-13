@@ -300,6 +300,18 @@ function setUserOnlineStatus(online) {
   }
 }
 
+//display user online status
+function displayUserOnlineStatus() {
+  const chatStatusElement = document.querySelector("#main-header .chat-status");
+  chatStatusElement.style.display = "flex";
+}
+
+//hide user online status
+function hideUserOnlineStatus() {
+  const chatStatusElement = document.querySelector("#main-header .chat-status");
+  chatStatusElement.style.display = "none";
+}
+
 //display chat actions menu
 function displayChatActions() {
   //hide menu if already present
