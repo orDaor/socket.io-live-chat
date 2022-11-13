@@ -17,16 +17,11 @@ function onMessagesListScroll(event) {
   handleScrollToBottomIconVisibility(messagesListElement);
 
   //if we scrolled to top, request to load more messages
-  const isMessagesListAtTop =
-    messagesListElement.scrollTop === 0 && messagesListLastScrollPosition <= 100;
-  if (!isMessagesListAtTop) {
-    //update last scroll position value
-    messagesListLastScrollPosition = messagesListElement.scrollTop;
+  const isMessagesListAtTop = messagesListElement.scrollTop === 0;
+  if (!isMessagesListAtTop || userIsSelectingNewChat) {
+    userIsSelectingNewChat = false;
     return;
   }
-
-  //update last scroll position value
-  messagesListLastScrollPosition = messagesListElement.scrollTop;
 
   //request to load more messages
   loadMoreMessages();

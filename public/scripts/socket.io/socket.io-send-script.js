@@ -260,11 +260,8 @@ function loadMoreMessages() {
 
   //user not connected or laoding of more messages forbidden at the moment
   if (!socket.connected || disableLoadingOfMoreMessages) {
-    console.log("blocked load more");
     return;
   }
-
-  console.log("OK load more");
 
   //get selected chat room data
   const roomId =

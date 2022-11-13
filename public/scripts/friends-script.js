@@ -179,9 +179,12 @@ function selectOneChat(event) {
       hideFriendsSection();
       displayChatSection();
       scrollToBottomOfMessagesList("auto");
-      return;
     }
+    return;
   }
+
+  //user is selecting a new chat
+  userIsSelectingNewChat = true;
 
   //remove selection from previous selected chat item
   if (selectedChatItemGlobal) {

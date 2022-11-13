@@ -186,7 +186,7 @@ async function onMessageLoad(socket, eldestMessageData, sendAck) {
     eldestMessageCreationDate = "";
   }
 
-  await new Promise(r => setTimeout(r, 6000)); // ---------->> DELETE ! ! ! 
+  // await new Promise(r => setTimeout(r, 6000)); 
 
   //init ack
   let ackData = {};

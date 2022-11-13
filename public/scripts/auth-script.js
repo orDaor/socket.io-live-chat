@@ -27,7 +27,7 @@ function logout(event) {
   lastInvitationIdAcceptedGlobal = "";
   disableDisplayOfScrollToBottomButton = false;
   disableLoadingOfMoreMessages = false;
-  messagesListLastScrollPosition = 0;
+  userIsSelectingNewChat = false;
 
   //resest text area status
   resetTextAreaElement();
