@@ -146,6 +146,7 @@ function cleanAllMessages() {
   //remove the list element and re-create it
   const messagesListElement = chatSectionElement.querySelector("ul");
   messagesListElement.textContent = "";
+  return messagesListElement;
 }
 
 //delete a message from screen

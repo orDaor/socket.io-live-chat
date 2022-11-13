@@ -17,18 +17,16 @@ function onMessagesListScroll(event) {
   handleScrollToBottomIconVisibility(messagesListElement);
 
   //if we scrolled to top, request to load more messages
-  const isMessagesListAtTop = !messagesListElement.scrollTop;
+  const isMessagesListAtTop =
+    messagesListElement.scrollTop === 0 && messagesListLastScrollPosition <= 100;
   if (!isMessagesListAtTop) {
+    //update last scroll position value
+    messagesListLastScrollPosition = messagesListElement.scrollTop;
     return;
   }
 
-  //if there are no messages in the list, stop
-  //NODE: this is needed to prevent, when selecting a new chat, from sending right a way the request below. This
-  //happens because when selecting a new chat, the current chat list elements is emptied, causing UL element to scroll to top.
-  const isMessagesListEmpty = !messagesListElement.children.length;
-  if (isMessagesListEmpty) {
-    return;
-  }
+  //update last scroll position value
+  messagesListLastScrollPosition = messagesListElement.scrollTop;
 
   //request to load more messages
   loadMoreMessages();

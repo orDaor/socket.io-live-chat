@@ -106,5 +106,8 @@ let disableDisplayOfScrollToBottomButton = false;
 //messages for the selected chat
 let disableLoadingOfMoreMessages = false;
 
+//last scroll position of messages list
+let messagesListLastScrollPosition = 0;
+
 //initialization
 initAfterPageLoaded();

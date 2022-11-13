@@ -27,6 +27,7 @@ function logout(event) {
   lastInvitationIdAcceptedGlobal = "";
   disableDisplayOfScrollToBottomButton = false;
   disableLoadingOfMoreMessages = false;
+  messagesListLastScrollPosition = 0;
 
   //resest text area status
   resetTextAreaElement();
