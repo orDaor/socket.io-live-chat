@@ -9,8 +9,15 @@
 }
 
 #sign-up-in-section form {
+  box-sizing: border-box;
+  text-align: center;
+  border-radius: 12px;
+  padding: 2rem;
   width: 90%;
   margin: 4rem auto;
+  position: relative;
+  border: 1px solid var(--color-grey-100);
+  background-color: var(--color-primary-150);
 }
 
 #sign-up-in-section p {
@@ -38,7 +45,7 @@
 
 #sign-up-in-section button {
   display: block;
-  margin: 0 auto 0 auto;
+  margin: 1.5rem auto;
 }
 
 #sign-up-in-section .btn-alt {
@@ -52,7 +59,6 @@
   margin: 0.5rem auto;
   padding: 1rem;
   border-radius: 6px;
-  width: 80%;
   font-size: var(--font-size-0);
 }
 

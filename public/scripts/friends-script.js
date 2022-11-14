@@ -1,3 +1,49 @@
+//display init info when zero friends
+function displayInfoOnEmptyChatlist() {
+  //if some chats are present stop here
+  if (getfriendChatItemsNumber()) {
+    return;
+  }
+
+  //this user name
+  const userName = localStorage.getItem("user-name");
+
+  //info
+  const infoContainerElement = document.createElement("div");
+  infoContainerElement.classList.add("empty-chat-list-info");
+
+  const titleInfoElement = document.createElement("p");
+  titleInfoElement.textContent = `Hi ${userName}!`;
+
+  const mainInfoElement = document.createElement("p");
+  mainInfoElement.innerHTML = `You can add a new friend by pushing the <span>${htmlContentAddChatButtonIcon}</span> button above.
+  This will generate an invitation <b>link</b>  that you can <b>share</b> with a friend!
+  `;
+
+  const secondaryInfoElement = document.createElement("p");
+  secondaryInfoElement.textContent =
+    "Please not that, after a link has been used, a new one must be generated.";
+
+  const greetingsInfoElement = document.createElement("p");
+  greetingsInfoElement.textContent = "Enjoy!";
+
+  //append
+  infoContainerElement.appendChild(titleInfoElement);
+  infoContainerElement.appendChild(mainInfoElement);
+  infoContainerElement.appendChild(secondaryInfoElement);
+  infoContainerElement.appendChild(greetingsInfoElement);
+  friendsSectionElement.querySelector("ul").append(infoContainerElement);
+}
+
+function hideInfoOnEmptyChatList() {
+  const infoElement = friendsSectionElement.querySelector(
+    "ul .empty-chat-list-info"
+  );
+  if (infoElement) {
+    infoElement.parentElement.removeChild(infoElement);
+  }
+}
+
 //display one chat
 function displayOneChat(
   roomId,
@@ -7,6 +53,10 @@ function displayOneChat(
   viewed,
   lastMessageText
 ) {
+  //checks if "welcome" content is present, and deletes it
+  hideInfoOnEmptyChatList();
+
+  //main elements
   const friendInfoElement = document.createElement("div");
   friendInfoElement.classList.add("friend-chat-main-info");
 
@@ -65,7 +115,14 @@ function displayOneChat(
 
 //hide one chat
 function hideOneChat(chat) {
+  //remove chat
   chat.parentElement.removeChild(chat);
+
+  //if some chats are present stop here
+  if (!getfriendChatItemsNumber()) {
+    displayInfoOnEmptyChatlist();
+    return;
+  }
 }
 
 //display all chats
@@ -102,6 +159,12 @@ function displayChatList(chatList) {
 //clean all chats
 function cleanChatList() {
   friendsSectionElement.querySelector("ul").textContent = "";
+}
+
+//get chat items number in friends section
+function getfriendChatItemsNumber() {
+  const chatItems = friendsSectionElement.querySelectorAll(".friend-chat-item");
+  return chatItems.length;
 }
 
 //select one chat

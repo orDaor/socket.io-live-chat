@@ -17,6 +17,10 @@ function initAfterPageLoaded() {
 
 //initialization after successfull login
 async function initAfterLogin(token) {
+  //display init info inside friends section if no friends yet (chat list is empty)
+  hideInfoOnEmptyChatList();
+  displayInfoOnEmptyChatlist();
+
   //attach token to socket
   socket.auth = { token: token };
 

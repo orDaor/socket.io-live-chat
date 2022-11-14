@@ -19,6 +19,13 @@ const htmlContentShareLinkButtonIcon = `<svg xmlns="http://www.w3.org/2000/svg" 
 />
 </svg>`;
 
+const htmlContentAddChatButtonIcon = `<svg xmlns="http://www.w3.org/2000/svg" height="20" width="20">
+<path
+  fill = "#404040"
+  d="M3.146 15.646V4.854q0-.729.489-1.219.49-.489 1.24-.489h8.271q.729 0 1.219.489.489.49.489 1.24v3.146q.042-.042.084-.042H15q-.354.042-.698.104-.344.063-.656.188V4.875q0-.229-.146-.375t-.375-.146h-8.25q-.229 0-.375.146t-.146.375v7.271h5.771q-.042.166-.083.312-.042.146-.042.334 0 .146.01.291.011.146.052.271H5.438Zm2.687-8.292h6.334V6.146H5.833Zm0 3h4.334V9.146H5.833Zm8.563 5.5v-2.25h-2.25v-1.208h2.25v-2.25h1.208v2.25h2.25v1.208h-2.25v2.25ZM4.354 12.146V4.354v7.792Z"
+/>
+</svg>`;
+
 function getHtmlContentSignUpInForm(action, alternativeAction) {
   let h1ElementTextContent;
   if (action === "Login") {
