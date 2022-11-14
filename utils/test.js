@@ -77,7 +77,7 @@ async function insertManyMessages(iterationsNumber, roomId, sendersIds) {
 //insert actual messages for different chatrooms
 async function callInsertManyMessages() {
   //save test messages (1)
-  insertManyMessages(20, "63716b787edbcd4c7598cb75", [
+  insertManyMessages(20, "6372083896da381a5e57cc1b", [
     "636a825d22d5e6ed36883c77",
     "636a826c22d5e6ed36883c78",
   ]);
