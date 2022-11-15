@@ -71,7 +71,7 @@ async function onUserFetchInvitationLink(socket, emptyObj, sendAck) {
 }
 
 //user just accepted an invitation to a given room
-async function onUserAcceptedInvitation(socket, roomId) {
+async function onUserAcceptedInvitation(io, socket, roomId) {
   //this user wants to notify the other friends in roomId that he just joined this room. Then
   //check if user actually joined this room
   if (!socket.rooms.has(roomId)) {

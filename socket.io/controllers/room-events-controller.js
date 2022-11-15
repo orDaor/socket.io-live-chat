@@ -28,7 +28,7 @@ async function registerOneChatView(socket, roomId) {
 }
 
 //broadcast "is typing" status to socket in a room
-function sendIsTypingStatus(socket, roomId) {
+function sendIsTypingStatus(io, socket, roomId) {
   //check if user is assigned to this room where he/she wants to broadcast
   if (!socket.rooms.has(roomId)) {
     return;
@@ -40,7 +40,7 @@ function sendIsTypingStatus(socket, roomId) {
 
 //broadcast "i am alive" status coming from one user, to other users in the
 //room this user is in
-function sendOnlineStatus(socket) {
+function sendOnlineStatus(io, socket) {
   //loop through rooms in which this user is. For each targetted
   //room, broadcast the "i am alive" status to other users
   socket.rooms.forEach(function (roomId) {

@@ -6,7 +6,7 @@ const User = require("../../models/user-model");
 const validation = require("../../utils/validation-util");
 
 //send a message
-async function onSend(socket, message, sendAck) {
+async function onSend(io, socket, message, sendAck) {
   //init ack
   let ackData = {};
 
@@ -121,7 +121,7 @@ async function onSend(socket, message, sendAck) {
 }
 
 //delete a message
-async function onDelete(socket, messageId, sendAck) {
+async function onDelete(io, socket, messageId, sendAck) {
   //init ack
   let ackData = {};
 

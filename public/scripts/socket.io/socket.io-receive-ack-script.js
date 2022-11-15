@@ -187,8 +187,6 @@ function onMessageLoadAck(ackData) {
         getElementMargin(displayedMessage, "margin-bottom");
       messagesListElement.scrollTop =
         messagesListElement.scrollTop + scrollDelta;
-      //do not enter here anymore
-      iterationNumber = undefined;
     }
   }
 

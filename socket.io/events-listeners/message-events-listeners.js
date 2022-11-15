@@ -5,12 +5,12 @@ const messsageEventsController = require("../controllers/message-events-controll
 function listenToMessageEvents(io, socket) {
   //send message
   socket.on("message-send", function (message, sendAck) {
-    messsageEventsController.onSend(socket, message, sendAck);
+    messsageEventsController.onSend(io, socket, message, sendAck);
   });
 
   //delete message
   socket.on("message-delete", function (messageId, sendAck) {
-    messsageEventsController.onDelete(socket, messageId, sendAck);
+    messsageEventsController.onDelete(io, socket, messageId, sendAck);
   });
 
   //load more messages

@@ -10,12 +10,12 @@ function listenToRoomEvents(io, socket) {
 
   //broadcast "is typing status"
   socket.on("room-is-typing", function (roomId) {
-    roomEventsController.sendIsTypingStatus(socket, roomId);
+    roomEventsController.sendIsTypingStatus(io, socket, roomId);
   });
 
   //broad cast "i am alive" status
   socket.on("room-is-online", function (emptyObj) {
-    roomEventsController.sendOnlineStatus(socket);
+    roomEventsController.sendOnlineStatus(io, socket);
   });
 
   //cancel a chat room
