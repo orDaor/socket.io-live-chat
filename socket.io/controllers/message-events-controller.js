@@ -72,7 +72,7 @@ async function onSend(io, socket, message, sendAck) {
   //update last activity date of the destination chat room
   room.lastActivityDate = fullMessage.creationDate;
   room.save().catch(function (error) {
-    //??
+    console.log(error);
   });
 
   //find user names in the destination room
@@ -97,8 +97,8 @@ async function onSend(io, socket, message, sendAck) {
     senderName = friends[friendIndex].name;
   }
 
-  //build the broadcast message
-  const broadcastData = {
+  //build the broadcast message for sockets opened by other users in this room
+  const broadcastDataToOtherUsers = {
     message: new MessageViewData(fullMessage, null),
     roomId: validatedMessage.validatedRoomId,
     senderName: senderName,
@@ -106,10 +106,33 @@ async function onSend(io, socket, message, sendAck) {
     errorList: errorList,
   };
 
-  //broadcast message to the destination room from this socket
-  socket
-    .to(validatedMessage.validatedRoomId)
-    .emit("message-receive-broadcast", broadcastData);
+  //build the broadcast message for sockets opened by other users in this room
+  const broadcastDataToThisUser = {
+    ...broadcastDataToOtherUsers,
+    message: new MessageViewData(fullMessage, socket.userId),
+  };
+
+  //all sockets in this room
+  const socketList = await io
+    .in(validatedMessage.validatedRoomId)
+    .fetchSockets();
+
+  //broadcast this messages
+  for (const socketItem of socketList) {
+    //CASE 1: skip socket where request was received
+    if (socketItem.id === socket.id) {
+      continue;
+    }
+
+    //CASE 2: emit to other sockets opened by this user in this room
+    if (socketItem.userId === socket.userId) {
+      socketItem.emit("message-receive-broadcast", broadcastDataToThisUser);
+      continue;
+    }
+
+    //CASE 3: emit to sockets of other users in this room
+    socketItem.emit("message-receive-broadcast", broadcastDataToOtherUsers);
+  }
 
   //send ack ok
   ackData.ok = true;
