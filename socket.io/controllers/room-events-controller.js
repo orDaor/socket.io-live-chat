@@ -28,26 +28,47 @@ async function registerOneChatView(socket, roomId) {
 }
 
 //broadcast "is typing" status to socket in a room
-function sendIsTypingStatus(io, socket, roomId) {
+async function sendIsTypingStatus(io, socket, roomId) {
   //check if user is assigned to this room where he/she wants to broadcast
   if (!socket.rooms.has(roomId)) {
     return;
   }
 
-  //broadcase "is typing" event to other suers in the room
-  socket.to(roomId).emit("room-is-typing-broadcast", roomId);
+  //all sockets in this room
+  const socketList = await io.in(roomId).fetchSockets();
+
+  //broadcast "is typing" status only to sockets not opened by this user
+  for (const socketItem of socketList) {
+    if (socketItem.userId !== socket.userId) {
+      socketItem.emit("room-is-typing-broadcast", roomId);
+    }
+  }
 }
 
 //broadcast "i am alive" status coming from one user, to other users in the
 //room this user is in
-function sendOnlineStatus(io, socket) {
+async function sendOnlineStatus(io, socket) {
+  //target rooms this scket is in
+  const roomIds = Array.from(socket.rooms); //from Set to Array
+
   //loop through rooms in which this user is. For each targetted
   //room, broadcast the "i am alive" status to other users
-  socket.rooms.forEach(function (roomId) {
-    if (roomId !== socket.id) {
-      socket.to(roomId).emit("room-is-online-broadcast", roomId);
+  for (const roomId of roomIds) {
+    //skip room wher user is alone
+    if (roomId === socket.id) {
+      continue;
     }
-  });
+
+    //all sockets in this room
+    const socketList = await io.in(roomId).fetchSockets();
+
+    //broadcast online status only to sockets not opened by this user
+    for (const socketItem of socketList) {
+      if (socketItem.userId !== socket.userId) {
+        socketItem.emit("room-is-online-broadcast", roomId);
+      }
+    }
+  }
 }
 
 //user requested to cancel a chat room, where he is inside together with another friend.

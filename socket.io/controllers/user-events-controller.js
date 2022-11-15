@@ -86,12 +86,21 @@ async function onUserAcceptedInvitation(io, socket, roomId) {
     return;
   }
 
-  //broadcast to other users in this room that this user just joined the room
+  //build notification thas this user send to others in the room to tell them he just entered
   const broadcastData = {
     userName: user.name,
     roomId: roomId,
   };
-  socket.to(roomId).emit("user-accecpted-invitation-broadcast", broadcastData);
+
+  //all sockets in this room
+  const socketList = await io.in(roomId).fetchSockets();
+
+  //broadcast "is typing" status only to sockets not opened by this user
+  for (const socketItem of socketList) {
+    if (socketItem.userId !== socket.userId) {
+      socketItem.emit("user-accecpted-invitation-broadcast", broadcastData);
+    }
+  }
 }
 
 //exports
