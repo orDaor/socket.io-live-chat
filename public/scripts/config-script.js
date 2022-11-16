@@ -113,9 +113,7 @@ function displayFriendsAndChatSectionOnWidhtChange(event) {
       const chatGlobal = getChatGlobalByRoomId(
         selectedChatItemGlobal.dataset.roomId
       );
-      if (!chatGlobal.viewed) {
-        updateNewMessagesCount("decrement");
-      }
+      updateNewMessagesCount("decrement");
       chatGlobal.viewed = true;
       //tell the server the user is viewing new content for this chat
       registerOneChatView(selectedChatItemGlobal.dataset.roomId);

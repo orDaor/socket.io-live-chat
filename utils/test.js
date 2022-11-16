@@ -3,12 +3,19 @@ const Message = require("../models/message-model");
 const db = require("../data/database");
 
 //insert a lot of messages for testing "step by step" messages loading
-async function insertManyMessages(iterationsNumber, roomId, sendersIds) {
-  //clean current messages
-  try {
-    await db.getDb().collection("messages").deleteMany({});
-  } catch (error) {
-    return;
+async function insertManyMessages(
+  iterationsNumber,
+  roomId,
+  sendersIds,
+  deleteOldMessages
+) {
+  if (deleteOldMessages) {
+    //clean current messages
+    try {
+      await db.getDb().collection("messages").deleteMany({});
+    } catch (error) {
+      return;
+    }
   }
 
   //waiting time before two DB queries
@@ -77,13 +84,28 @@ async function insertManyMessages(iterationsNumber, roomId, sendersIds) {
 //insert actual messages for different chatrooms
 async function callInsertManyMessages() {
   //save test messages (1)
-  insertManyMessages(20, "6372083896da381a5e57cc1b", [
-    "636a825d22d5e6ed36883c77",
-    "636a826c22d5e6ed36883c78",
-  ]);
+  insertManyMessages(
+    20,
+    "6374c4aca699ab614b1ad5cb",
+    ["636a825d22d5e6ed36883c77", "636a826c22d5e6ed36883c78"],
+    true
+  );
 
   //save test messages (2)
-  //...
+  insertManyMessages(
+    20,
+    "6374c3dfa699ab614b1ad5c0",
+    ["636a825d22d5e6ed36883c77", "636aae50048d7522f43d9027"],
+    false
+  );
+
+  //save test messages (3)
+  insertManyMessages(
+    20,
+    "6374c42ca699ab614b1ad5c6",
+    ["636a826c22d5e6ed36883c78", "636aae50048d7522f43d9027"],
+    false
+  );
 }
 
 //exmports test fucntions

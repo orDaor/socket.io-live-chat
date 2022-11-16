@@ -56,12 +56,12 @@ function onMessageReceiveBroadcast(broadcastData) {
       newChat.friendsNames,
       true,
       "prepend",
-      newChat.viewed, //false
+      newChat.viewed,
       getChatGlobalLastMessageText(newChat)
     );
 
     //update notification counter
-    //NO new content to be viewed if the messages was sent this user
+    //NO new content to be viewed if the messages was sent this user himself
     if (!broadcastData.message.senderIsViewer) {
       updateNewMessagesCount("increment");
     }
@@ -79,15 +79,6 @@ function onMessageReceiveBroadcast(broadcastData) {
   chatListGlobal[destinationChatIndexGlobal].messages.push(
     broadcastData.message
   );
-
-  //new content needs to be viewed on this chat, only if
-  //this message was not sent by this user
-  if (!broadcastData.message.senderIsViewer) {
-    if (chatListGlobal[destinationChatIndexGlobal].viewed) {
-      updateNewMessagesCount("increment");
-    }
-    chatListGlobal[destinationChatIndexGlobal].viewed = false;
-  }
 
   //target chat on screen
   const friendChatItemElement = getChatItemByRoomId(broadcastData.roomId);
@@ -116,20 +107,16 @@ function onMessageReceiveBroadcast(broadcastData) {
         chatSectionElement.style.display === "flex" &&
         friendsSectionElement.style.display === "none")
     ) {
-      //set chat to viewed, only if user is viewing a message not sent by himself
-      if (!broadcastData.message.senderIsViewer) {
-        if (!chatListGlobal[destinationChatIndexGlobal].viewed) {
-          updateNewMessagesCount("decrement");
-        }
-        chatListGlobal[destinationChatIndexGlobal].viewed = true;
-        //tell the server this user is viewing this chat
-        registerOneChatView(broadcastData.roomId);
-      }
-
       //when arrives the new messages in desktop view, before displaying it,
       //chek if scroll position is already at the bottom, then scroll
       const messagesListElement = chatSectionElement.querySelector("ul");
       let scrollToBottomRequest = false;
+
+      //tell the server this user is viewing this chat, only if this user
+      //did not send this message to himself
+      if (!broadcastData.message.senderIsViewer) {
+        registerOneChatView(broadcastData.roomId);
+      }
 
       //check if message list is already scrolled at bottom
       const isMessagesListAtBottom =
@@ -176,15 +163,24 @@ function onMessageReceiveBroadcast(broadcastData) {
         messageDisplaySide,
         "append"
       );
+
       //notify new content only if message was not sent by this user himself
       if (!broadcastData.message.senderIsViewer) {
-        setChatItemAsUnread(friendChatItemElement);
+        if (chatListGlobal[destinationChatIndexGlobal].viewed) {
+          setChatItemAsUnread(friendChatItemElement);
+          updateNewMessagesCount("increment");
+          chatListGlobal[destinationChatIndexGlobal].viewed = false;
+        }
       }
     }
   } else {
     //notify new content only if message was not sent by this user himself
     if (!broadcastData.message.senderIsViewer) {
-      setChatItemAsUnread(friendChatItemElement);
+      if (chatListGlobal[destinationChatIndexGlobal].viewed) {
+        setChatItemAsUnread(friendChatItemElement);
+        updateNewMessagesCount("increment");
+        chatListGlobal[destinationChatIndexGlobal].viewed = false;
+      }
     }
   }
 }

@@ -224,9 +224,7 @@ function selectOneChat(event) {
   ) {
     //remove un-read chat item status if present
     setChatItemAsRead(selectedFriendChatItemElement);
-    if (!chatGlobal.viewed) {
-      updateNewMessagesCount("decrement");
-    }
+    updateNewMessagesCount("decrement");
     chatGlobal.viewed = true;
     //tell the server this user is viewing this chat
     registerOneChatView(selectedRoomId);
