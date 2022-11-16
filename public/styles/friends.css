@@ -14,7 +14,7 @@
 }
 
 .friends-control {
-  padding: 1rem;
+  padding: 0.7rem;
   border-radius: var(--friends-chat-section-inner-border-radius);
   background-color: var(--color-primary-150);
   border: 1px solid var(--color-grey-100);
@@ -45,7 +45,7 @@
 .friends-control .friends-actions-buttons {
   display: flex;
   align-items: center;
-  gap: 1.5rem;
+  gap: 1.25rem;
 }
 
 .friends-control .friends-actions-buttons button {
@@ -118,7 +118,7 @@
 .friends-control .invitation-link-actions {
   display: flex;
   align-items: center;
-  gap: 1.5rem;
+  gap: 1.25rem;
 }
 
 .friends-control .invitation-link-actions button {
@@ -150,7 +150,7 @@
 
 #friends-section ul {
   box-sizing: border-box;
-  padding: 1rem 1rem;
+  padding: 0.5rem 0.5rem;
   height: 100%;
   overflow: auto;
   background-color: var(--color-primary-150);
@@ -358,6 +358,10 @@
     justify-content: center;
     gap: 6rem;
   }
+
+  .friends-control .friends-actions-buttons {
+    gap: 2rem;
+  }
 }
 
 @media (min-width: 768px) {
@@ -371,6 +375,10 @@
   .friends-control {
     border-top-left-radius: 0;
     border-bottom-left-radius: 0;
+  }
+
+  .friends-control .friends-actions-buttons {
+    gap: 1.25rem;
   }
 
   #friends-section ul {

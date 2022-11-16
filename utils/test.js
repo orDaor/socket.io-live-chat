@@ -83,29 +83,21 @@ async function insertManyMessages(
 
 //insert actual messages for different chatrooms
 async function callInsertManyMessages() {
-  //save test messages (1)
+  //save test messages
   insertManyMessages(
     20,
-    "6374c4aca699ab614b1ad5cb",
-    ["636a825d22d5e6ed36883c77", "636a826c22d5e6ed36883c78"],
+    "6374e636277a32842b27db9c",
+    ["636a825d22d5e6ed36883c77", "636aae50048d7522f43d9027"],
     true
   );
 
-  //save test messages (2)
-  insertManyMessages(
-    20,
-    "6374c3dfa699ab614b1ad5c0",
-    ["636a825d22d5e6ed36883c77", "636aae50048d7522f43d9027"],
-    false
-  );
-
-  //save test messages (3)
-  insertManyMessages(
-    20,
-    "6374c42ca699ab614b1ad5c6",
-    ["636a826c22d5e6ed36883c78", "636aae50048d7522f43d9027"],
-    false
-  );
+  //save test messages 
+  // insertManyMessages(
+  //   20,
+  //   "6374c42ca699ab614b1ad5c6",
+  //   ["636a826c22d5e6ed36883c78", "636aae50048d7522f43d9027"],
+  //   false
+  // );
 }
 
 //exmports test fucntions

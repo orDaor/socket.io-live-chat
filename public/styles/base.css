@@ -30,9 +30,9 @@ html {
 
   --color-danger-zone: rgb(122, 23, 23);
 
-  --friends-section-width-1: 80%;
+  --friends-section-width-1: 90%;
   --friends-section-width-2: 20rem;
-  --friends-section-width-3: 60%;
+  --friends-section-width-3: 80%;
 
   --friends-chat-section-from-top: 5rem;
 
@@ -90,6 +90,11 @@ body {
 #main-header p {
   margin: 0;
   font-size: var(--font-size-1);
+}
+
+#main-header a {
+  text-decoration: none;
+  color: inherit;
 }
 
 #main-header .website-logo {
@@ -186,13 +191,15 @@ ul {
   #main-header p {
     font-size: var(--font-size-2);
   }
+
+  .main-header-content {
+    padding: 0 0.7rem;
+  }
 }
 
 @media (min-width: 1024px) {
   .main-header-content {
-    margin-left: var(--friends-chat-section-from-left-right);
-    margin-right: var(--friends-chat-section-from-left-right);
-    padding: 0;
+    padding: 0 1rem;
   }
 }
 
