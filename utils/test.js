@@ -86,7 +86,7 @@ async function callInsertManyMessages() {
   //save test messages
   insertManyMessages(
     20,
-    "6374e636277a32842b27db9c",
+    "63761550c9ba0023acd1d62b",
     ["636a825d22d5e6ed36883c77", "636aae50048d7522f43d9027"],
     true
   );

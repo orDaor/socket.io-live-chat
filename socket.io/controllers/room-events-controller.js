@@ -84,13 +84,13 @@ async function cancelChat(socket, roomId, sendAck) {
   } catch (error) {
     if (error.code === 404) {
       ackData.ok = true;
-      ackData.roomId = roomId;
-      ackData.info = "This room has already been canceled";
+      ackData.info =
+        "This room does not exist, or it has already been canceled";
     } else {
       ackData.ok = false;
-      ackData.roomId = roomId;
       ackData.info = "It is not possible to cancel this chat at the moment";
     }
+    ackData.roomId = roomId;
     sendAck(ackData);
     return;
   }

@@ -25,7 +25,7 @@ async function onSend(io, socket, message, sendAck) {
   //is assigned to such a room. If not send back an error
   if (!socket.rooms.has(validatedMessage.validatedRoomId)) {
     ackData.ok = false;
-    ackData.info = "The message can not be sento to the recipient (1)";
+    ackData.info = "The message can not be sento to the recipient";
     ackData.roomId = validatedMessage.validatedRoomId;
     ackData.tempMessageId = validatedMessage.validatedTempMessageId;
     sendAck(ackData);
@@ -38,7 +38,7 @@ async function onSend(io, socket, message, sendAck) {
     room = await Room.findById(validatedMessage.validatedRoomId);
   } catch (error) {
     ackData.ok = false;
-    ackData.info = "The message can not be sento to the recipient (2)";
+    ackData.info = "The message can not be sento to the recipient";
     ackData.roomId = validatedMessage.validatedRoomId;
     ackData.tempMessageId = validatedMessage.validatedTempMessageId;
     sendAck(ackData);
@@ -144,25 +144,36 @@ async function onSend(io, socket, message, sendAck) {
 }
 
 //delete a message
-async function onDelete(io, socket, messageId, sendAck) {
+async function onDelete(io, socket, messageData, sendAck) {
   //init ack
   let ackData = {};
+
+  //message data
+  const messageId = messageData.messageId;
+  const roomId = messageData.roomId;
 
   //check if message to delete exists
   let message;
   try {
     message = await Message.findById(messageId);
   } catch (error) {
-    ackData.ok = false;
-    ackData.info = "This message does not exist";
+    if (error.code === 404) {
+      ackData.ok = true;
+      ackData.info =
+        "This message does not exist, or it has already been deleted";
+    } else {
+      ackData.ok = false;
+      ackData.info = "It is not possible to delete this message at the moment";
+    }
     ackData.messageId = messageId;
+    ackData.roomId = roomId;
     sendAck(ackData);
     return;
   }
 
-  //check if the user who want to delete this message is
-  //the actual sender of this message
-  if (socket.userId !== message.senderId) {
+  //check if the user who want to delete this message is the actual sender of this message.
+  //Also check if room ids are matching
+  if (socket.userId !== message.senderId || message.roomId !== roomId) {
     ackData.ok = false;
     ackData.info = "You do not have the permission to delete this message";
     ackData.messageId = messageId;

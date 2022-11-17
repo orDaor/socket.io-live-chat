@@ -9,8 +9,8 @@ function listenToMessageEvents(io, socket) {
   });
 
   //delete message
-  socket.on("message-delete", function (messageId, sendAck) {
-    messsageEventsController.onDelete(io, socket, messageId, sendAck);
+  socket.on("message-delete", function (messageData, sendAck) {
+    messsageEventsController.onDelete(io, socket, messageData, sendAck);
   });
 
   //load more messages

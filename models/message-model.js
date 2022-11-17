@@ -43,7 +43,9 @@ class Message {
 
     //no message found
     if (!document) {
-      throw new Error("No message found");
+      const error = new Error("No message found");
+      error.code = 404;
+      throw error;
     }
 
     //return Message class obj

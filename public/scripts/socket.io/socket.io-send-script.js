@@ -241,15 +241,17 @@ function deleteOneMessage(event) {
     disableButtons(buttons, false);
   }, delay);
 
+  //data to be sent
+  const message = {
+    messageId: selectedMessageItemGlobal.dataset.messageId,
+    roomId: selectedRoomId,
+  };
+
   //send deletion request
-  socket.emit(
-    "message-delete",
-    selectedMessageItemGlobal.dataset.messageId,
-    function (ackData) {
-      clearTimeout(timerId);
-      onMessageDeleteAck(ackData);
-    }
-  );
+  socket.emit("message-delete", message, function (ackData) {
+    clearTimeout(timerId);
+    onMessageDeleteAck(ackData);
+  });
 }
 
 //load more messages for a fiven chat
