@@ -21,6 +21,7 @@ function logout(event) {
   setActiveFriendName("");
 
   //restart
+  clearAllTimers();
   initializationDoneGlobal = false;
   chatListGlobal = [];
   selectedChatItemGlobal = undefined;

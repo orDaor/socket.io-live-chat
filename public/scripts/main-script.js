@@ -76,11 +76,12 @@ socket.on(
 
 //global variables
 let initializationDoneGlobal = false;
-let chatListGlobal = [];
+let chatListGlobal = []; //store all the chats laoded from the server after login
 let selectedChatItemGlobal;
 let selectedMessageItemGlobal;
 let lastGeneratedInvitationLinkGlobal = "";
 let lastInvitationIdAcceptedGlobal;
+let socketTimeoutIdsGlobal = [];  //stores all timer ids user starts after laoding the page.
 
 //timer: send "is typing" info
 let isTypingTimerId_send;
@@ -93,6 +94,7 @@ let isTypingTimerActive_receive = false;
 let isTypingTimerDelay_receive = 3000;
 
 //timer: send "i am online" info to users in the rooms I am in
+let iAmOnlineTimerId;
 let iAmOnlineTimerDelay = 1500;
 let iAmOnlineTimerActive = false;
 

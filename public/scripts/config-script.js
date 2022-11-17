@@ -362,3 +362,35 @@ function displayDeleteChatModal() {
   hideChatActions();
   modalSectionElement.innerHTML = getHmlContentModal("delete-chat");
 }
+
+//reset all timers processes and info/status
+function clearAllTimers() {
+  console.log("clear timeouts");
+  //timeouts started when sending socket "requests" which expected an ACK as "response"
+  socketTimeoutIdsGlobal.forEach(function (timerId) {
+    clearTimeout(timerId);
+  });
+  socketTimeoutIdsGlobal = [];
+
+  //online status timers of each laoded chat
+  chatListGlobal.forEach(function (chat) {
+    clearTimeout(chat.onlineStatusTimer.timerId);
+    chat.onlineStatusTimer.timerId = null;
+    chat.onlineStatusTimer.active = false;
+  });
+
+  //timer: send "is typing" info
+  clearTimeout(isTypingTimerId_send);
+  isTypingTimerId_send = null;
+  isTypingTimerActive_send = false;
+
+  //timer: display "is typing info" in the selected chat
+  clearTimeout(isTypingTimerId_receive);
+  isTypingTimerId_receive = null;
+  isTypingTimerActive_receive = false;
+
+  //timer: send "i am online" info to users in the rooms I am in
+  clearInterval(iAmOnlineTimerId);
+  iAmOnlineTimerId = null;
+  iAmOnlineTimerActive = false;
+}

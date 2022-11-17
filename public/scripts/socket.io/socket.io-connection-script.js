@@ -7,7 +7,7 @@ function onSocketConnect() {
 
   //send cyclycally "I am alive" status on the socket
   if (!iAmOnlineTimerActive) {
-    setInterval(sendOnlineStatus, iAmOnlineTimerDelay);
+    iAmOnlineTimerId = setInterval(sendOnlineStatus, iAmOnlineTimerDelay);
     iAmOnlineTimerActive = true;
     //NOTE: iAmOnlineTimerActive --> prevents from starting multiple paralell "setInterval"
     //      processes when re-connecting

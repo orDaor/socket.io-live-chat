@@ -64,7 +64,6 @@ function onMessageSendAck(ackData) {
 
 //process ack from server on message delete ack
 function onMessageDeleteAck(ackData) {
-  console.log(ackData);
   //target buttons to re-enable in the modal
   const buttons = modalSectionElement
     .querySelector(".modal-prompt")

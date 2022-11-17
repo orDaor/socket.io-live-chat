@@ -28,6 +28,9 @@ function fetchInvitationLink() {
     hideOneLoader("add-friend-loader");
   }, delay);
 
+  //collect timer id for clearing it at logout
+  socketTimeoutIdsGlobal.push(timerId);
+
   //send event
   socket.emit("user-fetch-invitation-link", {}, function (ackData) {
     clearTimeout(timerId);
@@ -126,6 +129,9 @@ function sendMessage(event) {
       displayOneMessageErrorInfo(displayedMessage, "An error occured");
     }
   }, delay);
+
+  //collect timer id for clearing it at logout
+  socketTimeoutIdsGlobal.push(timerId);
 
   //send (emit) a event with a message to the server
   socket.emit("message-send", message, function (ackData) {
@@ -241,6 +247,9 @@ function deleteOneMessage(event) {
     disableButtons(buttons, false);
   }, delay);
 
+  //collect timer id for clearing it at logout
+  socketTimeoutIdsGlobal.push(timerId);
+
   //data to be sent
   const message = {
     messageId: selectedMessageItemGlobal.dataset.messageId,
@@ -302,6 +311,9 @@ function loadMoreMessages() {
     letUserSelectOtherChats();
   }, delay);
 
+  //collect timer id for clearing it at logout
+  socketTimeoutIdsGlobal.push(timerId);
+
   //send request
   socket.emit("message-load", eldestMessageData, function (ackData) {
     clearTimeout(timerId);
@@ -350,6 +362,9 @@ function cancelChat(event) {
     hideOneLoader("modal-loader");
     disableButtons(buttons, false);
   }, delay);
+
+  //collect timer id for clearing it at logout
+  socketTimeoutIdsGlobal.push(timerId);
 
   socket.emit("room-cancel", roomId, function (ackData) {
     clearTimeout(timerId);

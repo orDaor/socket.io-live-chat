@@ -443,6 +443,7 @@ function updateNewMessagesCount(action) {
     }
   } else if ("reset") {
     newMessagesCountElement.textContent = "0";
+    newMessagesCountElement.style.display = "none";
   }
 
   //update notification in the window title
