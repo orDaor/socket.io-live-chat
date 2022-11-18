@@ -81,7 +81,7 @@ let selectedChatItemGlobal;
 let selectedMessageItemGlobal;
 let lastGeneratedInvitationLinkGlobal = "";
 let lastInvitationIdAcceptedGlobal;
-let socketTimeoutIdsGlobal = [];  //stores all timer ids user starts after laoding the page.
+let socketTimeoutIdsGlobal = []; //stores all timer ids user starts after laoding the page.
 
 //timer: send "is typing" info
 let isTypingTimerId_send;
@@ -110,6 +110,9 @@ let disableLoadingOfMoreMessages = false;
 
 //user is currently selecting a new chat
 let userIsSelectingNewChat = false;
+
+//last window height
+let windowHeightOnLastScroll = window.innerHeight;
 
 //initialization
 initAfterPageLoaded();

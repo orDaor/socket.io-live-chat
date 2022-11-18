@@ -16,15 +16,25 @@ function onMessagesListScroll(event) {
   //logic for displaying/hide "scroll to bottom" icon
   handleScrollToBottomIconVisibility(messagesListElement);
 
+  //check if window height changed from last scroll
+  const windowHeightChangedFromLastScroll =
+    window.innerHeight !== windowHeightOnLastScroll;
+
   //if we scrolled to top, request to load more messages
   const isMessagesListAtTop = messagesListElement.scrollTop === 0;
-  if (!isMessagesListAtTop || userIsSelectingNewChat) {
+  if (
+    !isMessagesListAtTop ||
+    userIsSelectingNewChat ||
+    windowHeightChangedFromLastScroll
+  ) {
     userIsSelectingNewChat = false;
+    windowHeightOnLastScroll = window.innerHeight;
     return;
   }
 
   //request to load more messages
   loadMoreMessages();
+  windowHeightOnLastScroll = window.innerHeight;
 }
 
 //display/hide scroll to bottom icon

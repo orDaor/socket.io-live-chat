@@ -31,6 +31,7 @@ function logout(event) {
   disableDisplayOfScrollToBottomButton = false;
   disableLoadingOfMoreMessages = false;
   userIsSelectingNewChat = false;
+  windowHeightOnLastScroll = window.innerHeight;
 
   //resest text area status
   resetTextAreaElement();
