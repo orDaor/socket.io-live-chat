@@ -12,6 +12,12 @@ const Room = require("../models/room-model");
 const oneHour_s = 60 * 60; //s
 const oneDay_s = oneHour_s * 24; //s
 
+//environment variable for JWT secret key
+let tokenKey = "not-a-secret";
+if (process.env.TOKEN_KEY) {
+  tokenKey = process.env.TOKEN_KEY;
+}
+
 //create a new user account
 async function signup(req, res, next) {
   //init response data
@@ -120,7 +126,7 @@ async function login(req, res, next) {
   //token contains id of the user account with which login was successfully perfomed
   jwt.sign(
     jwtPayload,
-    "not-a-secret",
+    tokenKey,
     {
       expiresIn: oneDay_s * 2,
       algorithm: "HS256",
