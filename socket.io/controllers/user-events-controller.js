@@ -9,7 +9,7 @@ async function onUserFetchInvitationLink(socket, emptyObj, sendAck) {
 
   //let user wait just a little time to make him realize
   //a new link is actually being generated
-  await new Promise((r) => setTimeout(r, 800));
+  await new Promise((r) => setTimeout(r, 200));
 
   //user asking for the link
   const userId = socket.userId;
