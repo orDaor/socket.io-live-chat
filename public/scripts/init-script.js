@@ -27,6 +27,7 @@ async function initAfterLogin(token) {
 
   //handle invitation request, in case this page was served by accessing an invitation link
   if (invitationInfoElement) {
+    hideOneLoader("main-loader");
     handleInvitationRequest(invitationInfoElement.dataset);
     return;
   }
