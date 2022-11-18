@@ -73,7 +73,7 @@ class Message {
       .find(query)
       .sort(sortLogic)
       .skip(filteredMessagesNumberToSkip)
-      .limit(10)
+      .limit(20)
       .toArray();
 
     //map array of message documents into array of Message class objects
@@ -112,7 +112,7 @@ class Message {
       .collection("messages")
       .find(query)
       .sort(sortLogic)
-      .limit(10)
+      .limit(20)
       .toArray();
 
     //map array of message documents into array of Message class objects

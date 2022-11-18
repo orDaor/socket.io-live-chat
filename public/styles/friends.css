@@ -3,7 +3,7 @@
   position: fixed;
   width: var(--friends-section-width-1);
   left: calc(50% - var(--friends-section-width-1) / 2);
-  top: var(--friends-chat-section-from-top);
+  top: var(--friends-chat-section-from-top-1);
   bottom: 0;
   display: none;
   color: var(--color-grey-500);
@@ -251,7 +251,8 @@
   box-sizing: border-box;
   margin: 0;
   padding: 0 2rem;
-  height: 15%;
+  min-height: 3.9rem;
+  height: 7%;
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
@@ -274,7 +275,7 @@
 .active-friends .active-friends-content {
   background-color: var(--color-primary-200);
   margin: 0;
-  padding: 1rem 1rem;
+  padding: 0.75rem;
   display: inline-block;
   border: 1px solid var(--color-grey-100);
   border-radius: var(--friends-selection-border-radius);
@@ -309,9 +310,12 @@
 
 .active-friends .is-typing-info {
   position: absolute;
-  top: 4rem;
-  left: 2rem;
+  top: 0;
+  right: -95px;
   margin: 0;
+  font-size: var(--font-size-0);
+  font-weight: bold;
+  color: var(--friend-status-online);
 }
 
 .active-friends .chat-action {
@@ -369,7 +373,7 @@
     width: var(--friends-section-width-2);
     text-align: left;
     left: 0;
-    top: var(--friends-chat-section-from-top);
+    top: var(--friends-chat-section-from-top-2);
   }
 
   .friends-control {

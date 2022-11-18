@@ -161,12 +161,13 @@ function setMessageId(message, messageId) {
 
 //display "is typing" info tight above the text area
 function displayIsTypingInfo() {
-  const activeFriendsElement =
-    chatSectionElement.querySelector(".active-friends");
+  const activeFriendsContentElement = chatSectionElement.querySelector(
+    ".active-friends .active-friends-content"
+  );
   const isTypingElement = document.createElement("p");
   isTypingElement.classList.add("is-typing-info");
   isTypingElement.textContent = "typing...";
-  activeFriendsElement.append(isTypingElement);
+  activeFriendsContentElement.append(isTypingElement);
 }
 
 //hide "is typing" info tight above the text area
@@ -272,7 +273,7 @@ function initTextAreaValue(value) {
 function fitTextAreaHeightToText(textArea) {
   //update height
   textArea.style.height = "";
-  textArea.style.height = Math.min(textArea.scrollHeight, 60) + "px";
+  textArea.style.height = Math.min(textArea.scrollHeight, 54) + "px";
   textArea.scrollTop = textArea.scrollHeight;
 }
 

@@ -34,7 +34,8 @@ html {
   --friends-section-width-2: 20rem;
   --friends-section-width-3: 80%;
 
-  --friends-chat-section-from-top: 5rem;
+  --friends-chat-section-from-top-1: 3.5rem;
+  --friends-chat-section-from-top-2: 5rem;
 
   --friends-chat-section-from-left-right: 15%;
 
@@ -42,7 +43,7 @@ html {
 
   --friends-chat-section-inner-border-radius: 12px;
 
-  --friend-status-online: rgb(0, 196, 0);
+  --friend-status-online: rgb(0, 173, 0);
   --friend-status-offline: var(--color-grey-200);
 
   --friend-status-dimension: 10px;
@@ -75,7 +76,7 @@ body {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  height: 4rem;
+  height: 2.5rem;
 }
 
 .main-header-content-error-page {
@@ -194,6 +195,7 @@ ul {
 
   .main-header-content {
     padding: 0 0.7rem;
+    height: 4rem;
   }
 }
 

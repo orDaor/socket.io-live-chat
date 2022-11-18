@@ -91,8 +91,8 @@ async function callInsertManyMessages(disableTesting) {
   //save test messages
   insertManyMessages(
     20,
-    "63767c1a7d456923ba96bc2d",
-    ["636a825d22d5e6ed36883c77", "636aae50048d7522f43d9027"],
+    "6377877b1fa16db7c56f0f5c",
+    ["636a825d22d5e6ed36883c77", "636a826c22d5e6ed36883c78"],
     true
   );
 
