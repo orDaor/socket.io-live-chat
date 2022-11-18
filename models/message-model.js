@@ -138,6 +138,32 @@ class Message {
     return result;
   }
 
+  //delete old messages in the DB
+  static deleteManyOld(messageMaxAge) {
+    //inputs validation
+    const oneHour = 1000 * 60 * 60;
+    const filteredMessageMaxAge = +messageMaxAge;
+    if (!filteredMessageMaxAge || filteredMessageMaxAge < 1 * oneHour) {
+      throw Error("Delay parameters are not valid");
+    }
+
+    //define old messages to be deleted
+    const dateNow = new Date().getTime();
+    const query = {
+      creationDate: { $lt: new Date(dateNow - filteredMessageMaxAge) },
+    };
+
+    //delete old messages
+    db.getDb()
+      .collection("messages")
+      .deleteMany(query)
+      .catch(function (error) {
+        console.log(error);
+      });
+
+    console.log("Deleting old messages");
+  }
+
   //save a new message
   async save() {
     if (!this.messageId) {

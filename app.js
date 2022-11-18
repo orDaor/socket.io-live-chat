@@ -27,6 +27,7 @@ const listenToUserEvents = require("./socket.io/events-listeners/user-events-lis
 const listenToRoomEvents = require("./socket.io/events-listeners/room-events-listeners");
 const listenToMessageEvents = require("./socket.io/events-listeners/message-events-listeners");
 const test = require("./utils/test");
+const Message = require("./models/message-model");
 
 //web server
 const app = express();
@@ -96,11 +97,21 @@ if (process.env.PORT) {
   portNumber = process.env.PORT;
 }
 
-//init connection to database
+//init connection to database and start web server
 db.connectToDatabase()
   .then(function () {
     //save test messages
-    test.callInsertManyMessages();
+    const disableTesting = true;
+    test.callInsertManyMessages(disableTesting);
+
+    //periodically delete old messages
+    const oneHour = 1000 * 60 * 60;
+    const oneDay = oneHour * 24;
+    const messageMaxAge = oneDay * 7;
+    setInterval(function () {
+      //every week delete messages elder that 1 week
+      Message.deleteManyOld(messageMaxAge);
+    }, messageMaxAge);
 
     //starting web server
     server.listen(portNumber);

@@ -82,7 +82,12 @@ async function insertManyMessages(
 }
 
 //insert actual messages for different chatrooms
-async function callInsertManyMessages() {
+async function callInsertManyMessages(disableTesting) {
+  //check if testing is disabled
+  if (disableTesting) {
+    return;
+  }
+
   //save test messages
   insertManyMessages(
     20,
@@ -91,7 +96,7 @@ async function callInsertManyMessages() {
     true
   );
 
-  //save test messages 
+  //save test messages
   // insertManyMessages(
   //   20,
   //   "6374c42ca699ab614b1ad5c6",
