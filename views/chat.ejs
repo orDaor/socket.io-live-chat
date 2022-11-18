@@ -2,6 +2,7 @@
 <html>
   <head>
     <%- include("includes/head", {pageTitle: "Live Chat"}) %>
+    <meta name="description" content="Create an account and send an invitation link to your friends to start chatting with them. Save all your chats and messages!">
     <meta name="csrf-token" content="<%= locals.csrfToken %>">
     <% if (locals.invitationInfo) { %> 
       <meta name="invitation-info"
