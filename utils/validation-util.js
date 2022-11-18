@@ -48,7 +48,11 @@ function message(message, loggingEnabled = true) {
   } else {
     wordsOk = true;
     //still clean message in case isProfane above failed
-    validatedText = wordsFilter.clean(validatedText);
+    try {
+      validatedText = wordsFilter.clean(validatedText);
+    } catch (error) {
+      console.log(error);
+    }
   }
 
   //roomId
