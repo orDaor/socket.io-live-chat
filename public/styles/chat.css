@@ -204,7 +204,7 @@
   width: 1.5rem;
   height: 1.5rem;
   position: absolute;
-  left: 50%;
+  left: calc(50% - 0.75rem - 2.5px);
   top: 15%;
 }
 
