@@ -5,6 +5,12 @@ const jwt = require("jsonwebtoken");
 const Room = require("../../models/room-model");
 const User = require("../../models/user-model");
 
+//environment variable for JWT secret key
+let tokenKey = "not-a-secret";
+if (process.env.TOKEN_KEY) {
+  tokenKey = process.env.TOKEN_KEY;
+}
+
 //this function checks whether a user is allowed or not to open a socket connection.
 //User is allowed if it is authenticated
 async function socketAuthCheckMiddleware(socket, next) {
@@ -34,7 +40,7 @@ async function socketAuthCheckMiddleware(socket, next) {
   //NOTE: SYNC call is needed, because Sociot.IO middleware can not terminate without calling next() ! ! !
   let jwtPayload;
   try {
-    jwtPayload = jwt.verify(token, "not-a-secret", { algorithms: ["HS256"] });
+    jwtPayload = jwt.verify(token, tokenKey, { algorithms: ["HS256"] });
   } catch (error) {
     //refuse socket connection
     error = new Error("User not authenticated");
