@@ -117,6 +117,7 @@ function sendMessage(event) {
     if (displayedMessage) {
       displayOneMessageErrorInfo(displayedMessage, connectionErrorInfo);
     }
+    disableDisplayOfScrollToBottomButton = false;
     return;
   }
 
@@ -222,6 +223,9 @@ function deleteOneMessage(event) {
     //delete from screen
     hideOneMessage(selectedMessageItemGlobal);
     hideModal();
+    //this will delete "scroll to bottom" button if there is no overflow after message deletion
+    const messagesListElement = chatSectionElement.querySelector("ul");
+    handleScrollToBottomIconVisibility(messagesListElement);
     return;
   }
 

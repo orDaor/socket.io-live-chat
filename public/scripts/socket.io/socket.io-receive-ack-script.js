@@ -102,7 +102,11 @@ function onMessageDeleteAck(ackData) {
   hideModal();
   const messageItemElement = getMessageItemByMessageId(ackData.messageId);
   if (messageItemElement) {
+    //remove message from screen
     hideOneMessage(messageItemElement);
+    //this will delete "scroll to bottom" button if there is no overflow after message deletion
+    const messagesListElement = chatSectionElement.querySelector("ul");
+    handleScrollToBottomIconVisibility(messagesListElement);
   }
 
   //target chat on screen

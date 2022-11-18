@@ -297,6 +297,9 @@ function onMessageDeleteBroadcast(broadcastData) {
   const messageItemElement = getMessageItemByMessageId(broadcastData.messageId);
   if (messageItemElement) {
     hideOneMessage(messageItemElement);
+    //this will delete "scroll to bottom" button if there is no overflow after message deletion
+    const messagesListElement = chatSectionElement.querySelector("ul");
+    handleScrollToBottomIconVisibility(messagesListElement);
   }
 
   //target chat on screen
