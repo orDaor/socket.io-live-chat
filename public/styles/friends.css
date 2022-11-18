@@ -281,6 +281,7 @@
   font-size: var(--font-size-2);
   color: var(--color-grey-500);
   position: relative;
+  z-index: 2;
 }
 
 .active-friends .one-active-friend {
