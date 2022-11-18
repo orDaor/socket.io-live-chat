@@ -1,7 +1,12 @@
+//import 3rd party
+const WordsFilter = require("bad-words");
+const wordsFilter = new WordsFilter();
+
 //minumum user input lengths (excluded extra spaces)
 const minPasswordLength = 5;
 const minUserNameLength = 4;
 const maxUserNameLength = 15;
+const maxMessageTextLength = 1250;
 
 //sign up input validation
 function userData(userInput, loggingEnabled = false) {
@@ -33,8 +38,18 @@ function userData(userInput, loggingEnabled = false) {
 //validate a message which the user tries to send
 function message(message, loggingEnabled = true) {
   //text
-  const validatedText = message.text.trim();
-  const textOk = validatedText;
+  let validatedText = message.text.trim();
+  const textOk = validatedText && validatedText.length <= maxMessageTextLength;
+
+  //check for bad words in the text bad words
+  let wordsOk;
+  if (wordsFilter.isProfane(validatedText)) {
+    wordsOk = false;
+  } else {
+    wordsOk = true;
+    //still clean message in case isProfane above failed
+    validatedText = wordsFilter.clean(validatedText);
+  }
 
   //roomId
   const validatedRoomId = message.roomId.trim();
@@ -48,11 +63,12 @@ function message(message, loggingEnabled = true) {
 
   if (loggingEnabled) {
     console.log(`textOk: ${!!textOk}`);
+    console.log(`wordsOk: ${!!wordsOk}`);
     console.log(`roomIdOk: ${!!roomIdOk}`);
     console.log(`tempMessageIdOk: ${!!tempMessageIdOk}`);
   }
 
-  if (textOk && roomIdOk && tempMessageIdOk) {
+  if (textOk && wordsOk && roomIdOk && tempMessageIdOk) {
     return {
       validatedText: validatedText,
       validatedRoomId: validatedRoomId,
