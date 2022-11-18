@@ -123,6 +123,11 @@ function hideOneLoader(id) {
 
 //create and display the main page loader
 function displayMainLoader() {
+  //check if already present before adding it again
+  const existingLoader = document.getElementById("main-loader");
+  if (existingLoader) {
+    return;
+  }
   const loaderElement = createOneLoader("main-loader");
   document.querySelector("main").append(loaderElement);
 }

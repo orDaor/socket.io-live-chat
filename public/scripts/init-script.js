@@ -12,6 +12,7 @@ function initAfterPageLoaded() {
   }
 
   //no token is stored, then need to login to get a valid token
+  hideOneLoader("main-loader");
   displaySignUpInForm("Login");
 }
 
