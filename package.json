@@ -3,6 +3,9 @@
   "version": "1.0.0",
   "description": "socket.io-live-chat-example",
   "main": "index.js",
+  "engines": {
+    "node": "17.x"
+  },
   "scripts": {
     "start": "nodemon app.js"
   },
