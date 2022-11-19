@@ -204,7 +204,7 @@
   height: 1.5rem;
   position: absolute;
   left: calc(50% - 0.75rem - 2.5px);
-  top: 15%;
+  top: 7%;
 }
 
 @keyframes slidein {
