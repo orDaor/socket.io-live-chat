@@ -72,9 +72,7 @@
   font-size: var(--font-size-0);
   text-align: right;
   border: none;
-  padding-bottom: 0;
-  padding-right: 0;
-  padding-left: 0;
+  padding: 0.1rem 0 0 0;
   background-color: transparent;
 }
 
