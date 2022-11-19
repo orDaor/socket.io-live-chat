@@ -308,14 +308,19 @@
   padding: 0;
 }
 
-.active-friends .is-typing-info {
-  position: absolute;
-  top: 0;
-  right: -95px;
-  margin: 0;
+.active-friends p.friend-chat-name {
   font-size: var(--font-size-0);
   font-weight: bold;
+}
+
+.active-friends .is-typing-info {
+  position: absolute;
+  margin: 0;
+  font-size: 0.7rem;
+  font-weight: bold;
   color: var(--friend-status-online);
+  bottom: -13px;
+  left: 0;
 }
 
 .active-friends .chat-action {
