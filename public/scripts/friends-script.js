@@ -22,7 +22,7 @@ function displayInfoOnEmptyChatlist() {
 
   const secondaryInfoElement = document.createElement("p");
   secondaryInfoElement.textContent =
-    "Please not that, after a link has been used, a new one must be generated.";
+    "Please note that, after a link has been used, a new one must be generated.";
 
   const greetingsInfoElement = document.createElement("p");
   greetingsInfoElement.textContent = "Enjoy!";
