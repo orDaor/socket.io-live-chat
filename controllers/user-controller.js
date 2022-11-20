@@ -128,7 +128,7 @@ async function login(req, res, next) {
     jwtPayload,
     tokenKey,
     {
-      expiresIn: oneDay_s * 2,
+      expiresIn: oneDay_s * 7,
       algorithm: "HS256",
     },
     function (error, token) {
