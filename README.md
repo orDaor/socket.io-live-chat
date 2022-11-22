@@ -87,9 +87,9 @@ This **counter status** is **saved** (mantained) when reloading the page.
     - The **messages** in each chat object, are ordered **from the eldest to the most recent**.
 
 - The **frontend** collects the received chats in the **chatListGlobal array**:
-    - When the user **selects** on **screen** a chat, the frontend will point to that specific chat in chatListGLobal[], get its messages and display them on screen.
-    - When the user **loads more messages** for one chat, by scrolling messages list upwards, the new received messages will be **added** inside the selected chat in **chatListGLobal[]**.
-    - **Similarly** chatListGLobal[] is **updated** when a user **sends** or **deletes** a **message** in the currently selected chat.
+    - When the user **selects** on **screen** a chat, the frontend will point to that specific chat in chatListGlobal[], get its messages and display them on screen.
+    - When the user **loads more messages** for one chat, by scrolling messages list upwards, the new received messages will be **added** inside the selected chat in **chatListGlobal[]**.
+    - **Similarly** chatListGlobal[] is **updated** when a user **sends** or **deletes** a **message** in the currently selected chat.
 
 ### Online Status
 **Every 1.5 seconds**, the user sends on the socket to the server the notification "**I am alive/online**". The server will check to which rooms the user socket is assigned, then it will forward this notification to all sockets (recipients) which are part of those rooms.
