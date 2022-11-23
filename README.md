@@ -115,6 +115,31 @@ When the user clicks on the log out button, the **token** memorized in the brows
   - _messages_
   - _sessions_ → a user session is only used for implementing CSRF protection
 
+## HTTP ROUTES AND CONTROLLERS
+
+**Routes** are groupped in these sets:
+
+- base → renders home and error pages.
+- user
+- room 
+- message
+
+A **controller** is defined for each route set (except for the base routes), and each controller contains its controller actions. In the following are described the **end-points** handled by the different controller actions:
+
+- **user** controller:
+
+    - **POST: “/user/signup** → user requests to create a user account with valid name and password, which is saved in the database.
+    - **POST: “/user/login”** → user requests to login using credentials (name and password) of an existing user account.
+    - **GET: “/user/invitation/invitationId** → user accesses an invitation link which points to a chat room that he/she is invited to join.
+
+- **room** controller:
+
+    - **POST: “/room/join** → user wants to accept an invitation, that is to join a chat room where he/she was invited. In this way inviter and invited users will become "friends".
+
+- **message** controller:
+
+    - **POST: “/message/readAll** → user requests to load his/her chats, together with the messages sent in those chats. The server wil return an array of all user's chats, and for each chat only the last 20 messages are returned. The user will be able to load more messages for a given chat after he/she opened the socket connection.
+
 ## 3-RD PARTY PACKAGES
 The following Node.js 3-rd party packages are used for building the backend code:
 - express
