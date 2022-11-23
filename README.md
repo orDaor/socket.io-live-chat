@@ -140,6 +140,33 @@ A **controller** is defined for each route set (except for the base routes), and
 
     - **POST: “/message/readAll** → user requests to load his/her chats, together with the messages sent in those chats. The server wil return an array of all user's chats, and for each chat only the last 20 messages are returned. The user will be able to load more messages for a given chat after he/she opened the socket connection.
 
+## SOCKET OPENING AND INITIALIZATION (<ins>backend</ins>)
+- When a client sends the HTTP **request** to the server to **upgrade** the TCP connection from HTTP to **Websocket** protocol, it will attach to the request the **JWT**. This request is handled by a socket **authentication middleware** which will:
+    - Check the token validity.
+    - Verify whether the user account, for which this token was generated, exists or not.
+    - Find in the database all the chat rooms where the user is active.
+    - Refuse the connection if the above checks/actions fail, by sending back an error response, otherwise continue as below.
+    - Save this chat rooms inside of the socket that the server is going to open for this user.
+    - Accept the connection by sending back a 101 Code good response. **When connection is accepted a socket is opened**.
+
+- **When** a socket is **opened**, an **initialization** handler will look for the chat rooms saved inside of it, and will **assign** all those **rooms** to the socket. *This is the way by which users inside of a chat room can communicate between each other*.
+
+## SOCKET LISTENERS AND CONTROLLERS (<ins>backend</ins>)
+
+**Socket listeners** are groupped in these main sets:
+ 
+- user
+- room 
+- message
+
+A **controller** is defined for each listener set, and each controller contains its controller actions. In the following are described the **server events** handled by the different controller actions:
+
+- **user** controller:
+
+    - **user-fetch-invitation-link** → user requests the server to generate an invitation link. If the user has not generated any link yet, a new chat room will be created and he/she will be inserted in there. Then a link which points to this room is generated and sent back to the user. If the user has already generated a link, that link is re-proposed back to the user.
+
+    - **user-accecpted-invitation** → user wants to notify the other users of a given room, that he/she just accepted an invitation and joined that room.
+
 ## 3-RD PARTY PACKAGES
 The following Node.js 3-rd party packages are used for building the backend code:
 - express

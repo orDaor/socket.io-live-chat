@@ -9,7 +9,7 @@ function listenToUserEvents(io, socket) {
   });
 
   //user just accepted and invitation to a specific room
-  socket.on("user-accecpted-invitation", function (roomId) {
+  socket.on("user-accepted-invitation", function (roomId) {
     userEventsController.onUserAcceptedInvitation(io, socket, roomId);
   });
 }

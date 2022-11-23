@@ -70,7 +70,7 @@ socket.on("room-is-typing-broadcast", onRoomIsTypingBroadcast);
 socket.on("room-is-online-broadcast", onRoomIsOnlineBroadcast);
 socket.on("message-delete-broadcast", onMessageDeleteBroadcast);
 socket.on(
-  "user-accecpted-invitation-broadcast",
+  "user-accepted-invitation-broadcast",
   onUserAcceptedInvitationBroadcast
 );
 

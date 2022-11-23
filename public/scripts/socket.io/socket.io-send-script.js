@@ -333,7 +333,7 @@ function notifyInvitationAcceptance(roomId) {
   }
 
   //send notification
-  socket.emit("user-accecpted-invitation", roomId);
+  socket.emit("user-accepted-invitation", roomId);
 }
 
 //delete a friend with whom user is active inside of a chat room

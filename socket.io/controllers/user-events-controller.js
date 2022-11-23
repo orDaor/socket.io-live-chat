@@ -98,7 +98,7 @@ async function onUserAcceptedInvitation(io, socket, roomId) {
   //broadcast "is typing" status only to sockets not opened by this user
   for (const socketItem of socketList) {
     if (socketItem.userId !== socket.userId) {
-      socketItem.emit("user-accecpted-invitation-broadcast", broadcastData);
+      socketItem.emit("user-accepted-invitation-broadcast", broadcastData);
     }
   }
 }
