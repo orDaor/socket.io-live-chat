@@ -103,3 +103,28 @@ When the user clicks on the log out button, the **token** memorized in the brows
 - **Before the client requests to open the socket**, all the data exchanged between server and client are handled with HTTP requests and responses.
 
 - **After the socket has been opened**, the data exchange between server and client will occure with Websocket messages.
+
+## MONGODB DATABASE
+**NoSQL** MondoDB database is used for storing **user accounts, chat rooms and messages**:
+
+- MondoDB **database** → **_socketio-live-chat_**
+
+- MondoDB **collections** in _socketio-live-chat_ database:
+  - _users_
+  - _rooms_
+  - _messages_
+  - _sessions_ → a user session is only used for implementing CSRF protection
+
+## 3-RD PARTY PACKAGES
+The following Node.js 3-rd party packages are used for building the backend code:
+- express
+- socket.io
+- mongodb
+- bcryptjs
+- jsonwebtoken
+- uuid
+- express-session
+- connect-mongodb-session
+- csurf
+- ejs
+- bad-words
