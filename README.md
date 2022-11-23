@@ -83,8 +83,8 @@ This **counter status** is **saved** (mantained) when reloading the page.
 - **<ins>NOTE</ins>**: **even if in one chat room only 2 users can be active, the destination users can be more than one in case the sender is logged in at the same time in more browser tabs or browser instances. In this case one or more recipients will conincide with the sender**.
 
 - When the client **requests** the **chats** of a user with a given token pointing to that userId, ther server will find in the the database all the rooms in which this user is active. It will convert each room in a ChatViewData class object, that contains the last 20 messages that were sent in the context of that room. This chat objects are then collected inside of an array and send back in the response to the user:
-    - In the **chats** array, the chats are sorted **from the most recent to the eldest**.
-    - The **messages** in each chat object, are ordered **from the eldest to the most recent**.
+    - In the **chats** array, the chats are sorted **from the most recent to the eldest**, based on their last activity date. The last activity date of a chat is the date when the last message was sent for this chat.
+    - The **messages** in each chat object, are sorted **from the eldest to the most recent**.
 
 - The **frontend** collects the received chats in the **chatListGlobal array**:
     - When the user **selects** on **screen** a chat, the frontend will point to that specific chat in chatListGlobal[], get its messages and display them on screen.
@@ -126,19 +126,19 @@ When the user clicks on the log out button, the **token** memorized in the brows
 
 A **controller** is defined for each route set (except for the base routes), and each controller contains its controller actions. In the following are described the **end-points** handled by the different controller actions:
 
-- **user** controller:
+- **user** end-points:
 
-    - **POST: “/user/signup** → user requests to create a user account with valid name and password, which is saved in the database.
-    - **POST: “/user/login”** → user requests to login using credentials (name and password) of an existing user account.
-    - **GET: “/user/invitation/invitationId** → user accesses an invitation link which points to a chat room that he/she is invited to join.
+    - **POST: "/user/signup"** → user requests to create a user account with valid name and password, which is saved in the database.
+    - **POST: "/user/login"** → user requests to login using credentials (name and password) of an existing user account.
+    - **GET: "/user/invitation/invitationId"** → user accesses an invitation link which points to a chat room that he/she is invited to join.
 
-- **room** controller:
+- **room** end-points:
 
-    - **POST: “/room/join** → user wants to accept an invitation, that is to join a chat room where he/she was invited. In this way inviter and invited users will become "friends".
+    - **POST: "/room/join"** → user wants to accept an invitation, that is to join a chat room where he/she was invited. In this way inviter and invited users will become "friends".
 
-- **message** controller:
+- **message** end-points:
 
-    - **POST: “/message/readAll** → user requests to load his/her chats, together with the messages sent in those chats. The server wil return an array of all user's chats, and for each chat only the last 20 messages are returned. The user will be able to load more messages for a given chat after he/she opened the socket connection.
+    - **POST: "/message/readAll"** → user requests to load his/her chats, together with the messages sent in those chats. The server wil return an array of all user's chats (sorted from the most recent to the eldest), and for each chat only the last 20 messages are returned (sorted from the eldest to the most recent). The user will be able to load more messages for a given chat after he/she opened the socket connection.
 
 ## SOCKET OPENING AND INITIALIZATION (<ins>backend</ins>)
 - When a client sends the HTTP **request** to the server to **upgrade** the TCP connection from HTTP to **Websocket** protocol, it will attach to the request the **JWT**. This request is handled by a socket **authentication middleware** which will:
@@ -161,13 +161,31 @@ A **controller** is defined for each route set (except for the base routes), and
 
 A **controller** is defined for each listener set, and each controller contains its controller actions. In the following are described the **server events** handled by the different controller actions:
 
-- **user** controller:
+- **user** events:
 
-    - **user-fetch-invitation-link** → user requests the server to generate an invitation link. If the user has not generated any link yet, a new chat room will be created and he/she will be inserted in there. Then a link which points to this room is generated and sent back to the user. If the user has already generated a link, that link is re-proposed back to the user.
+    - **"user-fetch-invitation-link"** → user requests the server to generate an invitation link. If the user has not generated any link yet, a new chat room will be created and he/she will be inserted in there. Then a link which points to this room is generated and sent back to the user. If the user has already generated a link, that link is re-proposed back to the user.
 
-    - **user-accecpted-invitation** → user wants to notify the other users of a given room, that he/she just accepted an invitation and joined that room.
+    - **"user-accepted-invitation"** → user wants to notify the other users of a given room, that he/she just accepted an invitation and joined that room. In this way, the user who sent the invitation, will be notified when this is accepted.
 
-## 3-RD PARTY PACKAGES
+- **room** events:
+
+    - **"room-view"** → user requests for a specific chat room to update the last time (date) he/she viewd the content (messages) of that room. The date is updated to the moment this event is fired. 
+
+    - **"room-is-typing"** → user requests to broadcast the information that he/she is currently typing inside of a specific chat room. This notification is broadcasted to the other users inside of that room.
+
+    - **"room-is-online"** → user requests to broadcast to his/her friends the information that he/she is currently online. The server will look for the rooms the user's socket is currently assigned to, and will boradcast this notification to the other users in those rooms.
+
+    - **"room-cancel"** → user wants to remove a friend, which means he/she wants to remove a specific chat room he/she is active in. The server will also remove the user's socket from that room.
+
+- **message** events:
+
+    - **"message-send"** → user requests to send a message to the users of a given chat room, where he/she is active too. The server will save this message in the database, update the last activity date of this room with the message creation date, and then broadcast the message to the other users which are inside of the room.
+
+    - **"message-delete"** → user requests to delete a message that he/she previously sent in the context of a specific chat room. After the message is deleted, the server will broadcast a notification of the message deletion to the other users which are part of the target room.
+
+    - **"message-load"** → user wants to load more messages for a specific chat. The server will look for 20 more messages, collect them in an array (sorted from the most recent to the eldest) and send it back to the user.
+
+## 3rd PARTY PACKAGES
 The following Node.js 3-rd party packages are used for building the backend code:
 - express
 - socket.io
