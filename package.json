@@ -9,7 +9,7 @@
   "scripts": {
     "start": "nodemon app.js"
   },
-  "author": "",
+  "author": "Orgher Dalipi",
   "license": "ISC",
   "dependencies": {
     "bad-words": "^3.0.4",
