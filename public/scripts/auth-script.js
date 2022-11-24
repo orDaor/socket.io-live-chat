@@ -6,6 +6,7 @@ function logout(event) {
 
   //disconnect socket
   socket.disconnect();
+  socket.auth.token = "";
 
   //reset online status
   hideUserOnlineStatus();
