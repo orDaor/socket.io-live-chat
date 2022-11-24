@@ -64,18 +64,12 @@ function onSocketConnectError(error) {
   );
 
   if (error.data.code === 401 || error.data.code === 403) {
-    //autentication error
-    displaySignUpInForm("Login"); //need to get a new valid token
-    hideChatSection();
-    hideFriendsSection();
+    //autentication error, need to restart and get a new valid token
+    logout();
   } else if (error.data.code === 500) {
     //server error
     setTimeout(function () {
       socket.connect(); //try to reconnect after 3s
     }, 3000);
   }
-
-  //socket still closed, then user shows offline
-  displayUserOnlineStatus();
-  setUserOnlineStatus(false);
 }

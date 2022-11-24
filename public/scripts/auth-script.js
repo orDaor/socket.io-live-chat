@@ -6,7 +6,12 @@ function logout(event) {
 
   //disconnect socket
   socket.disconnect();
+
+  //reset online status
   hideUserOnlineStatus();
+  setUserOnlineStatus(false);
+
+  //reset message count
   updateNewMessagesCount("reset");
 
   //clean all chat content
@@ -20,7 +25,7 @@ function logout(event) {
   setActiveChatRoomId("");
   setActiveFriendName("");
 
-  //restart
+  //reset timers and flags
   clearAllTimers();
   initializationDoneGlobal = false;
   chatListGlobal = [];
