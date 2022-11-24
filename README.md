@@ -207,7 +207,7 @@ Represents the chat room entity. The room documents in the database have the str
     - **friends** (Array of strings) → contains ids of users active in this chat room.
     - **lastViewDates** (Array of Date class objects) → contains the last time (date) each friend of this room has viewed the content (messages) of this room.
     - **lastActivityDate** (Date class object) → the date in which was sent the last message in the context of this chat room.
-    - **roomId** → id of the corresponding document in the database.
+    - **roomId** (string) → id of the corresponding document in the database.
 
 ### Message
 
@@ -218,7 +218,7 @@ Represents the message entity. The message documents in the database have the st
     - **roomId** (string) → the id of the chat room in which the message was sent.
     - **senderId** (string) → id of the user account which sent this message.
     - **creationDate** (Date class object) → the date when this message was sent.
-    - **messageId** →id of the corresponding document in the database.
+    - **messageId** (string) →id of the corresponding document in the database.
 
 ### MessageViewData
 
