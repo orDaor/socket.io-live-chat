@@ -82,7 +82,7 @@ This **counter status** is **saved** (mantained) when reloading the page.
 
 - **<ins>NOTE</ins>**: **even if in one chat room only 2 users can be active, the destination users can be more than one in case the sender is logged in at the same time in more browser tabs or browser instances. In this case one or more recipients will conincide with the sender**.
 
-- When the client **requests** the **chats** of a user with a given token pointing to that userId, ther server will find in the the database all the rooms in which this user is active. It will convert each room in a ChatViewData class object, that contains the last 20 messages that were sent in the context of that room. This chat objects are then collected inside of an array and send back in the response to the user:
+- When the client **requests** the **chats** of a user with a given token pointing to that userId, ther server will find in the the database all the rooms in which this user is active. It will convert each room in a **ChatViewData** class object, that contains the last 20 messages that were sent in the context of that room. This chat objects are then collected inside of an array and send back in the response to the user:
     - In the **chats** array, the chats are sorted **from the most recent to the eldest**, based on their last activity date. The last activity date of a chat is the date when the last message was sent for this chat.
     - The **messages** in each chat object, are sorted **from the eldest to the most recent**.
 
@@ -140,7 +140,7 @@ A **controller** is defined for each route set (except for the base routes), and
 
     - **POST: "/message/readAll"** → user requests to load his/her chats, together with the messages sent in those chats. The server wil return an array of all user's chats (sorted from the most recent to the eldest), and for each chat only the last 20 messages are returned (sorted from the eldest to the most recent). The user will be able to load more messages for a given chat after he/she opened the socket connection.
 
-## SOCKET OPENING AND INITIALIZATION (<ins>backend</ins>)
+## SOCKET OPENING AND INITIALIZATION (backend)
 - When a client sends the HTTP **request** to the server to **upgrade** the TCP connection from HTTP to **Websocket** protocol, it will attach to the request the **JWT**. This request is handled by a socket **authentication middleware** which will:
     - Check the token validity.
     - Verify whether the user account, for which this token was generated, exists or not.
@@ -151,7 +151,7 @@ A **controller** is defined for each route set (except for the base routes), and
 
 - **When** a socket is **opened**, an **initialization** handler will look for the chat rooms saved inside of it, and will **assign** all those **rooms** to the socket. *This is the way by which users inside of a chat room can communicate between each other*.
 
-## SOCKET LISTENERS AND CONTROLLERS (<ins>backend</ins>)
+## SOCKET LISTENERS AND CONTROLLERS (backend)
 
 **Socket listeners** are groupped in these main sets:
  
@@ -184,6 +184,77 @@ A **controller** is defined for each listener set, and each controller contains 
     - **"message-delete"** → user requests to delete a message that he/she previously sent in the context of a specific chat room. After the message is deleted, the server will broadcast a notification of the message deletion to the other users which are part of the target room.
 
     - **"message-load"** → user wants to load more messages for a specific chat. The server will look for 20 more messages, collect them in an array (sorted from the most recent to the eldest) and send it back to the user.
+
+## MODELS
+
+The following are the **classes** defined in the backend for handling users and chat rooms (the methods are not listed):
+
+### User
+
+Represents the User account entity. The user account documents in the database have the stracture of this class:
+
+- <ins>properties</ins>:
+    - **name** (string)
+    - **password** (string)
+    - **regitrationDate** (Date class object)
+    - **userId** (string) → id of the corresponding document in the database.
+
+### Room
+
+Represents the chat room entity. The room documents in the database have the stracture of this class:
+
+- <ins>properties</ins>:
+    - **friends** (Array of strings) → contains ids of users active in this chat room.
+    - **lastViewDates** (Array of Date class objects) → contains the last time (date) each friend of this room has viewed the content (messages) of this room.
+    - **lastActivityDate** (Date class object) → the date in which was sent the last message in the context of this chat room.
+    - **roomId** → id of the corresponding document in the database.
+
+### Message
+
+Represents the message entity. The message documents in the database have the stracture of this class:
+
+- <ins>properties</ins>:
+    - **text** (string)
+    - **roomId** (string) → the id of the chat room in which the message was sent.
+    - **senderId** (string) → id of the user account which sent this message.
+    - **creationDate** (Date class object) → the date when this message was sent.
+    - **messageId** →id of the corresponding document in the database.
+
+### MessageViewData
+
+The user fetches the messages in the form described by this class, and not in the form they are store in the database:
+
+- <ins>properties</ins>:
+    - **text** (string)
+    - **creationDate** (Date class object) 
+    - **senderIsViewer** (bool) → the user who requested to see this message is the one who actually sent it. This is needed by the client for example to display the message correctly on screen.
+    - **messageId** (string) → this is needed by the client for example to request to delete a specific message.
+    - **sendingFailed** (bool) → this is handled at client side for marking a message sending as failed.
+    - **sendingFailedReason** (string) → this is handled as client side for specifying why the message sending failed.
+
+### Chat
+
+When the user fetches his/her chats, the server finds in the database the chat rooms (room documents) where the user is active. This rooms are collected inside of an array from the most recent to the eldest (sorted based on lastActivityDate), **and each room there is mapped first into a Chat class object, and then into a ChatViewData object**. 
+
+- <ins>properties</ins>:
+    - **roomId** (string)
+    - **viewerId** (string) → the id of the user who requested to see this chat.
+    - **friends** (Array of strings) → contains the ids of the users active in this chat room, **except** the **viewerId**.
+    - **friendsNames** (Array of strings) → contains the names of the users active in this chat room, **except the user who requested to see it**.
+    - **messages** (Array of MessageViewData class objects) → containes the messages sent in this chat room. These are sorted from the eldest to most recent.
+    - **lastViewDate** (Date class object) → last time the user, who requested this chat, has viewd its content (messages)
+
+### ChatViewData
+
+When the user requests his/her chats, these will be sent to him/her in the form represented by this class, as mentioned above. Each chat exposed to the client will contain only the data the user needs to know:
+
+- <ins>properties</ins>:
+    - **roomId** (string)
+    - **friendsNames** (Array of strings) → the names of the users active in this chat room, except the user who requested to see it.
+    - **messages** (Array of MessageViewData class objects) → containes the messages sent in this chat room. These are sorted from the eldest to the most recent.
+    - **errorList** (Array of numbers) → contains any error code. If an error occured while collecting the messages or friends names for this chat room, an error code is entered in this list.
+    - **viewed** (bool) → if TRUE, the user who is requesting this chat (the viewer), does NOT have any new content (message) to see here. If the last message sent in this chat by the viewer's friends has a creation date which is more recent than the last time the viewer has viewed this chat content (messages), then viewed = FALSE, because the viewer has new content too see here.  
+    This flag is used by the frontend to set a notification for new content to be viewed in a chat.
 
 ## 3rd PARTY PACKAGES
 The following Node.js 3-rd party packages are used for building the backend code:
