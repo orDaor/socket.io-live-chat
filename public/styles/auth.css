@@ -69,6 +69,39 @@
   height: 1rem;
 }
 
+#sign-up-in-section .form-success-info {
+  box-sizing: border-box;
+  position: absolute;
+  left: 0;
+  top: -3.3rem;
+  padding: 1rem 2rem;
+  font-size: var(--font-size-0);
+  background-color:var(--user-messages-color);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 3rem;
+  width: 100%;
+  border-radius: 6px;
+}
+
+#sign-up-in-section .form-success-info p {
+  margin: 0;
+}
+
+#sign-up-in-section .form-success-info button {
+  font: inherit;
+  border: none;
+  padding: 0;
+  background-color: inherit;
+  margin: 0;
+  cursor: pointer;
+}
+
+#sign-up-in-section .form-success-info button:disabled {
+  color: inherit;
+}
+
 @media (min-width: 480px) {
   #sign-up-in-section form {
     width: 80%;

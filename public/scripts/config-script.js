@@ -58,6 +58,40 @@ function hideSignUpInForm() {
   signUpInSectionElement.style.display = "none";
 }
 
+//display success info on form
+function displaySuccessInfoOnSignUpInForm(action) {
+  //container
+  const successInfoContainerElement = document.createElement("div");
+  successInfoContainerElement.classList.add("form-success-info");
+
+  //info
+  const successInfoElement = document.createElement("p");
+  if (action === "Signup") {
+    successInfoElement.textContent = `Account created successfully!`;
+  }
+
+  //hide button
+  const hideButtonElement = document.createElement("button");
+  hideButtonElement.textContent = "x";
+  hideButtonElement.addEventListener("click", hideSuccessInfoOnSignUpInForm);
+
+  //append
+  const formElement = signUpInSectionElement.querySelector("form");
+  successInfoContainerElement.appendChild(successInfoElement);
+  successInfoContainerElement.appendChild(hideButtonElement);
+  formElement.appendChild(successInfoContainerElement);
+}
+
+//hide success info on form
+function hideSuccessInfoOnSignUpInForm() {
+  const successInfoElement = signUpInSectionElement.querySelector(
+    "form .form-success-info"
+  );
+  if (successInfoElement) {
+    successInfoElement.parentElement.removeChild(successInfoElement);
+  }
+}
+
 //display friends section on desktop
 function displayFriendsAndChatSectionOnWidhtChange(event) {
   //only if auth form and init info are not visible, it is possible to

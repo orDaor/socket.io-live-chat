@@ -196,4 +196,5 @@ async function signup(event) {
 
   //ask the user to login
   displaySignUpInForm("Login");
+  displaySuccessInfoOnSignUpInForm("Signup");
 }
