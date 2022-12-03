@@ -14,6 +14,12 @@ if (process.env.MONGODB_URL) {
   mongodbUrl = process.env.MONGODB_URL;
 }
 
+//environment variable for the session secret
+let sessionSecret = "super-secret";
+if (process.env.SESSION_SECRET) {
+  sessionSecret = process.env.SESSION_SECRET;
+}
+
 //create a session store for the session package passed as parameter
 function createSessionStore() {
   const MongoDBStore = mongoDbStore(expressSession);
@@ -28,7 +34,7 @@ function createSessionStore() {
 //create configuration data for the session package
 function createSessionConfig() {
   return {
-    secret: "super-secret",
+    secret: sessionSecret,
     resave: false,
     saveUninitialized: false,
     store: createSessionStore(),
