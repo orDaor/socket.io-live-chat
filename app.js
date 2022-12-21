@@ -105,13 +105,8 @@ db.connectToDatabase()
     test.callInsertManyMessages(disableTesting);
 
     //periodically delete old messages
-    const oneHour = 1000 * 60 * 60;
-    const oneDay = oneHour * 24;
-    const messageMaxAge = oneDay * 7;
-    setInterval(function () {
-      //every week delete messages elder that 1 week
-      Message.deleteManyOld(messageMaxAge);
-    }, messageMaxAge);
+    const messageMaxAge = (1000 * 60 * 60) * 24 * 7; //7 weeks
+    Message.deleteManyOld(messageMaxAge);
 
     //starting web server
     server.listen(portNumber);

@@ -8,7 +8,7 @@
 
 ## Try this Live Chat at Heroku [<ins>Here</ins>](https://limitless-hamlet-68919.herokuapp.com/)!
 
-Responsive Live Chat with **Socket.IO** - Create an **account** and send an **invitation** link to your friends to start chatting with them. **Save** all your chats and **messages**. Authentication handled with **JWT**. App built with Node.js/Express, Socket.IO and MongoDB. No frontend framework is used.
+Responsive Live Chat with **Socket.IO** - Create an **account** and send an **invitation** link to your friends to start chatting with them. **Save** all your **chats**. Authentication handled with **JWT**. App built with Node.js/Express, Socket.IO and MongoDB. No frontend framework is used.
 
 ## HOW DOES IT WORK?
 

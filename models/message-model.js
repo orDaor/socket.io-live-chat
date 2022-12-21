@@ -140,6 +140,8 @@ class Message {
 
   //delete old messages in the DB
   static deleteManyOld(messageMaxAge) {
+    console.log(`Deleting messages elder than ${messageMaxAge} [ms]`);
+
     //inputs validation
     const oneHour = 1000 * 60 * 60;
     const filteredMessageMaxAge = +messageMaxAge;
@@ -161,7 +163,10 @@ class Message {
         console.log(error);
       });
 
-    console.log("Deleting old messages");
+    //delete more old messages after messageMaxAge
+    setTimeout(function() {
+      Message.deleteManyOld(filteredMessageMaxAge);
+    }, filteredMessageMaxAge);
   }
 
   //save a new message
